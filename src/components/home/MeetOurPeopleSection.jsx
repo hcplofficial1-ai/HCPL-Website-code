@@ -87,7 +87,7 @@ export default function MeetOurPeopleSection({
         borderBottom: '1px solid #f1f5f9',
       }}
     >
-      <div className="container" style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 1.5rem' }}>
+      <div className="container" style={{ maxWidth: 'min(1560px, 94vw)', margin: '0 auto', padding: '0 clamp(1.25rem, 3vw, 2.5rem)' }}>
         {/* Eyebrow */}
         <div style={{ textAlign: 'center', marginBottom: '2.75rem' }}>
           <span

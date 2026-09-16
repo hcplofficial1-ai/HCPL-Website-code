@@ -81,7 +81,7 @@ export default function PortfolioCapabilities({ videoSrc = '/DSC_0013.MOV' }) {
         overflow: 'hidden',
       }}
     >
-      <div className="container" style={{ maxWidth: '1360px', margin: '0 auto', padding: '0 1.5rem', position: 'relative', zIndex: 2 }}>
+      <div className="container" style={{ maxWidth: 'min(1560px, 94vw)', margin: '0 auto', padding: '0 clamp(1.25rem, 3vw, 2.5rem)', position: 'relative', zIndex: 2 }}>
         
         {/* ============================================================
             1. MCKINSEY-STYLE SHOWCASE CARD (HERO FEATURE FOR PORTFOLIO)

@@ -113,9 +113,9 @@ export default function Header() {
       height: '74px',
     },
     inner: {
-      maxWidth: '1280px',
+      maxWidth: 'min(1560px, 94vw)',
       margin: '0 auto',
-      padding: '0 1.5rem',
+      padding: '0 clamp(1.25rem, 3vw, 2.5rem)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',

@@ -24,7 +24,7 @@ export default function CoreCompetenciesSection() {
         overflow: 'hidden',
       }}
     >
-      <div className="container" style={{ maxWidth: '1440px', position: 'relative', zIndex: 2 }}>
+      <div className="container" style={{ maxWidth: 'min(1560px, 94vw)', margin: '0 auto', padding: '0 clamp(1.25rem, 3vw, 2.5rem)', position: 'relative', zIndex: 2 }}>
         {/* SECTION HEADER */}
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
           <div
@@ -275,21 +275,23 @@ export default function CoreCompetenciesSection() {
       </div>
 
       <style>{`
-        @media (min-width: 1100px) {
-          .competencies-grid-wide {
-            grid-template-columns: repeat(3, 1fr) !important;
-          }
+        .competencies-grid-wide {
+          display: grid !important;
+          grid-template-columns: repeat(3, 1fr) !important;
+          gap: clamp(1.5rem, 2.2vw, 2.5rem) !important;
         }
 
-        @media (min-width: 680px) and (max-width: 1099px) {
+        @media (max-width: 1100px) {
           .competencies-grid-wide {
             grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1.75rem !important;
           }
         }
 
-        @media (max-width: 679px) {
+        @media (max-width: 680px) {
           .competencies-grid-wide {
             grid-template-columns: 1fr !important;
+            gap: 1.25rem !important;
           }
         }
       `}</style>

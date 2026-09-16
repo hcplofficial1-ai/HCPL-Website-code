@@ -13,12 +13,8 @@ export default function VisionMissionMotto() {
       {/* Full-Width Edge-to-Edge Banner Image with Overlay Button shifted further down */}
       <div
         style={{
-          width: '100vw',
+          width: '100%',
           position: 'relative',
-          left: '50%',
-          right: '50%',
-          marginLeft: '-50vw',
-          marginRight: '-50vw',
           maxHeight: '520px',
           overflow: 'hidden',
           background: '#32004a',

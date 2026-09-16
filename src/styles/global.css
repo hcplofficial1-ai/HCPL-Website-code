@@ -103,8 +103,8 @@
   --dur-slow: 0.4s;
 
   /* Layout */
-  --max-width: 1280px;
-  --header-h: 72px;
+  --max-width: min(1560px, 94vw);
+  --header-h: 74px;
 }
 
 /* Reset & Global Typography Base */
@@ -318,7 +318,7 @@ ul { list-style: none; }
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 clamp(1.25rem, 3vw, 2.5rem);
 }
 
 /* Typography helpers */
