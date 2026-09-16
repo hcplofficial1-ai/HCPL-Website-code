@@ -75,18 +75,37 @@ function saveBase64File(dataUrl, subfolder = 'reports', defaultName = 'doc') {
 // MONGODB ATLAS CONNECTION
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://hcplofficial1_db_user:EulaTaXCA07QeJdz@cluster0.jvcfjru.mongodb.net/himat_db?retryWrites=true&w=majority&appName=Cluster0'
 
-console.log('Connecting to MongoDB Atlas database...')
-mongoose
-  .connect(MONGODB_URI, {
-    serverSelectionTimeoutMS: 5000,
-  })
-  .then(() => {
-    console.log('✅ MongoDB Atlas Connected Successfully to cluster0.jvcfjru.mongodb.net')
-    autoSeedIfEmpty()
-  })
-  .catch((err) => {
-    console.error('❌ MongoDB Atlas Connection Error:', err.message)
-  })
+let dbConnectPromise = null
+async function ensureDbConnected() {
+  if (mongoose.connection.readyState === 1) return
+  if (!dbConnectPromise) {
+    dbConnectPromise = mongoose
+      .connect(MONGODB_URI, {
+        serverSelectionTimeoutMS: 10000,
+      })
+      .then(async () => {
+        console.log('✅ MongoDB Atlas Connected Successfully')
+        dbConnectPromise = null
+        await autoSeedIfEmpty()
+      })
+      .catch((err) => {
+        dbConnectPromise = null
+        console.error('❌ MongoDB Atlas Connection Error:', err.message)
+      })
+  }
+  await dbConnectPromise
+}
+
+// Initial connection attempt
+ensureDbConnected()
+
+// Middleware to ensure DB connection before handling API requests
+app.use(async (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    await ensureDbConnected()
+  }
+  next()
+})
 
 // MONGOOSE SCHEMAS & MODELS
 const ProjectSchema = new mongoose.Schema({
@@ -259,7 +278,8 @@ async function autoSeedIfEmpty() {
 // REST API ENDPOINTS
 
 // Health Check
-app.get('/api/health', (req, res) => {
+app.get('/api/health', async (req, res) => {
+  await ensureDbConnected()
   res.json({
     status: 'online',
     database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
