@@ -164,8 +164,10 @@ export default function Consultants() {
   const { consultants = [] } = useData()
   const rawList = Array.isArray(consultants) && consultants.length > 0 ? consultants : DEFAULT_CONSULTANTS
   const displayConsultants = [...rawList].sort((a, b) => {
-    if (a.id === 'izhar-ali-hunzai') return -1
-    if (b.id === 'izhar-ali-hunzai') return 1
+    const aIsIzhar = a && (a.id === 'izhar-ali-hunzai' || (a.name && a.name.toLowerCase().includes('izhar')))
+    const bIsIzhar = b && (b.id === 'izhar-ali-hunzai' || (b.name && b.name.toLowerCase().includes('izhar')))
+    if (aIsIzhar && !bIsIzhar) return -1
+    if (!aIsIzhar && bIsIzhar) return 1
     const orderA = a.order != null ? Number(a.order) : 99
     const orderB = b.order != null ? Number(b.order) : 99
     return orderA - orderB

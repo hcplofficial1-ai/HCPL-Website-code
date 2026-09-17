@@ -14,7 +14,7 @@ const TEAM_KEY = 'himat_team_db'
 const REPORTS_KEY = 'himat_reports_db'
 const COMPETENCIES_KEY = 'himat_competencies_db'
 const CERTIFICATES_KEY = 'himat_certificates_db'
-const CONSULTANTS_KEY = 'himat_consultants_db'
+const CONSULTANTS_KEY = 'himat_consultants_db_v2'
 
 function safeSaveLocalStorage(key, data) {
   try {
@@ -38,8 +38,10 @@ function safeSaveLocalStorage(key, data) {
 export function sortConsultantsList(list) {
   if (!Array.isArray(list)) return []
   return [...list].sort((a, b) => {
-    if (a.id === 'izhar-ali-hunzai') return -1
-    if (b.id === 'izhar-ali-hunzai') return 1
+    const aIsIzhar = a && (a.id === 'izhar-ali-hunzai' || (a.name && a.name.toLowerCase().includes('izhar')))
+    const bIsIzhar = b && (b.id === 'izhar-ali-hunzai' || (b.name && b.name.toLowerCase().includes('izhar')))
+    if (aIsIzhar && !bIsIzhar) return -1
+    if (!aIsIzhar && bIsIzhar) return 1
     const orderA = a.order != null ? Number(a.order) : 99
     const orderB = b.order != null ? Number(b.order) : 99
     return orderA - orderB
