@@ -12,7 +12,7 @@ export const API_BASE = import.meta.env.VITE_API_URL || (window.location.hostnam
 const PROJECTS_KEY = 'himat_projects_db'
 const TEAM_KEY = 'himat_team_db'
 const REPORTS_KEY = 'himat_reports_db'
-const COMPETENCIES_KEY = 'himat_competencies_db'
+const COMPETENCIES_KEY = 'himat_competencies_db_v2'
 const CERTIFICATES_KEY = 'himat_certificates_db'
 const CONSULTANTS_KEY = 'himat_consultants_db_v2'
 
@@ -33,6 +33,25 @@ function safeSaveLocalStorage(key, data) {
       localStorage.setItem(key, JSON.stringify(sanitized))
     } catch (_) {}
   }
+}
+
+export function applyCompetencyImages(list) {
+  if (!Array.isArray(list)) return []
+  return list.map((c) => {
+    if (c.id === 'organizational-assessment' && (!c.image || c.image === './images/organizational-assessment-bg.jpg')) {
+      return { ...c, image: './images/capacity-building-bg.jpg' }
+    }
+    if (c.id === 'capacity-building' && (!c.image || c.image === './images/capacity-building-bg.jpg')) {
+      return { ...c, image: './images/organizational-assessment-bg.jpg' }
+    }
+    if (c.id === 'third-party-monitoring' && (!c.image || c.image === './images/third-party-monitoring-bg.jpg')) {
+      return { ...c, image: './images/office-automation-erp-bg.jpg' }
+    }
+    if (c.id === 'office-automation-erp' && (!c.image || c.image === './images/office-automation-erp-bg.jpg')) {
+      return { ...c, image: './images/third-party-monitoring-bg.jpg' }
+    }
+    return c
+  })
 }
 
 export function sortConsultantsList(list) {
@@ -84,7 +103,7 @@ export function DataProvider({ children }) {
     try {
       const saved = localStorage.getItem(COMPETENCIES_KEY)
       const parsed = saved ? JSON.parse(saved) : null
-      return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_COMPETENCIES
+      return Array.isArray(parsed) && parsed.length > 0 ? applyCompetencyImages(parsed) : DEFAULT_COMPETENCIES
     } catch {
       return DEFAULT_COMPETENCIES
     }
@@ -198,8 +217,9 @@ export function DataProvider({ children }) {
           if (compRes.ok) {
             const data = await compRes.json()
             if (Array.isArray(data) && data.length > 0) {
-              setCompetencies(data)
-              safeSaveLocalStorage(COMPETENCIES_KEY, data)
+              const updated = applyCompetencyImages(data)
+              setCompetencies(updated)
+              safeSaveLocalStorage(COMPETENCIES_KEY, updated)
             } else {
               setCompetencies(DEFAULT_COMPETENCIES)
             }
@@ -245,7 +265,7 @@ export function DataProvider({ children }) {
         setCertificates(savedCert ? JSON.parse(savedCert) : CLIENT_CERTIFICATES)
 
         const savedComp = localStorage.getItem(COMPETENCIES_KEY)
-        setCompetencies(savedComp ? JSON.parse(savedComp) : DEFAULT_COMPETENCIES)
+        setCompetencies(savedComp ? applyCompetencyImages(JSON.parse(savedComp)) : DEFAULT_COMPETENCIES)
 
         const savedCons = localStorage.getItem(CONSULTANTS_KEY)
         setConsultants(savedCons ? sortConsultantsList(JSON.parse(savedCons)) : DEFAULT_CONSULTANTS)

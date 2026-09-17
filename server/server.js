@@ -266,6 +266,11 @@ async function autoSeedIfEmpty() {
     if (compCount === 0 && DEFAULT_COMPETENCIES.length > 0) {
       await Competency.insertMany(DEFAULT_COMPETENCIES)
       console.log(`🌱 Auto-seeded ${DEFAULT_COMPETENCIES.length} competencies to MongoDB Atlas`)
+    } else {
+      await Competency.updateOne({ id: 'organizational-assessment' }, { $set: { image: './images/capacity-building-bg.jpg' } })
+      await Competency.updateOne({ id: 'capacity-building' }, { $set: { image: './images/organizational-assessment-bg.jpg' } })
+      await Competency.updateOne({ id: 'third-party-monitoring' }, { $set: { image: './images/office-automation-erp-bg.jpg' } })
+      await Competency.updateOne({ id: 'office-automation-erp' }, { $set: { image: './images/third-party-monitoring-bg.jpg' } })
     }
 
     const consultantCount = await Consultant.countDocuments()
