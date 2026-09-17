@@ -36,7 +36,7 @@ export default function Home() {
       <CoreCompetenciesSection />
 
       {/* 6. PORTFOLIO & 16 THEMATIC AREAS (06 & 07 PORTFOLIO & THEMATIC DOMAINS) */}
-      <PortfolioCapabilities videoSrc="/DSC_0013.MOV" />
+      <PortfolioCapabilities videoSrc="/portfolio-showcase.mp4" />
 
       {/* 7. OFFICIAL CLIENT TESTIMONIALS (13 CLIENT TESTIMONIALS) */}
       <ClientTestimonialsSection />

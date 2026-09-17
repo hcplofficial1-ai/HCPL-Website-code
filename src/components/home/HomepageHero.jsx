@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useData } from '../../context/DataContext'
 
@@ -191,6 +191,50 @@ export function HeroIntro({
 }
 
 export default function HomepageHero() {
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    video.muted = true
+    video.defaultMuted = true
+
+    const attemptPlay = () => {
+      const p = video.play()
+      if (p !== undefined) {
+        p.catch(() => {
+          video.muted = true
+          video.play().catch(() => {})
+        })
+      }
+    }
+
+    attemptPlay()
+
+    // Resilient continuous loop & stall auto-recovery
+    const handleLoop = () => {
+      video.currentTime = 0
+      attemptPlay()
+    }
+
+    const handleStall = () => {
+      if (video.paused) {
+        attemptPlay()
+      }
+    }
+
+    video.addEventListener('ended', handleLoop)
+    video.addEventListener('stalled', handleStall)
+    video.addEventListener('waiting', handleStall)
+
+    return () => {
+      video.removeEventListener('ended', handleLoop)
+      video.removeEventListener('stalled', handleStall)
+      video.removeEventListener('waiting', handleStall)
+    }
+  }, [])
+
   return (
     <section
       style={{
@@ -205,12 +249,14 @@ export default function HomepageHero() {
         boxSizing: 'border-box',
       }}
     >
-      {/* Full-Width Background Video Element (Poster picture removed) */}
+      {/* Full-Width Background Video Element */}
       <video
+        ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
+        preload="auto"
         controls={false}
         style={{
           position: 'absolute',

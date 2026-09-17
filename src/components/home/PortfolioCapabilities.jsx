@@ -24,7 +24,7 @@ const SHOWCASE_TABS = [
   },
 ]
 
-export default function PortfolioCapabilities({ videoSrc = '/DSC_0013.MOV' }) {
+export default function PortfolioCapabilities({ videoSrc = '/portfolio-showcase.mp4' }) {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -214,14 +214,20 @@ export default function PortfolioCapabilities({ videoSrc = '/DSC_0013.MOV' }) {
               <video
                 ref={videoRef}
                 src={videoSrc}
-                preload="metadata"
+                preload="auto"
                 playsInline
+                loop
                 controls={isPlaying}
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
-                onEnded={() => setIsPlaying(false)}
+                onEnded={() => {
+                  if (videoRef.current) {
+                    videoRef.current.currentTime = 0
+                    videoRef.current.play().catch(() => {})
+                  }
+                }}
                 style={{
                   width: '100%',
                   height: '100%',
