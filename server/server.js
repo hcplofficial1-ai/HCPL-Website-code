@@ -206,6 +206,7 @@ const ConsultantSchema = new mongoose.Schema({
   image: String,
   initials: String,
   experience: String,
+  order: Number,
 }, { timestamps: true })
 
 const Project = mongoose.model('Project', ProjectSchema)
@@ -271,6 +272,8 @@ async function autoSeedIfEmpty() {
     if (consultantCount === 0 && DEFAULT_CONSULTANTS.length > 0) {
       await Consultant.insertMany(DEFAULT_CONSULTANTS)
       console.log(`🌱 Auto-seeded ${DEFAULT_CONSULTANTS.length} consultants to MongoDB Atlas`)
+    } else {
+      await Consultant.updateOne({ id: 'izhar-ali-hunzai' }, { $set: { order: 1 } })
     }
   } catch (err) {
     console.error('Error auto-seeding MongoDB Atlas:', err)
@@ -459,7 +462,14 @@ app.put('/api/certificates/:id', async (req, res) => {
 // CONSULTANTS API
 app.get('/api/consultants', async (req, res) => {
   try {
-    const list = await Consultant.find().sort({ createdAt: 1 })
+    const list = await Consultant.find()
+    list.sort((a, b) => {
+      if (a.id === 'izhar-ali-hunzai') return -1
+      if (b.id === 'izhar-ali-hunzai') return 1
+      const orderA = a.order != null ? Number(a.order) : 99
+      const orderB = b.order != null ? Number(b.order) : 99
+      return orderA - orderB
+    })
     res.json(list)
   } catch (err) {
     res.status(500).json({ error: err.message })

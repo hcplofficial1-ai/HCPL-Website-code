@@ -210,9 +210,16 @@ export default function AdminDashboard() {
 
   const filteredConsultants = useMemo(() => {
     const list = consultants || []
-    if (!search.trim()) return list
+    const sorted = [...list].sort((a, b) => {
+      if (a.id === 'izhar-ali-hunzai') return -1
+      if (b.id === 'izhar-ali-hunzai') return 1
+      const orderA = a.order != null ? Number(a.order) : 99
+      const orderB = b.order != null ? Number(b.order) : 99
+      return orderA - orderB
+    })
+    if (!search.trim()) return sorted
     const q = search.toLowerCase()
-    return list.filter(c => c.name?.toLowerCase().includes(q) || c.role?.toLowerCase().includes(q) || c.org?.toLowerCase().includes(q))
+    return sorted.filter(c => c.name?.toLowerCase().includes(q) || c.role?.toLowerCase().includes(q) || c.org?.toLowerCase().includes(q))
   }, [consultants, search])
 
   // File Upload Helper (Images & PDFs)

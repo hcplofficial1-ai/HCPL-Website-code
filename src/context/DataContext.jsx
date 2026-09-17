@@ -35,6 +35,17 @@ function safeSaveLocalStorage(key, data) {
   }
 }
 
+export function sortConsultantsList(list) {
+  if (!Array.isArray(list)) return []
+  return [...list].sort((a, b) => {
+    if (a.id === 'izhar-ali-hunzai') return -1
+    if (b.id === 'izhar-ali-hunzai') return 1
+    const orderA = a.order != null ? Number(a.order) : 99
+    const orderB = b.order != null ? Number(b.order) : 99
+    return orderA - orderB
+  })
+}
+
 export function DataProvider({ children }) {
   const [projects, setProjects] = useState(() => {
     try {
@@ -89,7 +100,7 @@ export function DataProvider({ children }) {
     try {
       const saved = localStorage.getItem(CONSULTANTS_KEY)
       const parsed = saved ? JSON.parse(saved) : null
-      return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_CONSULTANTS
+      return Array.isArray(parsed) && parsed.length > 0 ? sortConsultantsList(parsed) : DEFAULT_CONSULTANTS
     } catch {
       return DEFAULT_CONSULTANTS
     }
@@ -203,8 +214,9 @@ export function DataProvider({ children }) {
           if (consRes.ok) {
             const data = await consRes.json()
             if (Array.isArray(data) && data.length > 0) {
-              setConsultants(data)
-              safeSaveLocalStorage(CONSULTANTS_KEY, data)
+              const sorted = sortConsultantsList(data)
+              setConsultants(sorted)
+              safeSaveLocalStorage(CONSULTANTS_KEY, sorted)
             } else {
               setConsultants(DEFAULT_CONSULTANTS)
             }
@@ -234,7 +246,7 @@ export function DataProvider({ children }) {
         setCompetencies(savedComp ? JSON.parse(savedComp) : DEFAULT_COMPETENCIES)
 
         const savedCons = localStorage.getItem(CONSULTANTS_KEY)
-        setConsultants(savedCons ? JSON.parse(savedCons) : DEFAULT_CONSULTANTS)
+        setConsultants(savedCons ? sortConsultantsList(JSON.parse(savedCons)) : DEFAULT_CONSULTANTS)
       }
     }
 
@@ -533,7 +545,7 @@ export function DataProvider({ children }) {
   const addConsultant = useCallback(async (cons) => {
     setConsultants((prev) => {
       const filtered = (prev || []).filter((c) => c.id !== cons.id)
-      const next = [cons, ...filtered]
+      const next = sortConsultantsList([cons, ...filtered])
       safeSaveLocalStorage(CONSULTANTS_KEY, next)
       return next
     })
@@ -557,7 +569,7 @@ export function DataProvider({ children }) {
 
   const updateConsultant = useCallback(async (id, updates) => {
     setConsultants((prev) => {
-      const next = (prev || []).map((c) => (c.id === id ? { ...c, ...updates } : c))
+      const next = sortConsultantsList((prev || []).map((c) => (c.id === id ? { ...c, ...updates } : c)))
       safeSaveLocalStorage(CONSULTANTS_KEY, next)
       return next
     })

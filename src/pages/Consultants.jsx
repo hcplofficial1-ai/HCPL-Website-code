@@ -162,7 +162,14 @@ function ConsultantCard({ consultant, index = 0 }) {
 
 export default function Consultants() {
   const { consultants = [] } = useData()
-  const displayConsultants = Array.isArray(consultants) && consultants.length > 0 ? consultants : DEFAULT_CONSULTANTS
+  const rawList = Array.isArray(consultants) && consultants.length > 0 ? consultants : DEFAULT_CONSULTANTS
+  const displayConsultants = [...rawList].sort((a, b) => {
+    if (a.id === 'izhar-ali-hunzai') return -1
+    if (b.id === 'izhar-ali-hunzai') return 1
+    const orderA = a.order != null ? Number(a.order) : 99
+    const orderB = b.order != null ? Number(b.order) : 99
+    return orderA - orderB
+  })
 
   return (
     <div style={{ background: '#ffffff', minHeight: '100vh', color: '#212121', fontFamily: "'Inter', sans-serif" }}>
