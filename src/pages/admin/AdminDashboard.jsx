@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { useData } from '../../context/DataContext'
+import { useData, API_BASE } from '../../context/DataContext'
 import CompetencyIcon from '../../components/common/CompetencyIcon'
 import ImageAdjuster from '../../components/admin/ImageAdjuster'
 
@@ -10,17 +10,19 @@ const EMPTY_REPORT = {
   id: '',
   title: '',
   client: '',
-  clientCategory: '',
+  clientCategory: 'Multilateral & Bilateral Partner',
   year: new Date().getFullYear().toString(),
   sector: 'Poverty Alleviation & Social Protection',
   type: 'Impact Assessment Study',
-  coverage: '',
+  coverage: 'Pakistan (National)',
   pages: '',
   pdfUrl: '',
   coverImage: '',
   summary: '',
-  keyFindings: ['', '', ''],
+  keyFindings: [],
   methodology: '',
+  docType: 'pdf',
+  docName: '',
 }
 const EMPTY_TEAM_MEMBER = {
   id: '',
@@ -99,6 +101,7 @@ export default function AdminDashboard() {
   const [editCertObj, setEditCertObj] = useState(null)
   const [certForm, setCertForm] = useState(EMPTY_CERTIFICATE)
   const [deleteCertId, setDeleteCertId] = useState(null)
+  const [isSavingCert, setIsSavingCert] = useState(false)
 
   // Project State & Modals
   const [showProjectModal, setShowProjectModal] = useState(false)
@@ -135,7 +138,7 @@ export default function AdminDashboard() {
   const fetchInquiries = async () => {
     setLoadingInquiries(true)
     try {
-      const res = await fetch('http://localhost:5000/api/contact')
+      const res = await fetch(`${API_BASE}/contact`)
       if (res.ok) {
         const data = await res.json()
         setInquiries(data)
@@ -154,7 +157,7 @@ export default function AdminDashboard() {
   const handleDeleteInquiry = async (id) => {
     if (!window.confirm('Delete this inquiry?')) return
     try {
-      const res = await fetch(`http://localhost:5000/api/contact/${id}`, { method: 'DELETE' })
+      const res = await fetch(`${API_BASE}/contact/${id}`, { method: 'DELETE' })
       if (res.ok) {
         setInquiries(prev => prev.filter(i => i.id !== id))
         showToast('Inquiry deleted ✓')
@@ -345,18 +348,38 @@ export default function AdminDashboard() {
     setCertForm(EMPTY_CERTIFICATE)
   }
 
-  const handleSaveCert = () => {
+  const handleSaveCert = async () => {
     if (!certForm.client.trim() || !certForm.title.trim()) {
       return alert('Client Name and Title/Assignment are required.')
     }
-    if (editCertObj) {
-      updateCertificate(editCertObj.id, certForm)
-      showToast('Certificate record updated ✓')
-    } else {
-      addCertificate(certForm)
-      showToast('New certificate published ✓')
+    setIsSavingCert(true)
+    try {
+      const payload = {
+        ...certForm,
+        id: certForm.id || 'cert-' + Date.now().toString().slice(-5),
+        clientCategory: certForm.clientCategory || (
+          certForm.category === 'multilateral' ? 'Multilateral & Bilateral Partner' :
+          certForm.category === 'akdn' ? 'Aga Khan Development Network (AKDN)' :
+          certForm.category === 'ingo' ? 'International NGO' : 'Social Protection & NGO Partner'
+        ),
+      }
+      let result
+      if (editCertObj) {
+        result = await updateCertificate(editCertObj.id, payload)
+        showToast('Certificate record updated ✓')
+      } else {
+        result = await addCertificate(payload)
+        showToast('New certificate published ✓')
+      }
+      if (result && result.error) {
+        alert(`Warning: ${result.error}`)
+      }
+      closeCertModal()
+    } catch (err) {
+      alert(`Error publishing certificate: ${err.message}`)
+    } finally {
+      setIsSavingCert(false)
     }
-    closeCertModal()
   }
 
   const confirmDeleteCert = () => {
@@ -1317,12 +1340,21 @@ export default function AdminDashboard() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.75rem' }}>
               {/* Form Fields */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ background: '#faf5ff', padding: '1.1rem', borderRadius: '12px', border: '1.5px solid rgba(118,12,176,0.15)' }}>
-                  <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
-                    📷 Client Logo (Upload Image File or Enter Path)
-                  </label>
-                  <input type="file" accept="image/*" onChange={e => handleImageUpload(e, base64 => setCertForm(f => ({ ...f, logo: base64 })))} style={{ fontSize: '0.8125rem', marginBottom: '0.5rem' }} />
-                  <input value={certForm.logo || ''} onChange={e => setCertForm(f => ({ ...f, logo: e.target.value }))} placeholder="./logos/client.png" style={s.input} />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div style={{ background: '#faf5ff', padding: '1rem', borderRadius: '12px', border: '1.5px solid rgba(118,12,176,0.15)' }}>
+                    <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.4rem', textTransform: 'uppercase' }}>
+                      📷 Client Primary Logo
+                    </label>
+                    <input type="file" accept="image/*" onChange={e => handleImageUpload(e, base64 => setCertForm(f => ({ ...f, logo: base64 })))} style={{ fontSize: '0.8125rem', marginBottom: '0.4rem' }} />
+                    <input value={certForm.logo || ''} onChange={e => setCertForm(f => ({ ...f, logo: e.target.value }))} placeholder="./logos/client.png or image URL..." style={s.input} />
+                  </div>
+                  <div style={{ background: '#faf5ff', padding: '1rem', borderRadius: '12px', border: '1.5px solid rgba(118,12,176,0.15)' }}>
+                    <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.4rem', textTransform: 'uppercase' }}>
+                      📷 Partner Secondary Logo (Optional)
+                    </label>
+                    <input type="file" accept="image/*" onChange={e => handleImageUpload(e, base64 => setCertForm(f => ({ ...f, secondaryLogo: base64 })))} style={{ fontSize: '0.8125rem', marginBottom: '0.4rem' }} />
+                    <input value={certForm.secondaryLogo || ''} onChange={e => setCertForm(f => ({ ...f, secondaryLogo: e.target.value }))} placeholder="./logos/partner.png or image URL..." style={s.input} />
+                  </div>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
@@ -1406,8 +1438,10 @@ export default function AdminDashboard() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', marginTop: 'auto', paddingTop: '1rem' }}>
-                  <button type="button" onClick={closeCertModal} style={{ background: '#f5f5f5', color: '#666', border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 700 }}>Cancel</button>
-                  <button type="button" onClick={handleSaveCert} style={s.btn('#760CB0')}>💾 Save & Publish Certificate</button>
+                  <button type="button" onClick={closeCertModal} disabled={isSavingCert} style={{ background: '#f5f5f5', color: '#666', border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 700 }}>Cancel</button>
+                  <button type="button" onClick={handleSaveCert} disabled={isSavingCert} style={{ ...s.btn('#760CB0'), opacity: isSavingCert ? 0.7 : 1, cursor: isSavingCert ? 'not-allowed' : 'pointer' }}>
+                    {isSavingCert ? '⏳ Publishing Certificate...' : '💾 Save & Publish Certificate'}
+                  </button>
                 </div>
               </div>
             </div>
@@ -1563,6 +1597,56 @@ export default function AdminDashboard() {
               <div style={{ gridColumn: 'span 2' }}>
                 <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Executive Summary / Overview</label>
                 <textarea value={reportForm.summary || ''} onChange={e => setReportForm(f => ({ ...f, summary: e.target.value }))} rows={3} placeholder="Comprehensive executive summary or overview of the assignment and research findings..." style={{ ...s.input, resize: 'vertical' }} />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Report Type</label>
+                <select value={reportForm.type || 'Impact Assessment Study'} onChange={e => setReportForm(f => ({ ...f, type: e.target.value }))} style={s.input}>
+                  <option value="Impact Assessment Study">Impact Assessment Study</option>
+                  <option value="Final Evaluation Report">Final Evaluation Report</option>
+                  <option value="Midterm Review & Evaluation">Midterm Review & Evaluation</option>
+                  <option value="Baseline Study & Diagnostic">Baseline Study & Diagnostic</option>
+                  <option value="Labour Market Survey">Labour Market Survey</option>
+                  <option value="Needs Assessment & Situation Analysis">Needs Assessment & Situation Analysis</option>
+                  <option value="Policy Brief & Thematic Research">Policy Brief & Thematic Research</option>
+                  <option value="Value for Money (VfM) Analysis">Value for Money (VfM) Analysis</option>
+                  <option value="Third-Party Monitoring Report">Third-Party Monitoring Report</option>
+                </select>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Number of Pages</label>
+                <input value={reportForm.pages || ''} onChange={e => setReportForm(f => ({ ...f, pages: e.target.value }))} placeholder="e.g. 78 pages" style={s.input} />
+              </div>
+
+              <div style={{ gridColumn: 'span 2' }}>
+                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Research Methodology & Approach</label>
+                <textarea value={reportForm.methodology || ''} onChange={e => setReportForm(f => ({ ...f, methodology: e.target.value }))} rows={2} placeholder="e.g. Mixed-methods quasi-experimental evaluation utilizing Difference-in-Differences (DiD), 1,400 household surveys, and 24 Key Informant Interviews." style={{ ...s.input, resize: 'vertical' }} />
+              </div>
+
+              {/* Key Findings Tag Builder */}
+              <div style={{ gridColumn: 'span 2', background: '#faf5ff', padding: '1rem', borderRadius: '12px', border: '1px solid rgba(118,12,176,0.15)' }}>
+                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.4rem', textTransform: 'uppercase' }}>
+                  💡 Key Research Findings & Takeaways
+                </label>
+                <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.6rem' }}>
+                  <input
+                    value={keyFindingInput}
+                    onChange={e => setKeyFindingInput(e.target.value)}
+                    onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleAddKeyFinding() } }}
+                    placeholder="Enter a key finding bullet point..."
+                    style={s.input}
+                  />
+                  <button type="button" onClick={handleAddKeyFinding} style={s.btn('#760CB0')}>+ Add Finding</button>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                  {(reportForm.keyFindings || []).filter(Boolean).map((kf, idx) => (
+                    <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#ffffff', padding: '0.45rem 0.85rem', borderRadius: '8px', border: '1px solid rgba(118,12,176,0.12)', fontSize: '0.82rem', color: '#333' }}>
+                      <span>• {kf}</span>
+                      <button type="button" onClick={() => handleRemoveKeyFinding(idx)} style={{ background: 'none', border: 'none', color: '#ef4444', fontWeight: 800, cursor: 'pointer', padding: '0 0.4rem' }}>✕</button>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 

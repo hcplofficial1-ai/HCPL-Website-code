@@ -7,7 +7,7 @@ import { CLIENT_CERTIFICATES } from '../data/certificatesData'
 import { DEFAULT_CONSULTANTS } from '../data/consultantsData'
 
 const DataContext = createContext(null)
-const API_BASE = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api')
+export const API_BASE = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api')
 
 const PROJECTS_KEY = 'himat_projects_db'
 const TEAM_KEY = 'himat_team_db'
@@ -449,33 +449,65 @@ export function DataProvider({ children }) {
 
   // CERTIFICATES CRUD WITH MONGODB ATLAS SYNC
   const addCertificate = useCallback(async (cert) => {
-    setCertificates((prev) => {
-      const next = [cert, ...prev]
-      safeSaveLocalStorage(CERTIFICATES_KEY, next)
-      return next
-    })
     try {
-      await fetch(`${API_BASE}/certificates`, {
+      const res = await fetch(`${API_BASE}/certificates`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(cert),
       })
-    } catch (_) {}
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}))
+        console.warn('Backend failed to save certificate:', errJson)
+        return { success: false, error: errJson.error || 'Server rejected certificate save' }
+      }
+      const savedData = await res.json()
+      setCertificates((prev) => {
+        const filtered = (prev || []).filter((c) => c.id !== savedData.id)
+        const next = [savedData, ...filtered]
+        safeSaveLocalStorage(CERTIFICATES_KEY, next)
+        return next
+      })
+      return { success: true, data: savedData }
+    } catch (err) {
+      console.warn('Backend server unreachable, saving certificate locally:', err.message)
+      setCertificates((prev) => {
+        const filtered = (prev || []).filter((c) => c.id !== cert.id)
+        const next = [cert, ...filtered]
+        safeSaveLocalStorage(CERTIFICATES_KEY, next)
+        return next
+      })
+      return { success: true }
+    }
   }, [])
 
   const updateCertificate = useCallback(async (id, updates) => {
-    setCertificates((prev) => {
-      const next = prev.map((c) => (c.id === id ? { ...c, ...updates } : c))
-      safeSaveLocalStorage(CERTIFICATES_KEY, next)
-      return next
-    })
     try {
-      await fetch(`${API_BASE}/certificates/${id}`, {
+      const res = await fetch(`${API_BASE}/certificates/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updates),
       })
-    } catch (_) {}
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}))
+        console.warn('Backend failed to update certificate:', errJson)
+        return { success: false, error: errJson.error || 'Server rejected certificate update' }
+      }
+      const savedData = await res.json()
+      setCertificates((prev) => {
+        const next = (prev || []).map((c) => (c.id === id ? { ...c, ...savedData } : c))
+        safeSaveLocalStorage(CERTIFICATES_KEY, next)
+        return next
+      })
+      return { success: true, data: savedData }
+    } catch (err) {
+      console.warn('Backend server unreachable, updating certificate locally:', err.message)
+      setCertificates((prev) => {
+        const next = (prev || []).map((c) => (c.id === id ? { ...c, ...updates } : c))
+        safeSaveLocalStorage(CERTIFICATES_KEY, next)
+        return next
+      })
+      return { success: true }
+    }
   }, [])
 
   const deleteCertificate = useCallback(async (id) => {

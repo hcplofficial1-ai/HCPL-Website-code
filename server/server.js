@@ -150,6 +150,8 @@ const ReportSchema = new mongoose.Schema({
   summary: String,
   keyFindings: [String],
   methodology: String,
+  docType: String,
+  docName: String,
 }, { timestamps: true })
 
 const CertificateSchema = new mongoose.Schema({
@@ -374,13 +376,14 @@ app.get('/api/reports', async (req, res) => {
 app.post('/api/reports', async (req, res) => {
   try {
     const body = { ...req.body }
+    if (!body.id) body.id = 'rep-' + Date.now().toString().slice(-6)
     if (body.pdfUrl && body.pdfUrl.startsWith('data:')) {
       body.pdfUrl = saveBase64File(body.pdfUrl, 'reports', body.docName || body.title || 'report')
     }
     if (body.coverImage && body.coverImage.startsWith('data:')) {
       body.coverImage = saveBase64File(body.coverImage, 'covers', body.title || 'cover')
     }
-    const rep = await Report.findOneAndUpdate({ id: body.id }, body, { upsert: true, new: true })
+    const rep = await Report.findOneAndUpdate({ id: body.id }, body, { upsert: true, new: true, setDefaultsOnInsert: true })
     res.json(rep)
   } catch (err) {
     console.error('Error in POST /api/reports:', err)
@@ -397,7 +400,7 @@ app.put('/api/reports/:id', async (req, res) => {
     if (body.coverImage && body.coverImage.startsWith('data:')) {
       body.coverImage = saveBase64File(body.coverImage, 'covers', body.title || 'cover')
     }
-    const updated = await Report.findOneAndUpdate({ id: req.params.id }, body, { new: true })
+    const updated = await Report.findOneAndUpdate({ id: req.params.id }, body, { new: true, upsert: true })
     res.json(updated)
   } catch (err) {
     console.error('Error in PUT /api/reports/:id:', err)
@@ -427,10 +430,11 @@ app.get('/api/certificates', async (req, res) => {
 app.post('/api/certificates', async (req, res) => {
   try {
     const body = { ...req.body }
+    if (!body.id) body.id = 'cert-' + Date.now().toString().slice(-6)
     if (body.downloadUrl && body.downloadUrl.startsWith('data:')) {
       body.downloadUrl = saveBase64File(body.downloadUrl, 'certificates', body.client || 'certificate')
     }
-    const cert = await Certificate.findOneAndUpdate({ id: body.id }, body, { upsert: true, new: true })
+    const cert = await Certificate.findOneAndUpdate({ id: body.id }, body, { upsert: true, new: true, setDefaultsOnInsert: true })
     res.json(cert)
   } catch (err) {
     console.error('Error in POST /api/certificates:', err)
@@ -444,7 +448,7 @@ app.put('/api/certificates/:id', async (req, res) => {
     if (body.downloadUrl && body.downloadUrl.startsWith('data:')) {
       body.downloadUrl = saveBase64File(body.downloadUrl, 'certificates', body.client || 'certificate')
     }
-    const updated = await Certificate.findOneAndUpdate({ id: req.params.id }, body, { new: true })
+    const updated = await Certificate.findOneAndUpdate({ id: req.params.id }, body, { new: true, upsert: true })
     res.json(updated)
   } catch (err) {
     console.error('Error in PUT /api/certificates/:id:', err)
