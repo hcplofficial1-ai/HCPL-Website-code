@@ -5,7 +5,7 @@ const TESTIMONIALS = [
     client: 'Swiss Agency for Development and Cooperation (SDC)',
     logoText: 'SDC',
     color: '#d97706',
-    quote: 'HCPL engaged effectively with a broad range of stakeholders—including local communities, women, and persons with disabilities—to develop a well-informed and insightful lessons learned report. Their recommendations have proven valuable in shaping the direction of future programming. We commend Himat for his professionalism, timely delivery, and the quality of work.',
+    quote: 'HCPL engaged effectively with a broad range of stakeholders, including local communities, women and persons with disabilities, to develop a well-informed and insightful lessons learned report. Their recommendations have proven valuable in shaping the direction of future programming. We commend Himat for his professionalism, timely delivery and the quality of work.',
     author: 'Swiss Agency for Development and Cooperation (SDC)',
   },
   {
