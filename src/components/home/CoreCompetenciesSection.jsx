@@ -6,7 +6,6 @@ import CompetencyIcon from '../common/CompetencyIcon'
 
 export default function CoreCompetenciesSection() {
   const { competencies } = useData()
-  const [activeId, setActiveId] = useState('program-development')
   const [hoveredId, setHoveredId] = useState(null)
 
   // Filter published competencies and sort by display order
@@ -104,14 +103,12 @@ export default function CoreCompetenciesSection() {
             const compId = comp.id || comp.slug
             const hasImage = Boolean(comp.image && comp.image.trim())
             const targetUrl = comp.detailUrl || '/services'
-            const isSelected = activeId === compId
             const isHovered = hoveredId === compId
-            const isWhiteCard = isSelected || isHovered
+            const isWhiteCard = isHovered
 
             return (
               <ScrollCard key={compId} index={idx} staggerDelay={150}>
                 <div
-                  onClick={() => setActiveId(compId)}
                   onMouseEnter={() => setHoveredId(compId)}
                   onMouseLeave={() => setHoveredId(null)}
                   style={{

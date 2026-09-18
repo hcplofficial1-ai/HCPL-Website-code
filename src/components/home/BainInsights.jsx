@@ -39,7 +39,6 @@ const INSIGHTS = [
 ]
 
 export default function BainInsights() {
-  const [activeId, setActiveId] = useState('ins-01')
   const [hoveredId, setHoveredId] = useState(null)
 
   return (
@@ -115,14 +114,12 @@ export default function BainInsights() {
           className="insights-grid-wide"
         >
           {INSIGHTS.map((ins, idx) => {
-            const isSelected = activeId === ins.id
             const isHovered = hoveredId === ins.id
-            const isWhiteCard = isSelected || isHovered
+            const isWhiteCard = isHovered
 
             return (
               <ScrollCard key={ins.id} index={idx} staggerDelay={350} animation="pop" duration={700}>
                 <div
-                  onClick={() => setActiveId(ins.id)}
                   onMouseEnter={() => setHoveredId(ins.id)}
                   onMouseLeave={() => setHoveredId(null)}
                   style={{
