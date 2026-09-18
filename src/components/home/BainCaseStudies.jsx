@@ -117,7 +117,8 @@ export default function BainCaseStudies() {
           className="case-studies-grid-wide"
         >
           {CASE_STUDIES.map((cs, idx) => {
-            const isWhiteCard = hoveredId === cs.id
+            const isHovered = hoveredId === cs.id
+            const isWhiteCard = isHovered
 
             return (
               <ScrollCard key={cs.id} index={idx} staggerDelay={450} direction="left" duration={850}>
