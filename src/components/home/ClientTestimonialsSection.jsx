@@ -59,7 +59,7 @@ export default function ClientTestimonialsSection() {
   return (
     <section
       style={{
-        background: '#f2bcff',
+        background: '#ffffff',
         color: '#210238',
         padding: '6rem 0 6.5rem',
         position: 'relative',
@@ -76,14 +76,13 @@ export default function ClientTestimonialsSection() {
               fontWeight: 800,
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              color: '#210238',
-              background: 'rgba(255, 255, 255, 0.45)',
+              color: '#760CB0',
+              background: '#f8f0fc',
               padding: '0.4rem 1.25rem',
               borderRadius: '999px',
-              border: '1px solid rgba(255, 255, 255, 0.65)',
+              border: '1px solid rgba(118, 12, 176, 0.2)',
               display: 'inline-block',
               marginBottom: '1.2rem',
-              backdropFilter: 'blur(8px)',
             }}
           >
             COMPANY PROFILE · 13
@@ -106,7 +105,7 @@ export default function ClientTestimonialsSection() {
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: '1.05rem',
-              color: '#38045e',
+              color: '#555555',
               maxWidth: '650px',
               margin: '0 auto',
               lineHeight: 1.75,
@@ -120,15 +119,16 @@ export default function ClientTestimonialsSection() {
         {/* Featured Testimonial Highlight Card */}
         <div
           style={{
-            background: '#ffffff',
+            background: 'linear-gradient(135deg, #760CB0 0%, #4a0670 100%)',
             borderRadius: '30px',
-            border: '2px solid rgba(255, 255, 255, 0.8)',
-            boxShadow: '0 20px 60px rgba(50, 0, 74, 0.15)',
+            border: '1.5px solid rgba(118, 12, 176, 0.3)',
+            boxShadow: '0 25px 65px rgba(118, 12, 176, 0.28)',
             padding: '4rem 3.5rem',
             maxWidth: '900px',
             margin: '0 auto 3rem',
             position: 'relative',
             textAlign: 'center',
+            color: '#ffffff',
           }}
         >
           {/* Quote Mark Icon */}
@@ -136,8 +136,8 @@ export default function ClientTestimonialsSection() {
             style={{
               fontFamily: "'Source Serif 4', Georgia, serif",
               fontSize: '6rem',
-              color: '#760CB0',
-              opacity: 0.18,
+              color: '#ffffff',
+              opacity: 0.22,
               lineHeight: 0.5,
               marginBottom: '1rem',
             }}
@@ -150,7 +150,7 @@ export default function ClientTestimonialsSection() {
               fontFamily: "'Source Serif 4', Georgia, serif",
               fontSize: 'clamp(1.4rem, 2.5vw, 1.85rem)',
               fontStyle: 'italic',
-              color: '#111111',
+              color: '#ffffff',
               lineHeight: 1.6,
               margin: '0 0 2rem',
             }}
@@ -164,7 +164,7 @@ export default function ClientTestimonialsSection() {
                 fontFamily: "'Inter', Arial, sans-serif",
                 fontWeight: 800,
                 fontSize: '1.05rem',
-                color: '#760CB0',
+                color: '#ffffff',
               }}
             >
               {activeTestimonial.client}
@@ -173,7 +173,7 @@ export default function ClientTestimonialsSection() {
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.85rem',
-                color: '#666666',
+                color: 'rgba(255, 255, 255, 0.8)',
                 fontWeight: 600,
               }}
             >
@@ -198,9 +198,9 @@ export default function ClientTestimonialsSection() {
               key={t.client}
               onClick={() => setActiveIndex(idx)}
               style={{
-                background: activeIndex === idx ? '#760CB0' : 'rgba(255, 255, 255, 0.6)',
-                color: activeIndex === idx ? '#ffffff' : '#210238',
-                border: activeIndex === idx ? '2px solid #760CB0' : '1.5px solid rgba(255, 255, 255, 0.8)',
+                background: activeIndex === idx ? '#760CB0' : '#f8f0fc',
+                color: activeIndex === idx ? '#ffffff' : '#760CB0',
+                border: activeIndex === idx ? '2px solid #760CB0' : '1.5px solid rgba(118, 12, 176, 0.2)',
                 borderRadius: '14px',
                 padding: '0.75rem 1.4rem',
                 fontFamily: "'Inter', Arial, sans-serif",
@@ -208,8 +208,7 @@ export default function ClientTestimonialsSection() {
                 fontSize: '0.88rem',
                 cursor: 'pointer',
                 transition: 'all 0.25s ease',
-                boxShadow: activeIndex === idx ? '0 8px 24px rgba(118, 12, 176, 0.3)' : '0 4px 14px rgba(0, 0, 0, 0.05)',
-                backdropFilter: 'blur(8px)',
+                boxShadow: activeIndex === idx ? '0 8px 24px rgba(118, 12, 176, 0.3)' : '0 4px 14px rgba(0, 0, 0, 0.04)',
               }}
             >
               {t.logoText}
