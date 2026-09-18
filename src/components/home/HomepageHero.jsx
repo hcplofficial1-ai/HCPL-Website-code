@@ -32,7 +32,7 @@ export function CircularArrowButton({ to = '/contact', title = 'Explore' }) {
 export function HeroIntro({
   label = 'PAKISTAN-ROOTED • INTERNATIONALLY EXPERIENCED • SINCE 2009',
   heading = null,
-  paragraph = 'HIMAT Consulting delivers independent research, monitoring, evaluation and advisory services that help governments, UN agencies, donors and development partners understand complex challenges, strengthen programmes and achieve measurable results.',
+  paragraph = 'HIMAT Consulting (Pvt.) Ltd. delivers independent research, monitoring, evaluation and advisory services that help governments, UN agencies, donors and development partners understand complex challenges, strengthen programmes and achieve measurable results.',
   ctaTo = '/projects',
   ctaText = 'Explore Our Work',
 }) {

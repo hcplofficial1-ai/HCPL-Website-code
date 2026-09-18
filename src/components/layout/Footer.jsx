@@ -172,6 +172,7 @@ export default function Footer() {
             <div style={{ marginTop: '0.75rem', fontSize: '0.82rem', color: '#666', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
               <div>✉️ <a href="mailto:info@himatconsulting.com" style={{ color: '#760CB0', fontWeight: 700, textDecoration: 'none' }}>info@himatconsulting.com</a></div>
               <div>📞 <a href="tel:+923434484598" style={{ color: '#424242', fontWeight: 600, textDecoration: 'none' }}>+92 343 4484598</a></div>
+              <div>☎️ <a href="tel:+92516131366" style={{ color: '#424242', fontWeight: 600, textDecoration: 'none' }}>Tel: +92 51 6131366</a></div>
             </div>
           </div>
 
