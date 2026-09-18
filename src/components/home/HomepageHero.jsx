@@ -37,37 +37,39 @@ export function HeroIntro({
   ctaText = 'Explore Our Work',
 }) {
   const { projects = [] } = useData()
+  const [isWorkHovered, setIsWorkHovered] = useState(false)
+  const [isDiscussHovered, setIsDiscussHovered] = useState(false)
   const displayHeading = heading || (
     <>
       Local Insights.
       <br />
       Global Standards.
       <br />
-      Real Impact.
+      <span style={{ color: '#fff', fontStyle: 'italic' }}>Transformative Impact.</span>
     </>
   )
 
   return (
     <div className="hero-intro-block" style={{ maxWidth: '820px' }}>
-      {/* Top Label */}
+      {/* Small Eyebrow Badge with Green Dot */}
       <div
         style={{
-          fontFamily: "'Inter', Arial, sans-serif",
-          fontSize: '0.8125rem',
-          fontWeight: 800,
-          letterSpacing: '0.1em',
-          textTransform: 'uppercase',
-          color: '#ffffff',
-          marginBottom: '1.25rem',
           display: 'inline-flex',
           alignItems: 'center',
           gap: '0.65rem',
-          background: 'rgba(255, 255, 255, 0.12)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-          padding: '0.45rem 1.25rem',
+          background: 'rgba(255, 255, 255, 0.15)',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+          color: '#ffffff',
+          fontFamily: "'Inter', Arial, sans-serif",
+          fontSize: '0.8rem',
+          fontWeight: 800,
+          letterSpacing: '0.1em',
+          textTransform: 'uppercase',
+          padding: '0.45rem 1.1rem',
           borderRadius: '999px',
-          border: '1px solid rgba(255, 255, 255, 0.25)',
+          marginBottom: '1.5rem',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
         }}
       >
         <span
@@ -76,7 +78,7 @@ export function HeroIntro({
             height: '8px',
             borderRadius: '50%',
             background: '#4ade80',
-            boxShadow: '0 0 0 3px rgba(74, 222, 128, 0.3)',
+            boxShadow: '0 0 10px #4ade80',
             display: 'inline-block',
           }}
         />
@@ -118,9 +120,11 @@ export function HeroIntro({
       <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center', flexWrap: 'wrap', marginBottom: '3rem' }}>
         <Link
           to={ctaTo}
+          onMouseEnter={() => setIsWorkHovered(true)}
+          onMouseLeave={() => setIsWorkHovered(false)}
           style={{
-            background: '#ffffff',
-            color: '#760CB0',
+            background: isWorkHovered ? '#ffffff' : 'rgba(255, 255, 255, 0.12)',
+            color: isWorkHovered ? '#760CB0' : '#ffffff',
             fontFamily: "'Inter', Arial, sans-serif",
             fontWeight: 800,
             fontSize: '0.95rem',
@@ -130,32 +134,41 @@ export function HeroIntro({
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.5rem',
-            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.35)',
+            border: isWorkHovered ? '1.5px solid #ffffff' : '1.5px solid rgba(255, 255, 255, 0.45)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+            boxShadow: isWorkHovered ? '0 12px 32px rgba(0, 0, 0, 0.35)' : 'none',
+            transform: isWorkHovered ? 'translateY(-2px)' : 'translateY(0)',
             transition: 'all 0.25s ease',
           }}
-          className="btn-white-square"
+          className="hero-btn-primary"
         >
           <span>{ctaText}</span>
         </Link>
         <Link
           to="/contact"
+          onMouseEnter={() => setIsDiscussHovered(true)}
+          onMouseLeave={() => setIsDiscussHovered(false)}
           style={{
-            background: 'rgba(255, 255, 255, 0.12)',
-            color: '#ffffff',
+            background: isDiscussHovered ? '#ffffff' : 'rgba(255, 255, 255, 0.12)',
+            color: isDiscussHovered ? '#760CB0' : '#ffffff',
             fontFamily: "'Inter', Arial, sans-serif",
             fontWeight: 700,
             fontSize: '0.95rem',
             padding: '0.9rem 2rem',
             borderRadius: '10px',
             textDecoration: 'none',
-            border: '1.5px solid rgba(255, 255, 255, 0.45)',
+            border: isDiscussHovered ? '1.5px solid #ffffff' : '1.5px solid rgba(255, 255, 255, 0.45)',
             backdropFilter: 'blur(10px)',
             WebkitBackdropFilter: 'blur(10px)',
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.5rem',
+            boxShadow: isDiscussHovered ? '0 12px 32px rgba(0, 0, 0, 0.35)' : 'none',
+            transform: isDiscussHovered ? 'translateY(-2px)' : 'translateY(0)',
             transition: 'all 0.25s ease',
           }}
+          className="hero-btn-secondary"
         >
           <span>Discuss an Assignment</span>
         </Link>

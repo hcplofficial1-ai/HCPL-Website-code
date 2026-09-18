@@ -42,7 +42,6 @@ const CASE_STUDIES = [
 ]
 
 export default function BainCaseStudies() {
-  const [activeId, setActiveId] = useState('cs-01')
   const [hoveredId, setHoveredId] = useState(null)
 
   return (
@@ -118,14 +117,11 @@ export default function BainCaseStudies() {
           className="case-studies-grid-wide"
         >
           {CASE_STUDIES.map((cs, idx) => {
-            const isSelected = activeId === cs.id
-            const isHovered = hoveredId === cs.id
-            const isWhiteCard = isSelected || isHovered
+            const isWhiteCard = hoveredId === cs.id
 
             return (
               <ScrollCard key={cs.id} index={idx} staggerDelay={450} direction="left" duration={850}>
                 <div
-                  onClick={() => setActiveId(cs.id)}
                   onMouseEnter={() => setHoveredId(cs.id)}
                   onMouseLeave={() => setHoveredId(null)}
                   style={{
