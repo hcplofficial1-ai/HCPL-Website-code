@@ -457,9 +457,12 @@ export default function Reports() {
                       )}
 
                       {/* Client Logo & Category */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                         {report.logo && (
-                          <img src={report.logo} alt={report.client} style={{ height: '22px', maxWidth: '60px', objectFit: 'contain' }} onError={e => e.currentTarget.style.display = 'none'} />
+                          <img src={report.logo} alt={report.client} style={{ height: '26px', maxWidth: '65px', objectFit: 'contain' }} onError={e => e.currentTarget.style.display = 'none'} />
+                        )}
+                        {report.secondaryLogo && (
+                          <img src={report.secondaryLogo} alt="Partner" style={{ height: '26px', maxWidth: '65px', objectFit: 'contain' }} onError={e => e.currentTarget.style.display = 'none'} />
                         )}
                         <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#760CB0' }}>{report.client}</span>
                       </div>
@@ -476,6 +479,14 @@ export default function Reports() {
                           <h3 style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '1.45rem', fontWeight: 700, color: '#111111', margin: '0.25rem 0 0', lineHeight: 1.3 }}>
                             {report.title}
                           </h3>
+                          {report.fundingPartner && (
+                            <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.35rem', lineHeight: 1.4 }}>
+                              <span style={{ fontWeight: 700, color: '#444' }}>Funding Partner:</span> {report.fundingPartner}
+                              {report.authoringFirm && (
+                                <> · <span style={{ fontWeight: 700, color: '#444' }}>Authoring Firm:</span> {report.authoringFirm}</>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -484,6 +495,11 @@ export default function Reports() {
                         <span style={{ background: 'rgba(118,12,176,0.08)', color: '#760CB0', fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: '0.78rem', padding: '0.2rem 0.65rem', borderRadius: '999px' }}>
                           {report.sector}
                         </span>
+                        {report.secondarySector && (
+                          <span style={{ background: 'rgba(118,12,176,0.04)', color: '#6b21a8', fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: '0.76rem', padding: '0.2rem 0.65rem', borderRadius: '999px', border: '1px solid rgba(118,12,176,0.12)' }}>
+                            {report.secondarySector}
+                          </span>
+                        )}
                         <span style={{ background: '#f5f5f5', color: '#616161', fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: '0.78rem', padding: '0.2rem 0.65rem', borderRadius: '999px' }}>
                           {report.type}
                         </span>
@@ -513,7 +529,7 @@ export default function Reports() {
                       {/* Key Findings Highlights */}
                       {Array.isArray(report.keyFindings) && report.keyFindings.filter(Boolean).length > 0 && (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', background: '#fdfaf7', padding: '0.75rem 1rem', borderRadius: '10px', borderLeft: '3.5px solid #760CB0' }}>
-                          <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase' }}>💡 Key Research Findings:</div>
+                          <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase' }}>💡 {report.findingsTitle || 'Key Research Findings'}:</div>
                           {report.keyFindings.filter(Boolean).map((kf, i) => (
                             <div key={i} style={{ fontSize: '0.82rem', color: '#333', display: 'flex', gap: '0.4rem', alignItems: 'flex-start' }}>
                               <span style={{ color: '#760CB0', fontWeight: 800 }}>✓</span>

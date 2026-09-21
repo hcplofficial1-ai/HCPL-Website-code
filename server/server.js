@@ -141,13 +141,19 @@ const ReportSchema = new mongoose.Schema({
   title: String,
   client: String,
   clientCategory: String,
+  fundingPartner: String,
+  authoringFirm: String,
   year: String,
   sector: String,
+  secondarySector: String,
   type: String,
   coverage: String,
   pages: String,
   pdfUrl: String,
   coverImage: String,
+  logo: String,
+  secondaryLogo: String,
+  findingsTitle: String,
   summary: String,
   keyFindings: [String],
   methodology: String,
@@ -269,6 +275,9 @@ async function autoSeedIfEmpty() {
 
     // Clean up any legacy dummy reports
     await Report.deleteMany({ id: { $in: ['rep-srso-cif-2024', 'rep-nutrition-survey-2023', 'rep-cpi-success-2021'] } })
+    for (const r of PUBLISHED_REPORTS) {
+      await Report.updateOne({ id: r.id }, { $set: r }, { upsert: true })
+    }
 
     const certCount = await Certificate.countDocuments()
     if (certCount === 0 && CLIENT_CERTIFICATES.length > 0) {

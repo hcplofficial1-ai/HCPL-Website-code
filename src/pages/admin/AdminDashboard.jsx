@@ -1721,6 +1721,8 @@ export default function AdminDashboard() {
               <div>
                 <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Report Type</label>
                 <select value={reportForm.type || 'Impact Assessment Study'} onChange={e => setReportForm(f => ({ ...f, type: e.target.value }))} style={s.input}>
+                  <option value="Training Manual / Capacity Development Resource">Training Manual / Capacity Development Resource</option>
+                  <option value="Training / Capacity-Building Manual">Training / Capacity-Building Manual</option>
                   <option value="Impact Assessment Study">Impact Assessment Study</option>
                   <option value="Final Evaluation Report">Final Evaluation Report</option>
                   <option value="Midterm Review & Evaluation">Midterm Review & Evaluation</option>
@@ -1730,6 +1732,8 @@ export default function AdminDashboard() {
                   <option value="Policy Brief & Thematic Research">Policy Brief & Thematic Research</option>
                   <option value="Value for Money (VfM) Analysis">Value for Money (VfM) Analysis</option>
                   <option value="Third-Party Monitoring Report">Third-Party Monitoring Report</option>
+                  <option value="Technical Reference & Guidelines">Technical Reference & Guidelines</option>
+                  <option value="Other / Capacity Resource">Other / Capacity Resource</option>
                 </select>
               </div>
 

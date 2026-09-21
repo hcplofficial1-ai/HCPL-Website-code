@@ -92,13 +92,21 @@ export function DataProvider({ children }) {
     try {
       const saved = localStorage.getItem(REPORTS_KEY)
       const parsed = saved ? JSON.parse(saved) : null
-      if (Array.isArray(parsed)) {
+      if (Array.isArray(parsed) && parsed.length > 0) {
         const cleaned = parsed.filter((r) => !['rep-srso-cif-2024', 'rep-nutrition-survey-2023', 'rep-cpi-success-2021'].includes(r.id))
-        return cleaned
+        const ids = new Set(cleaned.map(r => r.id))
+        const merged = [...cleaned]
+        for (const pub of PUBLISHED_REPORTS) {
+          if (!ids.has(pub.id)) {
+            merged.unshift(pub)
+            ids.add(pub.id)
+          }
+        }
+        return merged
       }
-      return []
+      return PUBLISHED_REPORTS
     } catch {
-      return []
+      return PUBLISHED_REPORTS
     }
   })
   const [competencies, setCompetencies] = useState(() => {
@@ -192,16 +200,24 @@ export function DataProvider({ children }) {
             const data = await repRes.json()
             if (Array.isArray(data)) {
               const cleaned = data.filter((r) => !['rep-srso-cif-2024', 'rep-nutrition-survey-2023', 'rep-cpi-success-2021'].includes(r.id))
-              setReports(cleaned)
-              safeSaveLocalStorage(REPORTS_KEY, cleaned)
+              const ids = new Set(cleaned.map(r => r.id))
+              const merged = [...cleaned]
+              for (const pub of PUBLISHED_REPORTS) {
+                if (!ids.has(pub.id)) {
+                  merged.unshift(pub)
+                  ids.add(pub.id)
+                }
+              }
+              setReports(merged)
+              safeSaveLocalStorage(REPORTS_KEY, merged)
             } else {
-              setReports([])
+              setReports(PUBLISHED_REPORTS)
             }
           } else {
-            setReports([])
+            setReports(PUBLISHED_REPORTS)
           }
         } catch (_) {
-          // fallback to localStorage or empty
+          // fallback to localStorage or PUBLISHED_REPORTS
         }
 
         // Fetch Certificates
