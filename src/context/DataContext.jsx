@@ -5,6 +5,7 @@ import { PUBLISHED_REPORTS } from '../data/reportsData'
 import { DEFAULT_COMPETENCIES } from '../data/competenciesData'
 import { CLIENT_CERTIFICATES } from '../data/certificatesData'
 import { DEFAULT_CONSULTANTS } from '../data/consultantsData'
+import { DEFAULT_SERVICES } from '../data/servicesData'
 
 const DataContext = createContext(null)
 export const API_BASE = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api')
@@ -15,6 +16,7 @@ const REPORTS_KEY = 'himat_reports_db'
 const COMPETENCIES_KEY = 'himat_competencies_db_v2'
 const CERTIFICATES_KEY = 'himat_certificates_db'
 const CONSULTANTS_KEY = 'himat_consultants_db_v2'
+const SERVICES_KEY = 'himat_services_db'
 
 function safeSaveLocalStorage(key, data) {
   try {
@@ -124,6 +126,15 @@ export function DataProvider({ children }) {
       return Array.isArray(parsed) && parsed.length > 0 ? sortConsultantsList(parsed) : DEFAULT_CONSULTANTS
     } catch {
       return DEFAULT_CONSULTANTS
+    }
+  })
+  const [services, setServices] = useState(() => {
+    try {
+      const saved = localStorage.getItem(SERVICES_KEY)
+      const parsed = saved ? JSON.parse(saved) : null
+      return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_SERVICES
+    } catch {
+      return DEFAULT_SERVICES
     }
   })
   const [dbStatus, setDbStatus] = useState('connecting')
@@ -248,6 +259,23 @@ export function DataProvider({ children }) {
         } catch (_) {
           setConsultants(DEFAULT_CONSULTANTS)
         }
+        // Fetch Services
+        try {
+          const srvRes = await fetch(`${API_BASE}/services`)
+          if (srvRes.ok) {
+            const data = await srvRes.json()
+            if (Array.isArray(data) && data.length > 0) {
+              setServices(data)
+              safeSaveLocalStorage(SERVICES_KEY, data)
+            } else {
+              setServices(DEFAULT_SERVICES)
+            }
+          } else {
+            setServices(DEFAULT_SERVICES)
+          }
+        } catch (_) {
+          setServices(DEFAULT_SERVICES)
+        }
       } catch (err) {
         console.warn('API server unreachable, fallback to localStorage/defaults:', err.message)
         setDbStatus('offline')
@@ -269,6 +297,9 @@ export function DataProvider({ children }) {
 
         const savedCons = localStorage.getItem(CONSULTANTS_KEY)
         setConsultants(savedCons ? sortConsultantsList(JSON.parse(savedCons)) : DEFAULT_CONSULTANTS)
+
+        const savedSrv = localStorage.getItem(SERVICES_KEY)
+        setServices(savedSrv ? JSON.parse(savedSrv) : DEFAULT_SERVICES)
       }
     }
 
@@ -481,6 +512,30 @@ export function DataProvider({ children }) {
     } catch (_) {}
   }, [])
 
+  // SERVICES CRUD WITH MONGODB ATLAS SYNC
+  const updateService = useCallback(async (id, updates) => {
+    setServices((prev) => {
+      const next = (prev || []).map((s) => (s.id === id ? { ...s, ...updates } : s))
+      safeSaveLocalStorage(SERVICES_KEY, next)
+      return next
+    })
+    try {
+      await fetch(`${API_BASE}/services/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates),
+      })
+    } catch (_) {}
+  }, [])
+
+  const resetServices = useCallback(async () => {
+    setServices(DEFAULT_SERVICES)
+    localStorage.removeItem(SERVICES_KEY)
+    try {
+      await fetch(`${API_BASE}/reset-all`, { method: 'POST' })
+    } catch (_) {}
+  }, [])
+
   // CERTIFICATES CRUD WITH MONGODB ATLAS SYNC
   const addCertificate = useCallback(async (cert) => {
     try {
@@ -676,6 +731,9 @@ export function DataProvider({ children }) {
         updateConsultant,
         deleteConsultant,
         resetConsultants,
+        services,
+        updateService,
+        resetServices,
         stats,
       }}
     >

@@ -79,6 +79,7 @@ export default function AdminDashboard() {
     competencies, updateCompetency, resetCompetencies,
     certificates, addCertificate, updateCertificate, deleteCertificate, resetCertificates,
     consultants = [], addConsultant, updateConsultant, deleteConsultant, resetConsultants,
+    services = [], updateService, resetServices,
   } = useData()
   const navigate = useNavigate()
 
@@ -86,6 +87,11 @@ export default function AdminDashboard() {
   const [search, setSearch] = useState('')
   const [toast, setToast] = useState('')
   const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(''), 3000) }
+
+  // Services State & Modals
+  const [showServiceModal, setShowServiceModal] = useState(false)
+  const [editServiceObj, setEditServiceObj] = useState(null)
+  const [serviceForm, setServiceForm] = useState(null)
 
   const handleLogout = () => { logout(); navigate('/admin/login') }
 
@@ -221,6 +227,13 @@ export default function AdminDashboard() {
     const q = search.toLowerCase()
     return sorted.filter(c => c.name?.toLowerCase().includes(q) || c.role?.toLowerCase().includes(q) || c.org?.toLowerCase().includes(q))
   }, [consultants, search])
+
+  const filteredServices = useMemo(() => {
+    const list = services || []
+    if (!search.trim()) return list
+    const q = search.toLowerCase()
+    return list.filter(s => s.title?.toLowerCase().includes(q) || s.category?.toLowerCase().includes(q) || s.desc?.toLowerCase().includes(q))
+  }, [services, search])
 
   // File Upload Helper (Images & PDFs)
   const handleFileUpload = (e, callback, maxMb = 35) => {
@@ -499,6 +512,39 @@ export default function AdminDashboard() {
     closeCompetencyModal()
   }
 
+  // SERVICE HANDLERS
+  const openEditService = (sv) => {
+    setEditServiceObj(sv)
+    setServiceForm({ ...sv, features: Array.isArray(sv.features) ? [...sv.features] : [] })
+    setShowServiceModal(true)
+  }
+  const closeServiceModal = () => {
+    setShowServiceModal(false)
+    setEditServiceObj(null)
+    setServiceForm(null)
+  }
+  const handleSaveService = () => {
+    if (!serviceForm.title.trim()) return alert('Service title is required.')
+    updateService(editServiceObj.id, serviceForm)
+    showToast(`${serviceForm.title} updated ✓`)
+    closeServiceModal()
+  }
+
+  // DIRECT DEVICE IMAGE UPLOAD HANDLERS
+  const handleDirectCompetencyImageUpload = (e, comp) => {
+    handleImageUpload(e, (base64) => {
+      updateCompetency(comp.id, { ...comp, image: base64 })
+      showToast(`✓ Picture updated for ${comp.title}`)
+    }, 1200, 800)
+  }
+
+  const handleDirectServiceImageUpload = (e, sv) => {
+    handleImageUpload(e, (base64) => {
+      updateService(sv.id, { ...sv, image: base64 })
+      showToast(`✓ Picture updated for ${sv.title}`)
+    }, 1200, 800)
+  }
+
   // CONSULTANT HANDLERS
   const openAddConsultant = () => {
     setEditConsultantObj(null)
@@ -636,7 +682,8 @@ export default function AdminDashboard() {
             { id: 'certificates', label: `📜 Certificates & Letters (${certificates.length})` },
             { id: 'reports', label: `📚 Reports & PDFs (${reports.length})` },
             { id: 'projects', label: `📋 Projects (${projects.length})` },
-            { id: 'competencies', label: '🎯 Core Competencies & Images' },
+            { id: 'competencies', label: `🎯 Core Competencies & Pictures (${competencies.length})` },
+            { id: 'services', label: `💼 Services & Pictures (${services.length})` },
           ].map(t => (
             <button
               key={t.id}
@@ -979,7 +1026,72 @@ export default function AdminDashboard() {
                     <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase' }}>{comp.category}</div>
                     <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#212121', margin: 0 }}>{comp.title}</h3>
                     <p style={{ fontSize: '0.82rem', color: '#555', lineHeight: 1.5, margin: 0, flex: 1 }}>{comp.description}</p>
-                    <button onClick={() => openEditCompetency(comp)} style={{ ...s.btn('#760CB0'), width: '100%', justifyContent: 'center', padding: '0.65rem', marginTop: '0.5rem' }}>✏️ Edit Competency & Image</button>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
+                      <label style={{ ...s.btn('#760CB0'), width: '100%', justifyContent: 'center', padding: '0.65rem', cursor: 'pointer', textAlign: 'center', boxSizing: 'border-box', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        📸 Upload Picture from Device
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={(e) => handleDirectCompetencyImageUpload(e, comp)}
+                        />
+                      </label>
+                      <button onClick={() => openEditCompetency(comp)} style={{ ...s.btn('#210238'), width: '100%', justifyContent: 'center', padding: '0.55rem', background: '#faf5ff', color: '#760CB0', border: '1.5px solid rgba(118,12,176,0.25)' }}>
+                        ✏️ Edit Details & Image
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* SERVICES TAB */}
+        {activeTab === 'services' && (
+          <div style={s.card}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+              <div>
+                <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#212121', marginBottom: '0.2rem' }}>Services & 16:9 Picture Management</h2>
+                <div style={{ fontSize: '0.8125rem', color: '#9e9e9e' }}>Upload custom pictures directly from your device for each service area. Changes reflect live on the Services page.</div>
+              </div>
+              <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                <input value={search} onChange={e => setSearch(e.target.value)} placeholder="🔍 Search services…" style={{ ...s.input, width: '200px', fontSize: '0.82rem', padding: '0.45rem 0.85rem' }} />
+                <button onClick={() => { if (window.confirm('Reset all services to default content and images?')) { resetServices(); showToast('Services reset to default ✓') } }} style={s.btn('#ef4444')}>↺ Reset Services</button>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+              {filteredServices.map(sv => (
+                <div key={sv.id} style={{ background: '#fff', borderRadius: '16px', border: '1.5px solid rgba(118, 12, 176, 0.12)', boxShadow: '0 4px 16px rgba(118, 12, 176, 0.05)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ width: '100%', aspectRatio: '16 / 9', background: 'linear-gradient(135deg, #32004a 0%, #760CB0 100%)', position: 'relative', overflow: 'hidden' }}>
+                    {sv.image ? (
+                      <img src={sv.image} alt={sv.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: sv.focalPoint || 'center center' }} onError={e => e.currentTarget.style.display = 'none'} />
+                    ) : (
+                      <div style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', color: '#fff', padding: '1rem', textAlign: 'center' }}>
+                        <span style={{ fontSize: '2.5rem' }}>{sv.icon || '💼'}</span>
+                        <span style={{ fontSize: '0.8125rem', fontWeight: 800, marginTop: '0.4rem', letterSpacing: '0.08em' }}>NO IMAGE UPLOADED</span>
+                      </div>
+                    )}
+                  </div>
+                  <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', flex: 1, gap: '0.75rem' }}>
+                    <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase' }}>{sv.category || 'Service Area'}</div>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#212121', margin: 0 }}>{sv.title}</h3>
+                    <p style={{ fontSize: '0.82rem', color: '#555', lineHeight: 1.5, margin: 0, flex: 1 }}>{sv.desc}</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
+                      <label style={{ ...s.btn('#760CB0'), width: '100%', justifyContent: 'center', padding: '0.65rem', cursor: 'pointer', textAlign: 'center', boxSizing: 'border-box', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        📸 Upload Picture from Device
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={(e) => handleDirectServiceImageUpload(e, sv)}
+                        />
+                      </label>
+                      <button onClick={() => openEditService(sv)} style={{ ...s.btn('#210238'), width: '100%', justifyContent: 'center', padding: '0.55rem', background: '#faf5ff', color: '#760CB0', border: '1.5px solid rgba(118,12,176,0.25)' }}>
+                        ✏️ Edit Details & Image
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -1788,17 +1900,69 @@ export default function AdminDashboard() {
                 <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, color: '#760CB0', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Title *</label>
                 <input value={competencyForm.title || ''} onChange={e => setCompetencyForm(f => ({ ...f, title: e.target.value }))} style={s.input} />
                 <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, color: '#760CB0', marginTop: '1rem', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Description</label>
-                <textarea value={competencyForm.description || ''} onChange={e => setCompetencyForm(f => ({ ...f, description: e.target.value }))} rows={4} style={{ ...s.input, resize: 'vertical' }} />
+                <textarea value={competencyForm.description || ''} onChange={e => setCompetencyForm(f => ({ ...f, description: e.target.value }))} rows={5} style={{ ...s.input, resize: 'vertical' }} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ background: '#faf5ff', padding: '1rem', borderRadius: '12px', border: '1px solid rgba(118,12,176,0.15)' }}>
-                  <label style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', display: 'block', marginBottom: '0.5rem' }}>16:9 Competency Image</label>
-                  <input type="file" accept="image/*" onChange={e => handleImageUpload(e, base64 => setCompetencyForm(f => ({ ...f, image: base64 })))} style={{ fontSize: '0.8125rem', marginBottom: '0.5rem' }} />
-                  <input value={competencyForm.image || ''} onChange={e => setCompetencyForm(f => ({ ...f, image: e.target.value }))} placeholder="./images/...jpg" style={s.input} />
+                <div style={{ background: '#faf5ff', padding: '1.25rem', borderRadius: '14px', border: '1.5px solid rgba(118,12,176,0.18)' }}>
+                  <label style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', display: 'block', marginBottom: '0.5rem', textTransform: 'uppercase' }}>16:9 Competency Picture</label>
+                  {competencyForm.image && (
+                    <div style={{ width: '100%', aspectRatio: '16 / 9', borderRadius: '10px', overflow: 'hidden', marginBottom: '0.75rem', border: '1px solid rgba(118,12,176,0.2)', background: '#fff' }}>
+                      <img src={competencyForm.image} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => e.currentTarget.style.display = 'none'} />
+                    </div>
+                  )}
+                  <label style={{ ...s.btn('#760CB0'), width: '100%', justifyContent: 'center', padding: '0.65rem', cursor: 'pointer', textAlign: 'center', boxSizing: 'border-box', display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.65rem' }}>
+                    📁 Upload Picture from Device
+                    <input type="file" accept="image/*" style={{ display: 'none' }} onChange={e => handleImageUpload(e, base64 => setCompetencyForm(f => ({ ...f, image: base64 })), 1200, 800)} />
+                  </label>
+                  <div style={{ fontSize: '0.75rem', color: '#666', marginBottom: '0.25rem' }}>Or enter Image Path / URL:</div>
+                  <input value={competencyForm.image || ''} onChange={e => setCompetencyForm(f => ({ ...f, image: e.target.value }))} placeholder="./images/...jpg or https://..." style={s.input} />
                 </div>
                 <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', marginTop: 'auto' }}>
                   <button type="button" onClick={closeCompetencyModal} style={{ background: '#f5f5f5', color: '#666', border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 700 }}>Cancel</button>
                   <button type="button" onClick={handleSaveCompetency} style={s.btn('#760CB0')}>💾 Save Competency</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SERVICE MODAL */}
+      {showServiceModal && serviceForm && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 9000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }} onClick={closeServiceModal}>
+          <div style={{ background: '#fff', borderRadius: '20px', width: '100%', maxWidth: '920px', maxHeight: '92vh', overflow: 'auto', padding: '2rem', boxShadow: '0 25px 70px rgba(0,0,0,0.35)' }} onClick={e => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid rgba(118,12,176,0.1)', paddingBottom: '1rem' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#760CB0', margin: 0 }}>Edit Service: {serviceForm.title}</h2>
+              <button onClick={closeServiceModal} style={{ background: '#f5f5f5', color: '#666', border: 'none', width: '32px', height: '32px', borderRadius: '50%', cursor: 'pointer', fontWeight: 900 }}>✕</button>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.75rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, color: '#760CB0', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Service Title *</label>
+                <input value={serviceForm.title || ''} onChange={e => setServiceForm(f => ({ ...f, title: e.target.value }))} style={s.input} />
+                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, color: '#760CB0', marginTop: '1rem', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Category / Subtitle</label>
+                <input value={serviceForm.category || ''} onChange={e => setServiceForm(f => ({ ...f, category: e.target.value }))} style={s.input} />
+                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, color: '#760CB0', marginTop: '1rem', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Description</label>
+                <textarea value={serviceForm.desc || ''} onChange={e => setServiceForm(f => ({ ...f, desc: e.target.value }))} rows={4} style={{ ...s.input, resize: 'vertical' }} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div style={{ background: '#faf5ff', padding: '1.25rem', borderRadius: '14px', border: '1.5px solid rgba(118,12,176,0.18)' }}>
+                  <label style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', display: 'block', marginBottom: '0.5rem', textTransform: 'uppercase' }}>16:9 Service Picture</label>
+                  {serviceForm.image && (
+                    <div style={{ width: '100%', aspectRatio: '16 / 9', borderRadius: '10px', overflow: 'hidden', marginBottom: '0.75rem', border: '1px solid rgba(118,12,176,0.2)', background: '#fff' }}>
+                      <img src={serviceForm.image} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => e.currentTarget.style.display = 'none'} />
+                    </div>
+                  )}
+                  <label style={{ ...s.btn('#760CB0'), width: '100%', justifyContent: 'center', padding: '0.65rem', cursor: 'pointer', textAlign: 'center', boxSizing: 'border-box', display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.65rem' }}>
+                    📁 Upload Picture from Device
+                    <input type="file" accept="image/*" style={{ display: 'none' }} onChange={e => handleImageUpload(e, base64 => setServiceForm(f => ({ ...f, image: base64 })), 1200, 800)} />
+                  </label>
+                  <div style={{ fontSize: '0.75rem', color: '#666', marginBottom: '0.25rem' }}>Or enter Image Path / URL:</div>
+                  <input value={serviceForm.image || ''} onChange={e => setServiceForm(f => ({ ...f, image: e.target.value }))} placeholder="./images/...jpg or https://..." style={s.input} />
+                </div>
+                <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', marginTop: 'auto' }}>
+                  <button type="button" onClick={closeServiceModal} style={{ background: '#f5f5f5', color: '#666', border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 700 }}>Cancel</button>
+                  <button type="button" onClick={handleSaveService} style={s.btn('#760CB0')}>💾 Save Service</button>
                 </div>
               </div>
             </div>

@@ -12,6 +12,7 @@ import { PUBLISHED_REPORTS } from '../src/data/reportsData.js'
 import { DEFAULT_COMPETENCIES } from '../src/data/competenciesData.js'
 import { CLIENT_CERTIFICATES } from '../src/data/certificatesData.js'
 import { DEFAULT_CONSULTANTS } from '../src/data/consultantsData.js'
+import { DEFAULT_SERVICES } from '../src/data/servicesData.js'
 
 dotenv.config()
 
@@ -217,6 +218,19 @@ const Competency = mongoose.model('Competency', CompetencySchema)
 const ContactSubmission = mongoose.model('ContactSubmission', ContactSubmissionSchema)
 const Consultant = mongoose.model('Consultant', ConsultantSchema)
 
+const ServiceSchema = new mongoose.Schema({
+  id: { type: String, required: true, unique: true },
+  icon: String,
+  title: String,
+  category: String,
+  desc: String,
+  features: [String],
+  image: String,
+  focalPoint: String,
+  order: Number,
+}, { timestamps: true })
+const Service = mongoose.model('Service', ServiceSchema)
+
 // EMAIL TRANSPORTER CONFIGURATION
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.gmail.com'
 const SMTP_PORT = Number(process.env.SMTP_PORT) || 587
@@ -279,6 +293,12 @@ async function autoSeedIfEmpty() {
       console.log(`🌱 Auto-seeded ${DEFAULT_CONSULTANTS.length} consultants to MongoDB Atlas`)
     } else {
       await Consultant.updateOne({ id: 'izhar-ali-hunzai' }, { $set: { order: 1 } })
+    }
+
+    const serviceCount = await Service.countDocuments()
+    if (serviceCount === 0 && DEFAULT_SERVICES.length > 0) {
+      await Service.insertMany(DEFAULT_SERVICES)
+      console.log(`🌱 Auto-seeded ${DEFAULT_SERVICES.length} services to MongoDB Atlas`)
     }
   } catch (err) {
     console.error('Error auto-seeding MongoDB Atlas:', err)
@@ -520,8 +540,51 @@ app.get('/api/competencies', async (req, res) => {
 
 app.put('/api/competencies/:id', async (req, res) => {
   try {
-    const updated = await Competency.findOneAndUpdate({ id: req.params.id }, req.body, { new: true })
+    const updateData = { ...req.body }
+    if (updateData.image && updateData.image.startsWith('data:')) {
+      updateData.image = saveBase64File(updateData.image, 'competencies', req.params.id)
+    }
+    const updated = await Competency.findOneAndUpdate({ id: req.params.id }, updateData, { new: true, upsert: true })
     res.json(updated)
+  } catch (err) {
+    res.status(400).json({ error: err.message })
+  }
+})
+
+// SERVICES API
+app.get('/api/services', async (req, res) => {
+  try {
+    await ensureDbConnected()
+    const list = await Service.find().sort({ order: 1 })
+    res.json(list)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+app.put('/api/services/:id', async (req, res) => {
+  try {
+    await ensureDbConnected()
+    const updateData = { ...req.body }
+    if (updateData.image && updateData.image.startsWith('data:')) {
+      updateData.image = saveBase64File(updateData.image, 'services', req.params.id)
+    }
+    const updated = await Service.findOneAndUpdate({ id: req.params.id }, updateData, { new: true, upsert: true })
+    res.json(updated)
+  } catch (err) {
+    res.status(400).json({ error: err.message })
+  }
+})
+
+app.post('/api/services', async (req, res) => {
+  try {
+    await ensureDbConnected()
+    const updateData = { ...req.body }
+    if (updateData.image && updateData.image.startsWith('data:')) {
+      updateData.image = saveBase64File(updateData.image, 'services', updateData.id || 'service')
+    }
+    const created = await Service.findOneAndUpdate({ id: updateData.id }, updateData, { new: true, upsert: true })
+    res.json(created)
   } catch (err) {
     res.status(400).json({ error: err.message })
   }
@@ -638,6 +701,7 @@ app.post('/api/reset-all', async (req, res) => {
     await Certificate.deleteMany({})
     await Competency.deleteMany({})
     await Consultant.deleteMany({})
+    await Service.deleteMany({})
 
     await autoSeedIfEmpty()
     res.json({ success: true, message: 'All MongoDB Atlas collections reset to default datasets' })

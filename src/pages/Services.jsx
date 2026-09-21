@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ScrollCard from '../components/common/ScrollCard'
+import { useData } from '../context/DataContext'
+import { DEFAULT_SERVICES } from '../data/servicesData'
 
 const SERVICES = [
   {
@@ -69,7 +71,8 @@ const METHODS = [
 ]
 
 export default function Services() {
-  const [activeId, setActiveId] = useState('me')
+  const { services } = useData()
+  const displayServices = (services && services.length > 0) ? services : DEFAULT_SERVICES
   const [hoveredId, setHoveredId] = useState(null)
 
   const breadcrumb = {
@@ -217,15 +220,13 @@ export default function Services() {
             }}
             className="services-grid-wide"
           >
-            {SERVICES.map((sv, idx) => {
-              const isSelected = activeId === sv.id
+            {displayServices.map((sv, idx) => {
               const isHovered = hoveredId === sv.id
-              const isWhiteCard = isSelected || isHovered
+              const isWhiteCard = isHovered
 
               return (
                 <ScrollCard key={sv.id} index={idx} staggerDelay={150}>
                   <div
-                    onClick={() => setActiveId(sv.id)}
                     onMouseEnter={() => setHoveredId(sv.id)}
                     onMouseLeave={() => setHoveredId(null)}
                     style={{
@@ -264,10 +265,13 @@ export default function Services() {
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
-                          objectPosition: 'center center',
+                          objectPosition: sv.focalPoint || 'center center',
                           display: 'block',
                           transition: 'transform 0.5s ease',
                           transform: isHovered ? 'scale(1.06)' : 'scale(1)',
+                        }}
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none'
                         }}
                       />
                     </div>
