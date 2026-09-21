@@ -28,5 +28,34 @@ export const PUBLISHED_REPORTS = [
       "Mainstreamed Inclusion: Integrates age, gender, disability and minority inclusion (AGDM) and the Do No Harm approach throughout assessment, design, implementation and M&E.",
       "Accountability & Handover: Underlines that effective humanitarian project management depends on strong MEAL systems, clear roles and accountability, stakeholder communication, quality assurance, sustainability planning and structured handover/exit arrangements."
     ]
+  },
+  {
+    id: 'rep-cgnp-ilmpossible-2021',
+    title: 'Power of Collective Action – Stories from the Field: ILMPOSSIBLE – Take a Child to School Programme',
+    client: 'Children’s Global Network Pakistan (CGN-P)',
+    clientCategory: 'National Non-Governmental Organization (NGO) / Civil Society Organization – Education & Child Development',
+    fundingPartner: 'British Council Pakistan & Educate A Child (EAC), Education Above All Foundation',
+    authoringFirm: 'HIMAT Consulting Private Limited (HCPL) – Editorial & Publication Design',
+    year: '2021',
+    sector: 'Education & Human Capital',
+    secondarySector: 'Gender & Social Inclusion (Girls’ Education & Marginalized Children)',
+    type: 'Impact Assessment Study',
+    coverage: 'Pakistan – 60 districts across Punjab, Sindh, Khyber Pakhtunkhwa and Balochistan',
+    pages: '84 PDF pages',
+    pdfUrl: '/uploads/reports/IMPACT_Story_Booklet_ILMPOSSIBLE_Take_a_Child_to_School.pdf',
+    docName: 'IMPACT_Story_Booklet_ILMPOSSIBLE_Take_a_Child_to_School.pdf',
+    docType: 'pdf',
+    logo: '/logos/britishcouncil.png',
+    findingsTitle: 'Key Research Findings & Field Results',
+    summary: "The publication documents the results, community-level changes and field experiences generated through the ILMPOSSIBLE: Take a Child to School (TACS) Programme, implemented by Children’s Global Network Pakistan in strategic partnership with the British Council and Educate A Child. The programme sought to increase enrolment and retention of out-of-school children, strengthen community ownership of education and improve linkages between communities, schools and government education authorities. The programme adopted a community-mobilization model centred on Mohalla Committees (MCs) and District Task Forces (DTFs). These structures brought together volunteers, parents, teachers, community leaders, government representatives and other stakeholders to identify education barriers, mobilize resources and implement locally driven solutions. Programme activities included enrolment campaigns, awareness raising, school infrastructure improvement, provision of educational supplies, reopening of closed schools, support for girls’ education, stakeholder advocacy and community-led Self Help Initiatives. Across the programme, 557 Mohalla Committees with 8,419 members were established in 60 districts. The publication documents both quantitative programme achievements and qualitative stories illustrating changes in school access, community attitudes, girls’ education, local accountability and resource mobilization.",
+    methodology: "Mixed-method results-documentation and case-study approach combining: review and synthesis of programme monitoring and implementation data from 60 intervention districts; analysis of administrative records, beneficiary figures, Self Help Initiatives, infrastructure projects, distribution activities and resources mobilized; compilation of province- and district-level results through Community Mobilizers, Mohalla Committees and District Task Forces; qualitative case studies and individual/community success stories illustrating pathways of change; interviews, testimonials and narrative accounts from beneficiaries, volunteers, parents, teachers and community actors; documentation of stakeholder engagement with district administrations, education departments, elected representatives and civil society; and review of challenges, mitigation approaches and lessons learned across implementation contexts.",
+    keyFindings: [
+      "Large-Scale Community Education Platform: Established 557 Mohalla Committees comprising 8,419 active members across 60 districts, collaborating with parents, teachers, education departments, and political representatives to address enrolment, retention, and school facilities.",
+      "Massive Community Resource Mobilization: Between 2018 and 2021, Mohalla Committees mobilized approx. PKR 114.4 million for local Self Help Initiatives (PKR 31M in 2018, PKR 32.5M in 2019, and PKR 50.9M in 2020–21).",
+      "Direct School Infrastructure & Enablers: Delivered 687 school infrastructure projects, 399 educational distribution events, and 287 awareness sessions, directly transforming school environments and access to essential learning resources.",
+      "District Task Forces (DTF) Government Linkages: Strengthened operational linkages with district administrations; in 2021 alone, DTF-led initiatives mobilized PKR 28.94 million from government departments, philanthropists, NGOs, and civil society.",
+      "COVID-19 Crisis Resilience: Mohalla Committees mobilized PKR 77.1 million for emergency response, providing food, basic needs, and hygiene supplies to 243,722 beneficiaries between March and June 2020.",
+      "Overcoming Barriers to Girls' Education: Tackled deep-seated socio-cultural constraints and poverty, demonstrating that locally rooted community volunteers and participatory decision-making improve transparency, local ownership, and long-term education sustainability."
+    ]
   }
 ]
