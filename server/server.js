@@ -293,7 +293,7 @@ async function autoSeedIfEmpty() {
       await Competency.updateOne({ id: 'organizational-assessment' }, { $set: { image: './images/capacity-building-bg.jpg' } })
       await Competency.updateOne({ id: 'capacity-building' }, { $set: { image: './images/organizational-assessment-bg.jpg' } })
       await Competency.updateOne({ id: 'third-party-monitoring' }, { $set: { image: './images/office-automation-erp-bg.jpg' } })
-      await Competency.updateOne({ id: 'office-automation-erp' }, { $set: { image: './images/third-party-monitoring-bg.jpg' } })
+      await Competency.updateOne({ id: 'office-automation-erp' }, { $set: { image: './images/office-automation-erp-work.jpg', focalPoint: 'center 45%' } })
       await Competency.updateOne({ id: 'inclusive-programming' }, { $set: { image: './images/inclusive-programming-bg.jpg', focalPoint: 'center 38%' } })
     }
 

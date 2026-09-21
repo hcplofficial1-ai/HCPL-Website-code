@@ -49,8 +49,8 @@ export function applyCompetencyImages(list) {
     if (c.id === 'third-party-monitoring' && (!c.image || c.image === './images/third-party-monitoring-bg.jpg')) {
       return { ...c, image: './images/office-automation-erp-bg.jpg' }
     }
-    if (c.id === 'office-automation-erp' && (!c.image || c.image === './images/office-automation-erp-bg.jpg')) {
-      return { ...c, image: './images/third-party-monitoring-bg.jpg' }
+    if (c.id === 'office-automation-erp') {
+      return { ...c, image: './images/office-automation-erp-work.jpg', focalPoint: 'center 45%' }
     }
     if (c.id === 'inclusive-programming' && (!c.image || c.image === './images/inclusive-programming-bg.png')) {
       return { ...c, image: './images/inclusive-programming-bg.jpg', focalPoint: 'center 38%' }
