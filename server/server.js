@@ -291,7 +291,7 @@ async function autoSeedIfEmpty() {
       console.log(`🌱 Auto-seeded ${DEFAULT_COMPETENCIES.length} competencies to MongoDB Atlas`)
     } else {
       await Competency.updateOne({ id: 'organizational-assessment' }, { $set: { image: './images/organizational-assessment-workshop.jpg', focalPoint: 'center 52%' } })
-      await Competency.updateOne({ id: 'capacity-building' }, { $set: { image: './images/organizational-assessment-bg.jpg' } })
+      await Competency.updateOne({ id: 'capacity-building' }, { $set: { image: './images/capacity-building-bg.jpg', focalPoint: 'center center' } })
       await Competency.updateOne({ id: 'third-party-monitoring' }, { $set: { image: './images/office-automation-erp-bg.jpg' } })
       await Competency.updateOne({ id: 'office-automation-erp' }, { $set: { image: './images/office-automation-erp-work.jpg', focalPoint: 'center 45%' } })
       await Competency.updateOne({ id: 'inclusive-programming' }, { $set: { image: './images/inclusive-programming-bg.jpg', focalPoint: 'center 38%' } })
@@ -309,6 +309,8 @@ async function autoSeedIfEmpty() {
     if (serviceCount === 0 && DEFAULT_SERVICES.length > 0) {
       await Service.insertMany(DEFAULT_SERVICES)
       console.log(`🌱 Auto-seeded ${DEFAULT_SERVICES.length} services to MongoDB Atlas`)
+    } else {
+      await Service.updateOne({ id: 'capacity' }, { $set: { image: './images/capacity-development-service-bg.jpg' } })
     }
   } catch (err) {
     console.error('Error auto-seeding MongoDB Atlas:', err)

@@ -52,7 +52,7 @@ export const DEFAULT_COMPETENCIES = [
       'Accountability Frameworks',
     ],
     imageFieldName: 'Capacity Building Image',
-    image: './images/organizational-assessment-bg.jpg',
+    image: './images/capacity-building-bg.jpg',
     focalPoint: 'center center',
     altText: 'HIMAT Consulting institutional governance capacity building session',
     published: true,

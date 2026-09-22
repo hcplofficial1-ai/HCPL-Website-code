@@ -43,8 +43,8 @@ export function applyCompetencyImages(list) {
     if (c.id === 'organizational-assessment') {
       return { ...c, image: './images/organizational-assessment-workshop.jpg', focalPoint: 'center 52%' }
     }
-    if (c.id === 'capacity-building' && (!c.image || c.image === './images/capacity-building-bg.jpg')) {
-      return { ...c, image: './images/organizational-assessment-bg.jpg' }
+    if (c.id === 'capacity-building') {
+      return { ...c, image: './images/capacity-building-bg.jpg', focalPoint: 'center center' }
     }
     if (c.id === 'third-party-monitoring' && (!c.image || c.image === './images/third-party-monitoring-bg.jpg')) {
       return { ...c, image: './images/office-automation-erp-bg.jpg' }
