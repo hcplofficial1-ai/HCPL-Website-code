@@ -319,6 +319,171 @@ export default function MeetOurPeopleSection({
             </div>
           </div>
         </div>
+
+        {/* Digital Platform & Mobile Insights Access Card */}
+        <div
+          style={{
+            marginTop: '4.5rem',
+            background: 'linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)',
+            borderRadius: '20px',
+            border: '1.5px solid rgba(118, 12, 176, 0.15)',
+            padding: 'clamp(2rem, 3.5vw, 3rem)',
+            boxShadow: '0 12px 36px rgba(118, 12, 176, 0.06)',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '3rem',
+            alignItems: 'center',
+          }}
+        >
+          {/* Left Column: Text, Feature Badges & CTA */}
+          <div>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+                background: 'rgba(118, 12, 176, 0.1)',
+                color: '#760CB0',
+                padding: '0.35rem 0.85rem',
+                borderRadius: '999px',
+                fontSize: '0.75rem',
+                fontWeight: 800,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                marginBottom: '1rem',
+              }}
+            >
+              <span>📱</span>
+              <span>DIGITAL KNOWLEDGE PLATFORM</span>
+            </div>
+
+            <h3
+              style={{
+                fontFamily: 'var(--font-sans, "Inter", sans-serif)',
+                fontSize: 'clamp(1.65rem, 2.5vw, 2.25rem)',
+                fontWeight: 700,
+                lineHeight: 1.2,
+                color: '#111827',
+                marginBottom: '1rem',
+                letterSpacing: '-0.02em',
+              }}
+            >
+              Access HCPL Insights & Research on the Go
+            </h3>
+
+            <p
+              style={{
+                fontSize: 'clamp(0.95rem, 1.05vw, 1.025rem)',
+                lineHeight: 1.7,
+                color: '#475569',
+                marginBottom: '1.75rem',
+                fontFamily: 'var(--font-sans, "Inter", sans-serif)',
+              }}
+            >
+              Explore HIMAT Consulting's published evaluation dossiers, institutional diagnostics, and thought leadership anytime on your mobile phone or tablet. Scan the code to access our knowledge base directly.
+            </p>
+
+            {/* Checklist */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '2rem' }}>
+              {[
+                'OECD-DAC compliant evaluation studies and reports',
+                'Instant mobile access to published technical manuals & dossiers',
+                'Downloadable research publications & case studies',
+              ].map((item, idx) => (
+                <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: '#334155', fontWeight: 600 }}>
+                  <span style={{ color: '#760CB0', fontWeight: 800, fontSize: '1rem' }}>✓</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap' }}>
+              <Link
+                to="/reports"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  background: '#760CB0',
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  padding: '0.75rem 1.75rem',
+                  borderRadius: '6px',
+                  textDecoration: 'none',
+                  boxShadow: '0 4px 14px rgba(118, 12, 176, 0.25)',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#5a0886'
+                  e.currentTarget.style.transform = 'translateY(-2px)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#760CB0'
+                  e.currentTarget.style.transform = 'translateY(0)'
+                }}
+              >
+                <span>Explore Published Reports</span>
+                <span>→</span>
+              </Link>
+
+              <Link
+                to="/team"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  background: '#ffffff',
+                  color: '#760CB0',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '6px',
+                  textDecoration: 'none',
+                  border: '1.5px solid rgba(118, 12, 176, 0.3)',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#faf5ff'
+                  e.currentTarget.style.borderColor = '#760CB0'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#ffffff'
+                  e.currentTarget.style.borderColor = 'rgba(118, 12, 176, 0.3)'
+                }}
+              >
+                <span>Meet Our Team</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column: Device Mockups & Scannable QR Graphic */}
+          <div
+            style={{
+              background: '#ffffff',
+              borderRadius: '16px',
+              padding: '1.25rem',
+              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.08)',
+              border: '1px solid rgba(118, 12, 176, 0.1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'hidden',
+            }}
+          >
+            <img
+              src="/images/hcpl-digital-insights.png"
+              alt="HCPL Digital Insights and Mobile Knowledge Platform"
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+                borderRadius: '8px',
+                objectFit: 'contain',
+              }}
+            />
+          </div>
+        </div>
       </div>
     </section>
   )
