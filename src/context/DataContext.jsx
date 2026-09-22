@@ -40,8 +40,8 @@ function safeSaveLocalStorage(key, data) {
 export function applyCompetencyImages(list) {
   if (!Array.isArray(list)) return []
   return list.map((c) => {
-    if (c.id === 'organizational-assessment' && (!c.image || c.image === './images/organizational-assessment-bg.jpg')) {
-      return { ...c, image: './images/capacity-building-bg.jpg' }
+    if (c.id === 'organizational-assessment') {
+      return { ...c, image: './images/organizational-assessment-workshop.jpg', focalPoint: 'center 52%' }
     }
     if (c.id === 'capacity-building' && (!c.image || c.image === './images/capacity-building-bg.jpg')) {
       return { ...c, image: './images/organizational-assessment-bg.jpg' }
