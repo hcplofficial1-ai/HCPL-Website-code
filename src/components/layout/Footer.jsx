@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const NAV_COLUMNS = [
@@ -23,18 +22,6 @@ const NAV_COLUMNS = [
 ]
 
 export default function Footer() {
-  const [email, setEmail] = useState('')
-  const [subscribed, setSubscribed] = useState(false)
-
-  const handleSubscribe = (e) => {
-    e.preventDefault()
-    if (!email.trim()) return
-    setSubscribed(true)
-    setTimeout(() => {
-      setSubscribed(false)
-      setEmail('')
-    }, 4000)
-  }
 
   const socialLinks = [
     {
@@ -176,62 +163,50 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 4: McKinsey-Style Subscribe Box */}
-          <div style={{ background: '#faf5ff', padding: '2rem', borderRadius: '20px', border: '1.5px solid rgba(118, 12, 176, 0.14)' }}>
-            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '0.4rem' }}>
-              Subscribe to Insights
+          {/* Column 4: Digital Knowledge Platform & Scannable QR Graphic */}
+          <div
+            style={{
+              background: '#faf5ff',
+              padding: '1.5rem',
+              borderRadius: '20px',
+              border: '1.5px solid rgba(118, 12, 176, 0.14)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              boxShadow: '0 4px 16px rgba(118, 12, 176, 0.06)',
+            }}
+          >
+            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '0.35rem' }}>
+              Digital Platform & Insights
             </div>
-            <h3 style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '1.45rem', fontWeight: 700, color: '#212121', lineHeight: 1.2, marginBottom: '0.65rem' }}>
-              Stay Current With Our Latest Research
-            </h3>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.84rem', color: '#666', lineHeight: 1.6, marginBottom: '1.25rem' }}>
-              Receive executive briefings, OECD-DAC evaluation findings, and market diagnostics directly in your inbox.
-            </p>
-
-            {subscribed ? (
-              <div style={{ background: '#dcfce7', color: '#15803d', padding: '0.85rem 1rem', borderRadius: '10px', fontSize: '0.85rem', fontWeight: 700 }}>
-                ✓ Thank you for subscribing to HIMAT Insights.
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
-                  style={{
-                    flex: '1',
-                    minWidth: '180px',
-                    padding: '0.65rem 0.95rem',
-                    borderRadius: '10px',
-                    border: '1.5px solid rgba(118, 12, 176, 0.25)',
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: '0.85rem',
-                    outline: 'none',
-                    background: '#ffffff',
-                  }}
-                />
-                <button
-                  type="submit"
-                  style={{
-                    background: '#760CB0',
-                    color: '#ffffff',
-                    fontFamily: "'Inter', Arial, sans-serif",
-                    fontWeight: 800,
-                    fontSize: '0.85rem',
-                    padding: '0.65rem 1.35rem',
-                    borderRadius: '10px',
-                    border: 'none',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 14px rgba(118, 12, 176, 0.3)',
-                    transition: 'all 0.2s ease',
-                  }}
-                >
-                  Subscribe
-                </button>
-              </form>
-            )}
+            <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '1.15rem', fontWeight: 700, color: '#212121', lineHeight: 1.25, marginBottom: '0.85rem' }}>
+              Scan QR to Connect & Explore
+            </div>
+            <div
+              style={{
+                background: '#ffffff',
+                borderRadius: '12px',
+                padding: '0.5rem',
+                border: '1px solid rgba(118, 12, 176, 0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflow: 'hidden',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+              }}
+            >
+              <img
+                src="./images/hcpl-digital-insights.png"
+                alt="HCPL Digital Insights and Mobile Knowledge Platform with Scannable QR Code"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                  borderRadius: '8px',
+                  objectFit: 'contain',
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
