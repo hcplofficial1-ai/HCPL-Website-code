@@ -5,6 +5,7 @@ import App from './App'
 import { AuthProvider } from './context/AuthContext'
 import { DataProvider } from './context/DataContext'
 import './styles/global.css'
+import './styles/chat.css'
 
 class ErrorBoundary extends React.Component {
   constructor(props) {

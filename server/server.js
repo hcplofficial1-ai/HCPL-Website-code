@@ -13,6 +13,8 @@ import { DEFAULT_COMPETENCIES } from '../src/data/competenciesData.js'
 import { CLIENT_CERTIFICATES } from '../src/data/certificatesData.js'
 import { DEFAULT_CONSULTANTS } from '../src/data/consultantsData.js'
 import { DEFAULT_SERVICES } from '../src/data/servicesData.js'
+import { generateChatResponse } from './services/aiService.js'
+import { createRateLimiter } from './middleware/rateLimiter.js'
 
 dotenv.config()
 
@@ -701,6 +703,115 @@ app.delete('/api/contact/:id', async (req, res) => {
     res.json({ success: true })
   } catch (err) {
     res.status(400).json({ error: err.message })
+  }
+})
+
+// Rate limiters for AI chat and lead requests
+const chatLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 25, message: 'Too many chat requests. Please wait a moment.' })
+const leadLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 10, message: 'Too many proposal requests. Please wait a moment.' })
+
+// AI CHAT COMPLETION ENDPOINT
+app.post('/api/chat', chatLimiter, async (req, res) => {
+  try {
+    const { messages } = req.body
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
+      return res.status(400).json({ success: false, error: 'Messages array is required.' })
+    }
+
+    // Sanitize input length
+    const sanitizedMessages = messages.slice(-10).map((m) => ({
+      role: m.role === 'assistant' ? 'assistant' : 'user',
+      content: String(m.content || '').substring(0, 1500)
+    }))
+
+    const result = await generateChatResponse(sanitizedMessages)
+    res.json({
+      success: true,
+      reply: result.reply,
+      quickActions: result.quickActions || []
+    })
+  } catch (err) {
+    console.error('Error handling /api/chat:', err)
+    res.status(500).json({
+      success: false,
+      error: 'An internal server error occurred while processing your request.',
+      reply: 'We are experiencing temporary difficulties. Please feel free to email our team directly at info@himatconsulting.com or WhatsApp us at +92 343 4484598.'
+    })
+  }
+})
+
+// IN-CHAT PROPOSAL / LEAD CAPTURE ENDPOINT
+app.post('/api/contact-lead', leadLimiter, async (req, res) => {
+  try {
+    const { name, email, organization, phone, serviceRequired, message } = req.body
+
+    if (!name || !email) {
+      return res.status(400).json({ success: false, error: 'Name and email are required.' })
+    }
+
+    const leadSubmission = new ContactSubmission({
+      name,
+      email,
+      phone: phone || '',
+      subject: `[AI Chat RFP] ${serviceRequired || 'Proposal Request'} - ${organization || name}`,
+      message: `Organization: ${organization || 'N/A'}\nService Requested: ${serviceRequired || 'General'}\nPhone/WhatsApp: ${phone || 'N/A'}\n\nProject Scope & Details:\n${message || 'No additional details provided.'}`,
+      source: 'AI Chat Assistant Proposal Form'
+    })
+
+    await leadSubmission.save()
+
+    // Dispatch email notification via Nodemailer
+    let emailDispatched = false
+    try {
+      if (process.env.SMTP_PASS) {
+        const recipientEmail = process.env.NOTIFICATION_EMAIL || 'info@himatconsulting.com'
+        const mailOptions = {
+          from: `"HCPL AI Assistant" <${process.env.SMTP_USER || 'info@himatconsulting.com'}>`,
+          to: recipientEmail,
+          replyTo: email,
+          subject: `⚡ [New AI Lead / Proposal] ${name} (${organization || 'Individual'})`,
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
+              <div style="background-color: #760CB0; padding: 16px; border-radius: 6px; text-align: center;">
+                <h2 style="color: #ffffff; margin: 0; font-size: 20px;">New Proposal Request via AI Assistant</h2>
+              </div>
+              <div style="padding: 20px 10px;">
+                <p>A website visitor has submitted a proposal request via the <strong>HCPL AI Chat Assistant</strong>:</p>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                  <tr><td style="padding: 8px; font-weight: bold; width: 35%;">Name:</td><td style="padding: 8px;">${name}</td></tr>
+                  <tr><td style="padding: 8px; font-weight: bold;">Email:</td><td style="padding: 8px;"><a href="mailto:${email}">${email}</a></td></tr>
+                  <tr><td style="padding: 8px; font-weight: bold;">Organization:</td><td style="padding: 8px;">${organization || 'N/A'}</td></tr>
+                  <tr><td style="padding: 8px; font-weight: bold;">Phone / WhatsApp:</td><td style="padding: 8px;">${phone || 'N/A'}</td></tr>
+                  <tr><td style="padding: 8px; font-weight: bold;">Service Needed:</td><td style="padding: 8px; color: #760CB0; font-weight: bold;">${serviceRequired || 'General Consultation'}</td></tr>
+                </table>
+                <div style="margin-top: 20px; padding: 15px; background-color: #f8fafc; border-left: 4px solid #760CB0; border-radius: 4px;">
+                  <h4 style="margin: 0 0 10px 0; color: #1e293b;">Project Scope / Message:</h4>
+                  <p style="margin: 0; color: #334155; line-height: 1.6; white-space: pre-wrap;">${message || 'No additional scope details provided.'}</p>
+                </div>
+              </div>
+              <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; font-size: 12px; color: #64748b; text-align: center;">
+                Saved automatically in MongoDB Atlas. Reply directly to this email to contact the lead.
+              </div>
+            </div>
+          `
+        }
+
+        const activeTransporter = createTransporter()
+        await activeTransporter.sendMail(mailOptions)
+        emailDispatched = true
+      }
+    } catch (mailErr) {
+      console.warn('AI lead email dispatch notification warning:', mailErr.message)
+    }
+
+    res.json({
+      success: true,
+      message: 'Your proposal request has been received. Our team will contact you shortly.',
+      emailDispatched
+    })
+  } catch (err) {
+    console.error('Error handling /api/contact-lead:', err)
+    res.status(500).json({ success: false, error: err.message })
   }
 })
 

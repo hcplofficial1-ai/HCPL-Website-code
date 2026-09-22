@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
+import ChatWidget from '../chat/ChatWidget'
 
 function ScrollToTopAndAnimate() {
   const { pathname } = useLocation()
@@ -48,6 +49,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <Footer />
+      <ChatWidget />
     </>
   )
 }
