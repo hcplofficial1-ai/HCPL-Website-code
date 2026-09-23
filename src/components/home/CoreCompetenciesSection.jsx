@@ -16,8 +16,8 @@ export default function CoreCompetenciesSection() {
   return (
     <section
       style={{
-        background: '#da95eb',
-        color: '#210238',
+        background: '#ffffff',
+        color: '#212121',
         padding: '6rem 0 6.5rem',
         position: 'relative',
         overflow: 'hidden',
@@ -33,14 +33,13 @@ export default function CoreCompetenciesSection() {
               fontWeight: 900,
               letterSpacing: '0.18em',
               textTransform: 'uppercase',
-              color: '#210238',
-              background: 'rgba(255, 255, 255, 0.45)',
+              color: '#760CB0',
+              background: 'rgba(118, 12, 176, 0.08)',
               padding: '0.45rem 1.4rem',
               borderRadius: '999px',
-              border: '1.5px solid rgba(255, 255, 255, 0.7)',
+              border: '1.5px solid rgba(118, 12, 176, 0.2)',
               display: 'inline-block',
               marginBottom: '1.2rem',
-              backdropFilter: 'blur(8px)',
             }}
           >
             KEY CAPABILITIES
@@ -51,7 +50,7 @@ export default function CoreCompetenciesSection() {
               fontFamily: "'Inter', Arial, sans-serif",
               fontSize: 'clamp(2.8rem, 6vw, 4.2rem)',
               fontWeight: 900,
-              color: '#210238',
+              color: '#111111',
               lineHeight: 1.1,
               marginBottom: '1rem',
               letterSpacing: '-0.02em',
@@ -66,7 +65,7 @@ export default function CoreCompetenciesSection() {
               fontFamily: "'Source Serif 4', Georgia, serif",
               fontSize: 'clamp(1.35rem, 2.8vw, 1.85rem)',
               fontWeight: 700,
-              color: '#210238',
+              color: '#212121',
               maxWidth: '750px',
               margin: '0 auto 1.2rem',
               lineHeight: 1.35,
@@ -79,11 +78,11 @@ export default function CoreCompetenciesSection() {
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: '1.05rem',
-              color: '#320454',
+              color: '#555555',
               maxWidth: '680px',
               margin: '0 auto',
               lineHeight: 1.7,
-              fontWeight: 600,
+              fontWeight: 450,
             }}
           >
             HIMAT Consulting combines research, technology, and sectoral expertise to strengthen humanitarian and development outcomes.
@@ -104,7 +103,6 @@ export default function CoreCompetenciesSection() {
             const hasImage = Boolean(comp.image && comp.image.trim())
             const targetUrl = comp.detailUrl || '/services'
             const isHovered = hoveredId === compId
-            const isWhiteCard = isHovered
 
             return (
               <ScrollCard key={compId} index={idx} staggerDelay={150}>
@@ -112,10 +110,10 @@ export default function CoreCompetenciesSection() {
                   onMouseEnter={() => setHoveredId(compId)}
                   onMouseLeave={() => setHoveredId(null)}
                   style={{
-                    background: isWhiteCard ? '#ffffff' : 'transparent',
+                    background: '#ffffff',
                     borderRadius: '0px',
-                    border: isWhiteCard ? '2px solid #ffffff' : '1.5px solid rgba(255, 255, 255, 0.45)',
-                    boxShadow: isWhiteCard ? '0 22px 55px rgba(33, 2, 56, 0.22)' : 'none',
+                    border: isHovered ? '1.5px solid #760CB0' : '1.5px solid #e5e7eb',
+                    boxShadow: isHovered ? '0 18px 45px rgba(118, 12, 176, 0.12)' : '0 4px 16px rgba(0, 0, 0, 0.04)',
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100%',
@@ -123,8 +121,9 @@ export default function CoreCompetenciesSection() {
                     overflow: 'hidden',
                     cursor: 'pointer',
                     transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                    transform: isHovered ? 'translateY(-4px)' : 'none',
                   }}
-                  className={`competency-card-interactive ${isWhiteCard ? 'is-white-active' : 'is-transparent'}`}
+                  className={`competency-card-interactive ${isHovered ? 'is-hovered' : ''}`}
                 >
                   {/* 1. Top Image Frame (Consistent 16:9 Landscape Aspect Ratio) */}
                   <div
@@ -216,8 +215,7 @@ export default function CoreCompetenciesSection() {
                       flexDirection: 'column',
                       flex: 1,
                       gap: '0.9rem',
-                      color: isWhiteCard ? '#212121' : '#210238',
-                      transition: 'color 0.3s ease',
+                      color: '#212121',
                     }}
                   >
                     {/* Title with Right Angle Arrow (Clickable Link) */}
@@ -225,24 +223,23 @@ export default function CoreCompetenciesSection() {
                       to={targetUrl}
                       style={{
                         textDecoration: 'none',
-                        color: isWhiteCard ? '#111111' : '#210238',
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '0.45rem',
-                        transition: 'color 0.3s ease',
+                        transition: 'color 0.25s ease',
                       }}
                       className="mckinsey-title-link"
                     >
                       <h3
                         style={{
                           fontFamily: "'Inter', Arial, sans-serif",
-                          fontSize: '1.4rem',
-                          fontWeight: 900,
+                          fontSize: '1.35rem',
+                          fontWeight: 800,
                           margin: 0,
                           lineHeight: 1.3,
                           letterSpacing: '-0.01em',
-                          color: isWhiteCard ? (isHovered ? '#760CB0' : '#111111') : '#210238',
-                          transition: 'color 0.3s ease',
+                          color: isHovered ? '#760CB0' : '#111111',
+                          transition: 'color 0.25s ease',
                         }}
                       >
                         {comp.title}
@@ -254,11 +251,10 @@ export default function CoreCompetenciesSection() {
                       style={{
                         fontFamily: "'Inter', sans-serif",
                         fontSize: '0.92rem',
-                        color: isWhiteCard ? '#555555' : '#320454',
+                        color: '#555555',
                         lineHeight: 1.68,
                         margin: 0,
-                        fontWeight: isWhiteCard ? 400 : 550,
-                        transition: 'color 0.3s ease',
+                        fontWeight: 400,
                       }}
                     >
                       {comp.description}
