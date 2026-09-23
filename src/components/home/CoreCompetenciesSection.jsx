@@ -110,10 +110,10 @@ export default function CoreCompetenciesSection() {
                   onMouseEnter={() => setHoveredId(compId)}
                   onMouseLeave={() => setHoveredId(null)}
                   style={{
-                    background: '#ffffff',
+                    background: isHovered ? 'linear-gradient(135deg, #760CB0 0%, #52077c 100%)' : '#ffffff',
                     borderRadius: '0px',
                     border: isHovered ? '1.5px solid #760CB0' : '1.5px solid #e5e7eb',
-                    boxShadow: isHovered ? '0 18px 45px rgba(118, 12, 176, 0.12)' : '0 4px 16px rgba(0, 0, 0, 0.04)',
+                    boxShadow: isHovered ? '0 20px 48px rgba(118, 12, 176, 0.28)' : '0 4px 16px rgba(0, 0, 0, 0.04)',
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100%',
@@ -121,7 +121,7 @@ export default function CoreCompetenciesSection() {
                     overflow: 'hidden',
                     cursor: 'pointer',
                     transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
-                    transform: isHovered ? 'translateY(-4px)' : 'none',
+                    transform: isHovered ? 'translateY(-6px)' : 'none',
                   }}
                   className={`competency-card-interactive ${isHovered ? 'is-hovered' : ''}`}
                 >
@@ -215,7 +215,8 @@ export default function CoreCompetenciesSection() {
                       flexDirection: 'column',
                       flex: 1,
                       gap: '0.9rem',
-                      color: '#212121',
+                      color: isHovered ? '#ffffff' : '#212121',
+                      transition: 'color 0.25s ease',
                     }}
                   >
                     {/* Title with Right Angle Arrow (Clickable Link) */}
@@ -238,7 +239,7 @@ export default function CoreCompetenciesSection() {
                           margin: 0,
                           lineHeight: 1.3,
                           letterSpacing: '-0.01em',
-                          color: isHovered ? '#760CB0' : '#111111',
+                          color: isHovered ? '#ffffff' : '#111111',
                           transition: 'color 0.25s ease',
                         }}
                       >
@@ -251,10 +252,11 @@ export default function CoreCompetenciesSection() {
                       style={{
                         fontFamily: "'Inter', sans-serif",
                         fontSize: '0.92rem',
-                        color: '#555555',
+                        color: isHovered ? 'rgba(255, 255, 255, 0.92)' : '#555555',
                         lineHeight: 1.68,
                         margin: 0,
                         fontWeight: 400,
+                        transition: 'color 0.25s ease',
                       }}
                     >
                       {comp.description}

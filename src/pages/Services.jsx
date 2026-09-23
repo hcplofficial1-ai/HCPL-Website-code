@@ -230,10 +230,10 @@ export default function Services() {
                     onMouseEnter={() => setHoveredId(sv.id)}
                     onMouseLeave={() => setHoveredId(null)}
                     style={{
-                      background: isWhiteCard ? '#ffffff' : 'transparent',
+                      background: isHovered ? 'linear-gradient(135deg, #760CB0 0%, #52077c 100%)' : '#ffffff',
                       borderRadius: '0px',
-                      border: isWhiteCard ? '2px solid #ffffff' : '1.5px solid rgba(118, 12, 176, 0.25)',
-                      boxShadow: isWhiteCard ? '0 22px 55px rgba(33, 2, 56, 0.18)' : 'none',
+                      border: isHovered ? '1.5px solid #760CB0' : '1.5px solid rgba(118, 12, 176, 0.15)',
+                      boxShadow: isHovered ? '0 20px 48px rgba(118, 12, 176, 0.28)' : '0 4px 16px rgba(0, 0, 0, 0.04)',
                       display: 'flex',
                       flexDirection: 'column',
                       height: '100%',
@@ -244,8 +244,9 @@ export default function Services() {
                       animation: 'slowWaveCard 5s ease-in-out infinite',
                       animationDelay: `${idx * 0.45}s`,
                       position: 'relative',
+                      transform: isHovered ? 'translateY(-6px)' : 'none',
                     }}
-                    className={`service-card-interactive ${isWhiteCard ? 'is-white-active' : 'is-transparent'}`}
+                    className={`service-card-interactive ${isHovered ? 'is-hovered' : ''}`}
                   >
                     {/* 1. Top Image Frame (16:9 Landscape Aspect Ratio) */}
                     <div
@@ -284,8 +285,8 @@ export default function Services() {
                         flexDirection: 'column',
                         flex: 1,
                         gap: '1rem',
-                        color: isWhiteCard ? '#212121' : '#210238',
-                        transition: 'color 0.3s ease',
+                        color: isHovered ? '#ffffff' : '#210238',
+                        transition: 'color 0.25s ease',
                       }}
                     >
                       {/* Main Headline (Card Headline): Arial/Helvetica, 26 pt (26px), Bold */}
@@ -304,8 +305,8 @@ export default function Services() {
                             margin: 0,
                             lineHeight: 1.25,
                             letterSpacing: '-0.01em',
-                            color: isWhiteCard ? (isHovered ? '#760CB0' : '#111111') : '#210238',
-                            transition: 'color 0.3s ease',
+                            color: isHovered ? '#ffffff' : '#111111',
+                            transition: 'color 0.25s ease',
                           }}
                         >
                           {sv.title}
@@ -317,11 +318,11 @@ export default function Services() {
                         style={{
                           fontFamily: 'Arial, Helvetica, sans-serif',
                           fontSize: '15px',
-                          color: isWhiteCard ? '#555555' : '#320454',
+                          color: isHovered ? 'rgba(255, 255, 255, 0.92)' : '#555555',
                           lineHeight: 1.65,
                           margin: 0,
                           fontWeight: 400,
-                          transition: 'color 0.3s ease',
+                          transition: 'color 0.25s ease',
                         }}
                       >
                         {sv.desc}
@@ -333,14 +334,15 @@ export default function Services() {
                           <span
                             key={f}
                             style={{
-                              background: isWhiteCard ? 'rgba(118, 12, 176, 0.08)' : 'rgba(255, 255, 255, 0.6)',
-                              color: '#760CB0',
+                              background: isHovered ? 'rgba(255, 255, 255, 0.18)' : 'rgba(118, 12, 176, 0.08)',
+                              color: isHovered ? '#ffffff' : '#760CB0',
                               fontFamily: 'Arial, Helvetica, sans-serif',
                               fontWeight: 400,
                               fontSize: '13px',
                               padding: '0.3rem 0.75rem',
                               borderRadius: '999px',
-                              border: '1px solid rgba(118, 12, 176, 0.12)',
+                              border: isHovered ? '1px solid rgba(255, 255, 255, 0.35)' : '1px solid rgba(118, 12, 176, 0.12)',
+                              transition: 'all 0.25s ease',
                             }}
                           >
                             {f}

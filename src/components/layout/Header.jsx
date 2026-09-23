@@ -12,19 +12,16 @@ const NAV_STRUCTURE = [
         to: '/about',
         label: 'Company Overview',
         desc: 'Vision, Mission & 16+ Years Legacy',
-        icon: '🏛️',
       },
       {
         to: '/team',
         label: 'Our People',
         desc: 'Executive Advisory & Specialists',
-        icon: '👥',
       },
       {
         to: '/consultants',
         label: 'Senior Consultants',
         desc: 'Independent Experts & Domain Advisors',
-        icon: '🎓',
       },
     ],
   },
@@ -37,19 +34,16 @@ const NAV_STRUCTURE = [
         to: '/projects',
         label: 'Projects Portfolio',
         desc: 'Search Complete Assignment Database',
-        icon: '💼',
       },
       {
         to: '/clients',
         label: 'Institutional Clients',
         desc: 'UN Agencies, World Bank & Donors',
-        icon: '🌍',
       },
       {
         to: '/certificates',
         label: 'Completion Certificates',
         desc: 'Verified Letters & Donor Commendations',
-        icon: '🏅',
       },
     ],
   },
@@ -319,7 +313,6 @@ export default function Header() {
                               onMouseEnter={(e) => (e.currentTarget.style.background = '#f0e0fa')}
                               onMouseLeave={(e) => (e.currentTarget.style.background = isSubActive ? 'rgba(118,12,176,0.08)' : '#faf5ff')}
                             >
-                              <span style={{ fontSize: '1.2rem', marginTop: '0.1rem' }}>{sub.icon}</span>
                               <div>
                                 <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.86rem', color: isSubActive ? '#760CB0' : '#212121' }}>
                                   {sub.to === '/projects' ? `${projects.length} Projects Portfolio` : sub.label}
@@ -431,7 +424,7 @@ export default function Header() {
                           padding: '0.4rem 0',
                         }}
                       >
-                        {sub.icon} {sub.to === '/projects' ? `${projects.length} Projects Portfolio` : sub.label}
+                        {sub.to === '/projects' ? `${projects.length} Projects Portfolio` : sub.label}
                       </Link>
                     ))}
                   </div>
