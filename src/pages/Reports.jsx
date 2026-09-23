@@ -221,18 +221,6 @@ export default function Reports() {
             <div><strong>Pages:</strong> ${report.pages || 'Full Dossier'}</div>
           </div>
 
-          <div class="summary-box">
-            <strong style="color: #760CB0; display: block; margin-bottom: 8px;">EXECUTIVE SUMMARY:</strong>
-            ${report.summary || 'Official study report publication.'}
-          </div>
-
-          ${report.methodology ? `
-            <div style="background: #faf5ff; padding: 16px 20px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 13px; color: #444; margin-bottom: 25px;">
-              <strong style="color: #760CB0; display: block; margin-bottom: 6px;">RESEARCH METHODOLOGY:</strong>
-              ${report.methodology}
-            </div>
-          ` : ''}
-
           <div class="footer-strip">
             <div>HIMAT Consulting Private Limited (HCPL) · www.himatconsulting.com</div>
             <div>Ref: REP-${report.year}-${report.id}</div>
@@ -512,32 +500,6 @@ export default function Reports() {
                           </span>
                         )}
                       </div>
-
-                      {/* Summary */}
-                      <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.9rem', color: '#444444', lineHeight: 1.7, margin: 0, flex: 1 }}>
-                        {report.summary}
-                      </p>
-
-                      {/* Methodology Overview */}
-                      {report.methodology && (
-                        <div style={{ background: '#faf5ff', padding: '0.65rem 0.95rem', borderRadius: '10px', border: '1px solid rgba(118,12,176,0.1)', fontSize: '0.82rem', color: '#555' }}>
-                          <strong style={{ color: '#760CB0', display: 'block', marginBottom: '0.2rem', fontSize: '0.78rem', textTransform: 'uppercase' }}>🔬 Research Methodology:</strong>
-                          {report.methodology}
-                        </div>
-                      )}
-
-                      {/* Key Findings Highlights */}
-                      {Array.isArray(report.keyFindings) && report.keyFindings.filter(Boolean).length > 0 && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', background: '#fdfaf7', padding: '0.75rem 1rem', borderRadius: '10px', borderLeft: '3.5px solid #760CB0' }}>
-                          <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase' }}>💡 {report.findingsTitle || 'Key Research Findings'}:</div>
-                          {report.keyFindings.filter(Boolean).map((kf, i) => (
-                            <div key={i} style={{ fontSize: '0.82rem', color: '#333', display: 'flex', gap: '0.4rem', alignItems: 'flex-start' }}>
-                              <span style={{ color: '#760CB0', fontWeight: 800 }}>✓</span>
-                              <span>{kf}</span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
 
                       {/* Actions */}
                       <div style={{ display: 'flex', gap: '0.75rem', marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid rgba(118,12,176,0.08)', flexWrap: 'wrap' }}>
