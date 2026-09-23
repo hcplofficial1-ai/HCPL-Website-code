@@ -161,7 +161,6 @@ const GLOBAL_PARTNERS = [
     name: 'Dynasty Evaluation Centre (DEC)',
     fullName: 'Dynasty Evaluation Centre (DEC) Uganda',
     region: 'Kampala, Uganda',
-    website: 'https://dynastyevaluationcentre.com/',
     logo: './logos/dec-placeholder.svg',
     logoNote: 'Temporary placeholder; official logo was not included in supplied profile',
     desc: 'Uganda-based research, evaluation, field data collection and independent verification partner.',
@@ -170,7 +169,6 @@ const GLOBAL_PARTNERS = [
     name: 'GIS Plus',
     fullName: 'GIS Plus Total Solutions (Pvt.) Ltd.',
     region: 'Islamabad, Pakistan',
-    website: 'https://www.gisplus.net/',
     logo: './logos/gis-plus-logo.png',
     desc: 'Geospatial technology partner specializing in GIS, remote sensing, spatial data infrastructure and GeoAI.',
   },
@@ -178,7 +176,6 @@ const GLOBAL_PARTNERS = [
     name: 'id:rc',
     fullName: 'Interdisciplinary Research Consultants (id:rc)',
     region: 'Amman, Jordan',
-    website: '',
     logo: './logos/idrc-logo.png',
     desc: 'Jordan-based international consulting firm specializing in surveys, evaluations, socioeconomic studies and technical assistance.',
   },
@@ -186,7 +183,6 @@ const GLOBAL_PARTNERS = [
     name: 'Ipsos',
     fullName: 'Ipsos',
     region: 'Jordan and Iraq',
-    website: 'https://www.ipsos.com/',
     logo: './logos/ipsos-logo.png',
     desc: 'Global market and social research partner with established operations in Jordan and Iraq.',
   },
@@ -194,7 +190,6 @@ const GLOBAL_PARTNERS = [
     name: 'Keystone Global Analytics',
     fullName: 'Keystone Global Analytics',
     region: 'Zimbabwe; Lusaka, Zambia & Lilongwe, Malawi',
-    website: 'https://www.kga.co.zw/',
     logo: './logos/keystone-global-analytics-logo.png',
     desc: 'Research, evaluation and advisory partner serving Zimbabwe and the wider Southern and East African regions.',
   },
@@ -578,32 +573,6 @@ export default function Clients() {
                 {p.logoNote && (
                   <div style={{ fontSize: '0.72rem', color: '#78716c', fontStyle: 'italic', background: '#fff', padding: '0.45rem 0.65rem', borderRadius: '6px', border: '1px dashed #d6d3d1' }}>
                     ℹ️ {p.logoNote}
-                  </div>
-                )}
-
-                {p.website && (
-                  <div style={{ marginTop: 'auto', paddingTop: '0.4rem' }}>
-                    <a
-                      href={p.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '0.35rem',
-                        fontSize: '0.78rem',
-                        fontWeight: 800,
-                        color: '#760CB0',
-                        textDecoration: 'none',
-                        background: '#ffffff',
-                        border: '1px solid rgba(118,12,176,0.2)',
-                        padding: '0.35rem 0.75rem',
-                        borderRadius: '8px',
-                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
-                      }}
-                    >
-                      <span>🌐 Visit Partner Site ↗</span>
-                    </a>
                   </div>
                 )}
               </div>
