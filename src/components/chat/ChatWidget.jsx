@@ -11,8 +11,11 @@ import {
   saveStoredSession,
   clearStoredSession
 } from '../../services/chatService'
+import { useData } from '../../context/DataContext'
 
 export default function ChatWidget() {
+  const { projects = [] } = useData()
+  const projectCount = projects.length || 121
   const [isOpen, setIsOpen] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
   const [isProposalOpen, setIsProposalOpen] = useState(false)
@@ -69,7 +72,7 @@ export default function ChatWidget() {
     setIsTyping(true)
 
     try {
-      const response = await sendChatMessage(updated)
+      const response = await sendChatMessage(updated, projectCount)
       const botMsg = {
         role: 'assistant',
         content: response.reply,

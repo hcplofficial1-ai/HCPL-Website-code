@@ -1,27 +1,29 @@
 import { Link } from 'react-router-dom'
-
-const NAV_COLUMNS = [
-  {
-    title: 'Company',
-    links: [
-      { to: '/about', label: 'About HIMAT' },
-      { to: '/team', label: 'Our People' },
-      { to: '/consultants', label: 'Senior Consultants' },
-      { to: '/services', label: 'Our Capabilities' },
-    ],
-  },
-  {
-    title: 'Work & Evidence',
-    links: [
-      { to: '/projects', label: '121 Projects Portfolio' },
-      { to: '/clients', label: 'Institutional Clients' },
-      { to: '/certificates', label: 'Completion Certificates' },
-      { to: '/reports', label: 'Published Reports' },
-    ],
-  },
-]
+import { useData } from '../../context/DataContext'
 
 export default function Footer() {
+  const { projects = [] } = useData()
+
+  const NAV_COLUMNS = [
+    {
+      title: 'Company',
+      links: [
+        { to: '/about', label: 'About HIMAT' },
+        { to: '/team', label: 'Our People' },
+        { to: '/consultants', label: 'Senior Consultants' },
+        { to: '/services', label: 'Our Capabilities' },
+      ],
+    },
+    {
+      title: 'Work & Evidence',
+      links: [
+        { to: '/projects', label: `${projects.length || 121} Projects Portfolio` },
+        { to: '/clients', label: 'Institutional Clients' },
+        { to: '/certificates', label: 'Completion Certificates' },
+        { to: '/reports', label: 'Published Reports' },
+      ],
+    },
+  ]
 
   const socialLinks = [
     {

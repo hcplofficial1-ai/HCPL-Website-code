@@ -7,7 +7,7 @@
 const SESSION_KEY = 'hcpl_chat_session_v1'
 
 // Built-in client-side offline knowledge responder
-function queryOfflineKnowledge(userMessage) {
+function queryOfflineKnowledge(userMessage, projectCount = 121) {
   const query = (userMessage || '').toLowerCase()
 
   // 1. Proposal / Quote / RFP
@@ -37,7 +37,7 @@ function queryOfflineKnowledge(userMessage) {
   ) {
     return {
       reply:
-        "**Monitoring & Evaluation (M&E) & TPM** is a flagship expertise of HIMAT Consulting:\n\n- **121+ Assignments Completed:** Baseline surveys, mid-term reviews, final evaluations, and Third-Party Field Monitoring (TPM).\n- **High-Risk & Hard-to-Reach Coverage:** Proven track record across Balochistan, Khyber Pakhtunkhwa, merged districts, Sindh, Punjab, and Gilgit-Baltistan.\n- **Rigorous Methodologies:** Mixed-methods frameworks, OECD-DAC criteria, digital verification, and real-time GPS tracking.\n- **Major Clients:** USAID/BHA, Concern Worldwide, UNICEF, UNDP, UNHCR, and British Council Pakistan.",
+        `**Monitoring & Evaluation (M&E) & TPM** is a flagship expertise of HIMAT Consulting:\n\n- **${projectCount}+ Assignments Completed:** Baseline surveys, mid-term reviews, final evaluations, and Third-Party Field Monitoring (TPM).\n- **High-Risk & Hard-to-Reach Coverage:** Proven track record across Balochistan, Khyber Pakhtunkhwa, merged districts, Sindh, Punjab, and Gilgit-Baltistan.\n- **Rigorous Methodologies:** Mixed-methods frameworks, OECD-DAC criteria, digital verification, and real-time GPS tracking.\n- **Major Clients:** USAID/BHA, Concern Worldwide, UNICEF, UNDP, UNHCR, and British Council Pakistan.`,
       quickActions: ['Request a Proposal', 'Conduct a Survey', 'Contact Info']
     }
   }
@@ -114,12 +114,12 @@ function queryOfflineKnowledge(userMessage) {
   }
 }
 
-export async function sendChatMessage(messages) {
+export async function sendChatMessage(messages, projectCount = 121) {
   try {
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages })
+      body: JSON.stringify({ messages, projectCount })
     })
 
     if (!response.ok) {
@@ -135,7 +135,7 @@ export async function sendChatMessage(messages) {
   } catch (error) {
     // Graceful offline knowledge engine fallback
     const latestUserMsg = [...messages].reverse().find((m) => m.role === 'user')
-    const fallback = queryOfflineKnowledge(latestUserMsg ? latestUserMsg.content : '')
+    const fallback = queryOfflineKnowledge(latestUserMsg ? latestUserMsg.content : '', projectCount)
 
     return {
       success: true,

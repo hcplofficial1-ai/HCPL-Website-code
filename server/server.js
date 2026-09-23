@@ -724,7 +724,16 @@ app.post('/api/chat', chatLimiter, async (req, res) => {
       content: String(m.content || '').substring(0, 1500)
     }))
 
-    const result = await generateChatResponse(sanitizedMessages)
+    // Dynamic count from MongoDB or client request
+    let liveProjectCount = Number(req.body?.projectCount) || 121
+    try {
+      const dbCount = await Project.countDocuments()
+      if (dbCount && dbCount > 0) {
+        liveProjectCount = dbCount
+      }
+    } catch (_) {}
+
+    const result = await generateChatResponse(sanitizedMessages, liveProjectCount)
     res.json({
       success: true,
       reply: result.reply,
