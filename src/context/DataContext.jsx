@@ -40,6 +40,9 @@ function safeSaveLocalStorage(key, data) {
 export function applyCompetencyImages(list) {
   if (!Array.isArray(list)) return []
   return list.map((c) => {
+    if (c.id === 'program-development') {
+      return { ...c, image: './images/program-development-bg.jpg', focalPoint: 'center 40%' }
+    }
     if (c.id === 'organizational-assessment') {
       return { ...c, image: './images/organizational-assessment-workshop.jpg', focalPoint: 'center 52%' }
     }
@@ -51,6 +54,9 @@ export function applyCompetencyImages(list) {
     }
     if (c.id === 'office-automation-erp') {
       return { ...c, image: './images/office-automation-erp-work.jpg', focalPoint: 'center 45%' }
+    }
+    if (c.id === 'web-development-digital-tools') {
+      return { ...c, image: './images/web-development-bg.jpg', focalPoint: 'center 45%' }
     }
     if (c.id === 'inclusive-programming' && (!c.image || c.image === './images/inclusive-programming-bg.png')) {
       return { ...c, image: './images/inclusive-programming-bg.jpg', focalPoint: 'center 38%' }
