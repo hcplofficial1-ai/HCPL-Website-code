@@ -65,6 +65,16 @@ export function applyCompetencyImages(list) {
   })
 }
 
+export function applyTeamImages(list) {
+  if (!Array.isArray(list)) return []
+  return list.map((m) => {
+    if (m.id === 'jawad') {
+      return { ...m, image: './jawad.jpg' }
+    }
+    return m
+  })
+}
+
 export function sortConsultantsList(list) {
   if (!Array.isArray(list)) return []
   return [...list].sort((a, b) => {
@@ -92,7 +102,7 @@ export function DataProvider({ children }) {
     try {
       const saved = localStorage.getItem(TEAM_KEY)
       const parsed = saved ? JSON.parse(saved) : null
-      return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_TEAM
+      return Array.isArray(parsed) && parsed.length > 0 ? applyTeamImages(parsed) : DEFAULT_TEAM
     } catch {
       return DEFAULT_TEAM
     }
@@ -190,8 +200,9 @@ export function DataProvider({ children }) {
           if (teamRes.ok) {
             const data = await teamRes.json()
             if (Array.isArray(data) && data.length > 0) {
-              setTeam(data)
-              safeSaveLocalStorage(TEAM_KEY, data)
+              const updated = applyTeamImages(data)
+              setTeam(updated)
+              safeSaveLocalStorage(TEAM_KEY, updated)
             } else {
               setTeam(DEFAULT_TEAM)
             }
@@ -309,7 +320,7 @@ export function DataProvider({ children }) {
         setProjects(savedProj ? JSON.parse(savedProj) : DEFAULT_PROJECTS)
 
         const savedTeam = localStorage.getItem(TEAM_KEY)
-        setTeam(savedTeam ? JSON.parse(savedTeam) : DEFAULT_TEAM)
+        setTeam(savedTeam ? applyTeamImages(JSON.parse(savedTeam)) : DEFAULT_TEAM)
 
         const savedRep = localStorage.getItem(REPORTS_KEY)
         setReports(savedRep ? JSON.parse(savedRep) : PUBLISHED_REPORTS)

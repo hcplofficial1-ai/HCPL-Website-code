@@ -13,7 +13,7 @@ function ExecutiveMemberCard({ member, index = 0 }) {
       case 'shoaib':
         return 'center 8%'
       case 'jawad':
-        return 'center 12%'
+        return 'center 15%'
       case 'mahrukh':
         return 'center 10%'
       case 'zeeshan':
