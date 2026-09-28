@@ -118,7 +118,7 @@ const GLOBAL_PARTNERS = [
     name: 'Fieldwork Africa',
     fullName: 'Fieldwork Africa',
     region: 'Ethiopia',
-    logo: './logos/fieldwork-africa-logo.jpg',
+    logo: './logos/fieldwork-africa-logo.png',
     desc: 'Ethiopia and East Africa research partner providing large-scale quantitative and qualitative field survey logistics.',
   },
   {
@@ -147,14 +147,14 @@ const GLOBAL_PARTNERS = [
     name: 'Kinconsult Associates Ltd',
     fullName: 'Kinconsult Associates Ltd',
     region: 'Nairobi, Kenya',
-    logo: './logos/kinconsult-logo.jpg',
+    logo: './logos/kinconsult-logo.png',
     desc: 'Kenya-based management consulting firm delivering strategic research, organizational development, and program evaluations in East Africa.',
   },
   {
     name: 'Oxford Policy Management (OPM)',
     fullName: 'Oxford Policy Management (OPM)',
     region: 'Oxford, United Kingdom; global office network',
-    logo: './logos/opm-logo.jpg',
+    logo: './logos/opm-logo.png',
     desc: 'Global international development consultancy operating across 50+ countries to improve public policy and socio-economic outcomes.',
   },
   {
