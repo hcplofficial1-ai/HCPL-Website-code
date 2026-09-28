@@ -47,7 +47,13 @@ export function applyCompetencyImages(list) {
       return { ...c, image: './images/organizational-assessment-workshop.jpg', focalPoint: 'center 52%' }
     }
     if (c.id === 'capacity-building') {
-      return { ...c, image: './images/capacity-building-bg.jpg', focalPoint: 'center center' }
+      return {
+        ...c,
+        title: 'Organizational Capacity Building',
+        category: 'ORGANIZATIONAL CAPACITY BUILDING',
+        image: './images/capacity-building-bg.jpg',
+        focalPoint: 'center 45%'
+      }
     }
     if (c.id === 'third-party-monitoring' && (!c.image || c.image === './images/third-party-monitoring-bg.jpg')) {
       return { ...c, image: './images/office-automation-erp-bg.jpg' }
