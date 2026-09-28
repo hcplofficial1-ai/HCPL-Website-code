@@ -14,7 +14,7 @@ export const DEFAULT_COMPETENCIES = [
     imageFieldName: 'Program Development Image',
     image: './images/program-development-bg.jpg',
     focalPoint: 'center 40%',
-    altText: 'HIMAT Consulting team member working on program development and digital initiatives',
+    altText: 'HIMAT Consulting program development team collaborating on program architecture and fieldwork',
     published: true,
     order: 1,
     detailUrl: '/services',
