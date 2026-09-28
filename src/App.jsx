@@ -13,6 +13,7 @@ import Contact from './pages/Contact'
 import OurPurpose from './pages/OurPurpose'
 import Portfolio from './pages/Portfolio'
 import TermsOfUse from './pages/TermsOfUse'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import PrivateRoute from './components/common/PrivateRoute'
@@ -36,6 +37,8 @@ export default function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="terms" element={<TermsOfUse />} />
         <Route path="terms-of-use" element={<TermsOfUse />} />
+        <Route path="privacy" element={<PrivacyPolicy />} />
+        <Route path="privacy-policy" element={<PrivacyPolicy />} />
       </Route>
 
       {/* Admin — hidden, no nav link */}

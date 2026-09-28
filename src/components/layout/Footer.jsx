@@ -13,6 +13,7 @@ export default function Footer() {
         { to: '/consultants', label: 'Senior Consultants' },
         { to: '/services', label: 'Our Capabilities' },
         { to: '/terms', label: 'Terms of Use' },
+        { to: '/privacy', label: 'Privacy Policy' },
       ],
     },
     {
@@ -262,7 +263,7 @@ export default function Footer() {
 
         {/* Legal & Utility Links */}
         <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', fontSize: '0.8125rem', color: '#666', fontWeight: 600, alignItems: 'center' }}>
-          <Link to="/about" style={{ color: '#666', textDecoration: 'none' }} onMouseEnter={(e) => (e.currentTarget.style.color = '#760CB0')} onMouseLeave={(e) => (e.currentTarget.style.color = '#666')}>Privacy Policy</Link>
+          <Link to="/privacy" style={{ color: '#760CB0', textDecoration: 'underline', fontWeight: 700 }} onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.8')} onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}>Privacy Policy</Link>
           <span>·</span>
           <Link to="/terms" style={{ color: '#760CB0', textDecoration: 'underline', fontWeight: 700 }} onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.8')} onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}>Terms of Use</Link>
           <span>·</span>
