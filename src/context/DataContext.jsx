@@ -141,8 +141,10 @@ export function DataProvider({ children }) {
       const parsed = saved ? JSON.parse(saved) : null
       if (Array.isArray(parsed) && parsed.length > 0) {
         const cleaned = parsed.filter((r) => !['rep-srso-cif-2024', 'rep-nutrition-survey-2023', 'rep-cpi-success-2021'].includes(r.id))
-        const ids = new Set(cleaned.map(r => r.id))
-        const merged = [...cleaned]
+        const pubMap = new Map(PUBLISHED_REPORTS.map(p => [p.id, p]))
+        const updated = cleaned.map(r => pubMap.has(r.id) ? { ...r, ...pubMap.get(r.id) } : r)
+        const ids = new Set(updated.map(r => r.id))
+        const merged = [...updated]
         for (const pub of PUBLISHED_REPORTS) {
           if (!ids.has(pub.id)) {
             merged.unshift(pub)
@@ -248,8 +250,10 @@ export function DataProvider({ children }) {
             const data = await repRes.json()
             if (Array.isArray(data)) {
               const cleaned = data.filter((r) => !['rep-srso-cif-2024', 'rep-nutrition-survey-2023', 'rep-cpi-success-2021'].includes(r.id))
-              const ids = new Set(cleaned.map(r => r.id))
-              const merged = [...cleaned]
+              const pubMap = new Map(PUBLISHED_REPORTS.map(p => [p.id, p]))
+              const updated = cleaned.map(r => pubMap.has(r.id) ? { ...r, ...pubMap.get(r.id) } : r)
+              const ids = new Set(updated.map(r => r.id))
+              const merged = [...updated]
               for (const pub of PUBLISHED_REPORTS) {
                 if (!ids.has(pub.id)) {
                   merged.unshift(pub)

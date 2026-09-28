@@ -1,5 +1,34 @@
 export const PUBLISHED_REPORTS = [
   {
+    id: 'rep-eti-gb-impact-2026',
+    title: 'Impact Assessment of the Economic Transformation Initiative – Gilgit-Baltistan (ETI-GB)',
+    client: 'Economic Transformation Initiative – Gilgit-Baltistan (ETI-GB), Government of Gilgit-Baltistan',
+    clientCategory: 'Government / Donor-Funded Development Programme',
+    fundingPartner: 'International Fund for Agricultural Development (IFAD) & Government of Gilgit-Baltistan',
+    authoringFirm: 'HIMAT Consulting Private Limited (HCPL)',
+    year: '2026',
+    sector: 'Climate Resilience & Agriculture',
+    secondarySector: 'Rural Infrastructure, Value Chain & Food Security',
+    type: 'Impact Assessment Report / Programme Impact Evaluation',
+    coverage: 'Gilgit-Baltistan, Pakistan – Astore, Diamer, Ghanche, Ghizer, Gilgit, Hunza, Kharmang, Nagar, Shigar and Skardu',
+    pages: '69 PDF pages',
+    pdfUrl: '/uploads/reports/ETI-GB_Final_Report_Impact_Assessment.pdf',
+    docName: 'ETI-GB_Final_Report_Impact_Assessment.pdf',
+    docType: 'pdf',
+    logo: '/logos/gbrsp.jpg',
+    secondaryLogo: '/logos/ifad.jpg',
+    findingsTitle: 'Key Evaluation Findings & Impact Metrics',
+    summary: 'The Economic Transformation Initiative – Gilgit-Baltistan (ETI-GB) is a flagship multi-sectoral rural transformation programme co-financed by the International Fund for Agricultural Development (IFAD) and the Government of Gilgit-Baltistan. This independent impact assessment evaluated programme interventions across all ten districts of Gilgit-Baltistan: land development, irrigation channels, high-value agricultural and horticulture value chains, farm-to-market access roads, and agribusiness enterprise support. The evaluation examined socio-economic outcomes, household income increments, women participation in agricultural value chains, irrigation efficiency, and climate-adaptive farming resilience across remote mountain valleys.',
+    methodology: 'Quasi-experimental mixed-methods impact evaluation design combining household surveys across treatment and comparison communities, key informant interviews with line departments and community organizations, focus group discussions with farmer and producer groups, field engineering verification of irrigation schemes and access roads, and value-for-money / economic rate of return diagnostics.',
+    keyFindings: [
+      'Comprehensive Regional Coverage: Successfully covered all 10 districts of Gilgit-Baltistan (Astore, Diamer, Ghanche, Ghizer, Gilgit, Hunza, Kharmang, Nagar, Shigar, and Skardu).',
+      'Land Development & Water Infrastructure: Significant expansion in cultivable command area through community-managed irrigation channels, glacier water conveyance systems, and land terracing.',
+      'Household Income & Yield Growth: Marked increase in household agricultural revenues through commercialization of high-value crops (apricots, cherries, apples, potatoes) and reduced post-harvest losses.',
+      'Women Economic Empowerment: Enhanced female participation in processing, post-harvest handling, and community-based producer organizations across rural mountain corridors.',
+      'Climate Resilience & Sustainable Livelihoods: Substantial strengthening of community resilience against flash floods, landslides, and irrigation water volatility in high-altitude environments.'
+    ]
+  },
+  {
     id: 'rep-concern-hpcm-2024',
     title: 'Training Participants Manual 2024 – Humanitarian Project Cycle Management (HPCM)',
     client: 'Concern Worldwide – RAPID Program',
