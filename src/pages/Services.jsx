@@ -14,12 +14,12 @@ const SERVICES = [
     image: './images/monitoring-evaluation-bg.jpg',
   },
   {
-    id: 'research',
-    icon: '🔬',
-    title: 'Research & Diagnostics',
-    desc: 'Applied mixed-methods research including baseline studies, endline surveys, KAP studies, labour market analyses, market studies, and situational diagnostics using quantitative and qualitative approaches.',
-    features: ['Baseline & Endline Studies', 'SMART Nutritional Surveys', 'Labour Market Studies', 'Conflict & Gender Analysis', 'Feasibility Studies'],
-    image: './images/organizational-assessment-bg.jpg',
+    id: 'training',
+    icon: '🎯',
+    title: 'Training & Workshops',
+    desc: 'Expert-led training modules on Humanitarian Project Cycle Management, HPCM, financial management, gender equality, social accountability, DRR, and advanced data tools.',
+    features: ['HPCM Trainings', 'Financial Governance', 'GESI Workshops', 'Data Management Tools', 'Field Enumerator Training'],
+    image: './images/training-workshops-bg.jpg',
   },
   {
     id: 'advisory',
@@ -46,12 +46,12 @@ const SERVICES = [
     image: './images/capacity-development-service-bg.jpg',
   },
   {
-    id: 'training',
-    icon: '🎯',
-    title: 'Training & Workshops',
-    desc: 'Expert-led training modules on Humanitarian Project Cycle Management, HPCM, financial management, gender equality, social accountability, DRR, and advanced data tools.',
-    features: ['HPCM Trainings', 'Financial Governance', 'GESI Workshops', 'Data Management Tools', 'Field Enumerator Training'],
-    image: './images/training-workshops-bg.jpg',
+    id: 'research',
+    icon: '🔬',
+    title: 'Research & Diagnostics',
+    desc: 'Applied mixed-methods research including baseline studies, endline surveys, KAP studies, labour market analyses, market studies, and situational diagnostics using quantitative and qualitative approaches.',
+    features: ['Baseline & Endline Studies', 'SMART Nutritional Surveys', 'Labour Market Studies', 'Conflict & Gender Analysis', 'Feasibility Studies'],
+    image: './images/organizational-assessment-bg.jpg',
   },
 ]
 

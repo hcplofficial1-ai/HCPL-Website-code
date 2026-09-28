@@ -82,15 +82,29 @@ export function applyCompetencyImages(list) {
 
 export function applyServicesOverrides(list) {
   if (!Array.isArray(list)) return []
-  return list.map((s) => {
-    if (s.id === 'tpm') {
-      return { ...s, image: './images/office-automation-erp-bg.jpg' }
-    }
-    if (s.id === 'capacity') {
-      return { ...s, title: 'Organizational Capacity Assessments' }
-    }
-    return s
-  })
+  const orderMap = {
+    me: 1,
+    training: 2,
+    advisory: 3,
+    tpm: 4,
+    capacity: 5,
+    research: 6,
+  }
+  return list
+    .map((s) => {
+      let updated = { ...s }
+      if (s.id === 'tpm') {
+        updated.image = './images/office-automation-erp-bg.jpg'
+      }
+      if (s.id === 'capacity') {
+        updated.title = 'Organizational Capacity Assessments'
+      }
+      if (orderMap[s.id] != null) {
+        updated.order = orderMap[s.id]
+      }
+      return updated
+    })
+    .sort((a, b) => (a.order || 99) - (b.order || 99))
 }
 
 export function applyTeamImages(list) {
