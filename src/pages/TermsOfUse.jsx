@@ -1,10 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function TermsOfUse() {
-  const [activeSection, setActiveSection] = useState('sec-1')
-  const [filterQuery, setFilterQuery] = useState('')
-
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -665,12 +662,6 @@ export default function TermsOfUse() {
     },
   ]
 
-  const filteredSections = sections.filter((s) => {
-    if (!filterQuery.trim()) return true
-    const q = filterQuery.toLowerCase()
-    return s.title.toLowerCase().includes(q) || s.num.includes(q)
-  })
-
   return (
     <div className="no-reveal" style={{ background: '#ffffff', minHeight: '100vh', color: '#212121', fontFamily: "'Inter', Arial, sans-serif" }}>
       {/* 1. Hero Header */}
@@ -803,243 +794,139 @@ export default function TermsOfUse() {
         </div>
       </section>
 
-      {/* 3. Main Content Grid (Sticky Table of Contents + 30 Sections) */}
+      {/* 3. Main Legal Content (30 Sections) */}
       <section className="no-reveal" style={{ padding: '3.5rem 0 5rem' }}>
-        <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '320px 1fr',
-              gap: '3rem',
-              alignItems: 'start',
-            }}
-            className="terms-layout"
-          >
-            {/* Sidebar / Quick Jump Navigation */}
-            <aside
-              style={{
-                position: 'sticky',
-                top: '90px',
-                background: '#ffffff',
-                borderRadius: '16px',
-                border: '1.5px solid rgba(118,12,176,0.15)',
-                padding: '1.5rem',
-                boxShadow: '0 6px 24px rgba(0,0,0,0.03)',
-                maxHeight: 'calc(100vh - 120px)',
-                overflowY: 'auto',
-              }}
-              className="terms-sidebar"
-            >
-              <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1rem' }}>
-                Table of Contents (30 Sections)
-              </div>
-
-              {/* Quick Search inside TOC */}
-              <input
-                type="text"
-                value={filterQuery}
-                onChange={(e) => setFilterQuery(e.target.value)}
-                placeholder="Search sections..."
+        <div className="container" style={{ maxWidth: '980px', margin: '0 auto', padding: '0 1.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            {sections.map((s) => (
+              <article
+                key={s.id}
+                id={s.id}
+                className="no-reveal"
                 style={{
-                  width: '100%',
-                  padding: '0.55rem 0.85rem',
-                  fontSize: '0.85rem',
-                  borderRadius: '8px',
-                  border: '1px solid rgba(118,12,176,0.2)',
-                  marginBottom: '1rem',
-                  boxSizing: 'border-box',
-                  fontFamily: "'Inter', sans-serif",
-                }}
-              />
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                {filteredSections.map((s) => (
-                  <button
-                    key={s.id}
-                    type="button"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      setActiveSection(s.id)
-                      const el = document.getElementById(s.id)
-                      if (el) {
-                        const y = el.getBoundingClientRect().top + window.pageYOffset - 95
-                        window.scrollTo({ top: y, behavior: 'smooth' })
-                      }
-                    }}
-                    style={{
-                      display: 'block',
-                      width: '100%',
-                      textAlign: 'left',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: '0.45rem 0.65rem',
-                      borderRadius: '6px',
-                      fontSize: '0.82rem',
-                      fontWeight: activeSection === s.id ? 700 : 500,
-                      color: activeSection === s.id ? '#ffffff' : '#444444',
-                      background: activeSection === s.id ? '#760CB0' : 'transparent',
-                      lineHeight: 1.35,
-                      transition: 'all 0.15s ease',
-                    }}
-                  >
-                    <span style={{ opacity: activeSection === s.id ? 0.9 : 0.6, marginRight: '0.35rem' }}>
-                      {s.num}.
-                    </span>
-                    {s.title}
-                  </button>
-                ))}
-              </div>
-            </aside>
-
-            {/* Content Sections */}
-            <main>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                {sections.map((s) => (
-                  <article
-                    key={s.id}
-                    id={s.id}
-                    className="no-reveal"
-                    style={{
-                      background: '#ffffff',
-                      borderRadius: '16px',
-                      border: '1.5px solid rgba(118,12,176,0.12)',
-                      padding: '2.25rem',
-                      boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
-                      scrollMarginTop: '110px',
-                      opacity: 1,
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem', borderBottom: '1px solid rgba(118,12,176,0.1)', paddingBottom: '0.85rem' }}>
-                      <span
-                        style={{
-                          width: '32px',
-                          height: '32px',
-                          borderRadius: '8px',
-                          background: 'linear-gradient(135deg, #760CB0 0%, #5a0886 100%)',
-                          color: '#ffffff',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '0.85rem',
-                          fontWeight: 800,
-                          flexShrink: 0,
-                        }}
-                      >
-                        {s.num}
-                      </span>
-                      <h2
-                        style={{
-                          fontFamily: "'Source Serif 4', Georgia, serif",
-                          fontSize: '1.45rem',
-                          fontWeight: 700,
-                          color: '#111111',
-                          margin: 0,
-                          lineHeight: 1.3,
-                        }}
-                      >
-                        {s.title}
-                      </h2>
-                    </div>
-
-                    <div
-                      style={{
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: '0.94rem',
-                        lineHeight: '1.75',
-                        color: '#424242',
-                      }}
-                    >
-                      {s.content}
-                    </div>
-                  </article>
-                ))}
-              </div>
-
-              {/* Contact Box */}
-              <div
-                style={{
-                  marginTop: '3.5rem',
-                  background: 'linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)',
+                  background: '#ffffff',
                   borderRadius: '16px',
-                  border: '1.5px solid rgba(118,12,176,0.25)',
+                  border: '1.5px solid rgba(118,12,176,0.12)',
                   padding: '2.5rem',
-                  textAlign: 'center',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
+                  opacity: 1,
                 }}
               >
-                <div style={{ fontWeight: 800, fontSize: '0.8125rem', color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
-                  Legal & Compliance Inquiries
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem', borderBottom: '1px solid rgba(118,12,176,0.1)', paddingBottom: '0.85rem' }}>
+                  <span
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '8px',
+                      background: 'linear-gradient(135deg, #760CB0 0%, #5a0886 100%)',
+                      color: '#ffffff',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.85rem',
+                      fontWeight: 800,
+                      flexShrink: 0,
+                    }}
+                  >
+                    {s.num}
+                  </span>
+                  <h2
+                    style={{
+                      fontFamily: "'Source Serif 4', Georgia, serif",
+                      fontSize: '1.45rem',
+                      fontWeight: 700,
+                      color: '#111111',
+                      margin: 0,
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {s.title}
+                  </h2>
                 </div>
-                <h3
+
+                <div
                   style={{
-                    fontFamily: "'Source Serif 4', Georgia, serif",
-                    fontSize: '1.75rem',
-                    fontWeight: 700,
-                    color: '#111111',
-                    margin: '0 0 0.85rem',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '0.96rem',
+                    lineHeight: '1.8',
+                    color: '#424242',
                   }}
                 >
-                  Questions Regarding These Terms?
-                </h3>
-                <p style={{ maxWidth: '600px', margin: '0 auto 1.75rem', color: '#555555', fontSize: '0.95rem', lineHeight: 1.65 }}>
-                  For inquiries regarding permissions, intellectual property, data protection, or reporting concerns, please contact HCPL's administrative and legal directorate.
-                </p>
-                <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <a
-                    href="mailto:info@himatconsulting.com"
-                    style={{
-                      background: '#760CB0',
-                      color: '#ffffff',
-                      fontWeight: 700,
-                      fontSize: '0.9rem',
-                      padding: '0.75rem 1.65rem',
-                      borderRadius: '8px',
-                      textDecoration: 'none',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      boxShadow: '0 4px 14px rgba(118,12,176,0.3)',
-                    }}
-                  >
-                    ✉ Email Legal Directorate
-                  </a>
-                  <Link
-                    to="/contact"
-                    style={{
-                      background: '#ffffff',
-                      color: '#760CB0',
-                      fontWeight: 700,
-                      fontSize: '0.9rem',
-                      padding: '0.75rem 1.65rem',
-                      borderRadius: '8px',
-                      textDecoration: 'none',
-                      border: '1.5px solid rgba(118,12,176,0.3)',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                    }}
-                  >
-                    Official Contact Form →
-                  </Link>
+                  {s.content}
                 </div>
-              </div>
-            </main>
+              </article>
+            ))}
+          </div>
+
+          {/* Contact Box */}
+          <div
+            style={{
+              marginTop: '3.5rem',
+              background: 'linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)',
+              borderRadius: '16px',
+              border: '1.5px solid rgba(118,12,176,0.25)',
+              padding: '2.5rem',
+              textAlign: 'center',
+            }}
+          >
+            <div style={{ fontWeight: 800, fontSize: '0.8125rem', color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
+              Legal & Compliance Inquiries
+            </div>
+            <h3
+              style={{
+                fontFamily: "'Source Serif 4', Georgia, serif",
+                fontSize: '1.75rem',
+                fontWeight: 700,
+                color: '#111111',
+                margin: '0 0 0.85rem',
+              }}
+            >
+              Questions Regarding These Terms?
+            </h3>
+            <p style={{ maxWidth: '600px', margin: '0 auto 1.75rem', color: '#555555', fontSize: '0.95rem', lineHeight: 1.65 }}>
+              For inquiries regarding permissions, intellectual property, data protection, or reporting concerns, please contact HCPL's administrative and legal directorate.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <a
+                href="mailto:info@himatconsulting.com"
+                style={{
+                  background: '#760CB0',
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  padding: '0.75rem 1.65rem',
+                  borderRadius: '8px',
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  boxShadow: '0 4px 14px rgba(118,12,176,0.3)',
+                }}
+              >
+                ✉ Email Legal Directorate
+              </a>
+              <Link
+                to="/contact"
+                style={{
+                  background: '#ffffff',
+                  color: '#760CB0',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  padding: '0.75rem 1.65rem',
+                  borderRadius: '8px',
+                  textDecoration: 'none',
+                  border: '1.5px solid rgba(118,12,176,0.3)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                }}
+              >
+                Official Contact Form →
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-
-      <style>{`
-        @media (max-width: 900px) {
-          .terms-layout {
-            grid-template-columns: 1fr !important;
-          }
-          .terms-sidebar {
-            position: relative !important;
-            top: 0 !important;
-            max-height: 280px !important;
-            margin-bottom: 2rem !important;
-          }
-        }
-      `}</style>
     </div>
   )
 }
