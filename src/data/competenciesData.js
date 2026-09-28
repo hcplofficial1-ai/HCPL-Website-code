@@ -132,7 +132,7 @@ export const DEFAULT_COMPETENCIES = [
       'Document Management Systems',
     ],
     imageFieldName: 'Office Automation and ERP Image',
-    image: './images/office-automation-erp-work.jpg',
+    image: './images/office-automation-erp-work.png',
     focalPoint: 'center 45%',
     altText: 'Enterprise Resource Planning and digital office workflow systems',
     published: true,
