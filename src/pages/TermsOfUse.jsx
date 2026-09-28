@@ -796,7 +796,7 @@ export default function TermsOfUse() {
 
       {/* 3. Main Legal Content (30 Sections) */}
       <section className="no-reveal" style={{ padding: '3.5rem 0 5rem' }}>
-        <div className="container" style={{ maxWidth: '980px', margin: '0 auto', padding: '0 1.5rem' }}>
+        <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {sections.map((s) => (
               <article
@@ -806,9 +806,9 @@ export default function TermsOfUse() {
                 style={{
                   background: '#ffffff',
                   borderRadius: '16px',
-                  border: '1.5px solid rgba(118,12,176,0.12)',
-                  padding: '2.5rem',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
+                  border: '1.5px solid rgba(118,12,176,0.18)',
+                  padding: '2rem 2.25rem',
+                  boxShadow: '0 10px 30px rgba(118,12,176,0.06)',
                   opacity: 1,
                 }}
               >
