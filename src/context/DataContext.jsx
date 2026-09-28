@@ -68,6 +68,12 @@ export function applyCompetencyImages(list) {
 export function applyTeamImages(list) {
   if (!Array.isArray(list)) return []
   return list.map((m) => {
+    if (m.id === 'himatullah') {
+      return {
+        ...m,
+        experience: "25+ years of executive leadership in international development advisory, third-party monitoring, and diagnostic research. Trusted principal investigator for the World Bank, UN agencies, USAID, EU, GIZ, ADB and 60+ institutional clients across Pakistan, Afghanistan, Tajikistan, Kazakhstan, and South Sudan."
+      }
+    }
     if (m.id === 'jawad') {
       return { ...m, image: './jawad.jpg' }
     }

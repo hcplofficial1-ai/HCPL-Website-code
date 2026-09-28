@@ -9,7 +9,7 @@ export const DEFAULT_TEAM = [
     linkedin: 'https://www.linkedin.com/in/himatullah-3753971a',
     image: './himatullah.jpg',
     education: "Master's in International Development & Development Economics",
-    experience: "16+ years of executive leadership in international development advisory, third-party monitoring, and diagnostic research. Trusted principal investigator for the World Bank, UN agencies, USAID, EU, GIZ, ADB and 60+ institutional clients across Pakistan, Afghanistan, Tajikistan, Kazakhstan, and South Sudan.",
+    experience: "25+ years of executive leadership in international development advisory, third-party monitoring, and diagnostic research. Trusted principal investigator for the World Bank, UN agencies, USAID, EU, GIZ, ADB and 60+ institutional clients across Pakistan, Afghanistan, Tajikistan, Kazakhstan, and South Sudan.",
     specialties: ['OECD-DAC Evaluations', 'Strategic Governance', 'Multilateral Liaison', 'Impact Assessments', 'Institutional Policy', 'Gender & Inclusion'],
     quote: 'Evidence without context is noise. Our mission is to generate rigorous, actionable intelligence that actually moves the needle for people who need it most.',
     initials: 'H',
