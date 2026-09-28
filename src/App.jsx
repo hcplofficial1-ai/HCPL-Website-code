@@ -12,6 +12,7 @@ import Reports from './pages/Reports'
 import Contact from './pages/Contact'
 import OurPurpose from './pages/OurPurpose'
 import Portfolio from './pages/Portfolio'
+import TermsOfUse from './pages/TermsOfUse'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import PrivateRoute from './components/common/PrivateRoute'
@@ -33,6 +34,8 @@ export default function App() {
         <Route path="certificates" element={<Certificates />} />
         <Route path="reports" element={<Reports />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="terms" element={<TermsOfUse />} />
+        <Route path="terms-of-use" element={<TermsOfUse />} />
       </Route>
 
       {/* Admin — hidden, no nav link */}

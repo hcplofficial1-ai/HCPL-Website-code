@@ -263,7 +263,7 @@ export default function Footer() {
         <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', fontSize: '0.8125rem', color: '#666', fontWeight: 600, alignItems: 'center' }}>
           <Link to="/about" style={{ color: '#666', textDecoration: 'none' }}>Privacy Policy</Link>
           <span>·</span>
-          <Link to="/contact" style={{ color: '#666', textDecoration: 'none' }}>Terms of Use</Link>
+          <Link to="/terms" style={{ color: '#666', textDecoration: 'none' }}>Terms of Use</Link>
           <span>·</span>
           <Link to="/certificates" style={{ color: '#666', textDecoration: 'none' }}>Compliance & Ethics</Link>
           <span>·</span>
