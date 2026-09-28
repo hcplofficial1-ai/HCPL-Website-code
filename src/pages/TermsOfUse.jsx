@@ -296,7 +296,7 @@ export default function TermsOfUse() {
             HCPL's internal policy also requires consent where necessary, secure storage, controlled access and appropriate arrangements when information is shared with third parties.
           </p>
           <p>
-            Further information is set out in HCPL's separate Privacy Policy. Where there is any inconsistency between these Terms and HCPL's Privacy Policy regarding personal-data processing, the Privacy Policy will govern that processing.
+            Further information is set out in HCPL's separate <Link to="/privacy" style={{ color: '#760CB0', fontWeight: 700, textDecoration: 'underline' }}>Privacy Policy</Link>. Where there is any inconsistency between these Terms and HCPL's Privacy Policy regarding personal-data processing, the Privacy Policy will govern that processing.
           </p>
         </>
       ),

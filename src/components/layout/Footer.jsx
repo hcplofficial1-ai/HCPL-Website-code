@@ -104,6 +104,7 @@ export default function Footer() {
                 <Link
                   key={l.to}
                   to={l.to}
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
                   style={{ color: '#424242', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s' }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = '#760CB0')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = '#424242')}
@@ -124,6 +125,7 @@ export default function Footer() {
                 <Link
                   key={l.to}
                   to={l.to}
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
                   style={{ color: '#424242', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s' }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = '#760CB0')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = '#424242')}
@@ -263,15 +265,51 @@ export default function Footer() {
 
         {/* Legal & Utility Links */}
         <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', fontSize: '0.8125rem', color: '#666', fontWeight: 600, alignItems: 'center' }}>
-          <Link to="/privacy" style={{ color: '#760CB0', textDecoration: 'underline', fontWeight: 700 }} onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.8')} onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}>Privacy Policy</Link>
+          <Link
+            to="/privacy"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
+            style={{ color: '#760CB0', textDecoration: 'underline', fontWeight: 700, cursor: 'pointer' }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.8')}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+          >
+            Privacy Policy
+          </Link>
           <span>·</span>
-          <Link to="/terms" style={{ color: '#760CB0', textDecoration: 'underline', fontWeight: 700 }} onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.8')} onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}>Terms of Use</Link>
+          <Link
+            to="/terms"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
+            style={{ color: '#760CB0', textDecoration: 'underline', fontWeight: 700, cursor: 'pointer' }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.8')}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+          >
+            Terms of Use
+          </Link>
           <span>·</span>
-          <Link to="/certificates" style={{ color: '#666', textDecoration: 'none' }} onMouseEnter={(e) => (e.currentTarget.style.color = '#760CB0')} onMouseLeave={(e) => (e.currentTarget.style.color = '#666')}>Compliance & Ethics</Link>
+          <Link
+            to="/certificates"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
+            style={{ color: '#666', textDecoration: 'none' }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = '#760CB0')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#666')}
+          >
+            Compliance & Ethics
+          </Link>
           <span>·</span>
-          <Link to="/contact" style={{ color: '#760CB0', textDecoration: 'none', fontWeight: 700 }}>Contact Us</Link>
+          <Link
+            to="/contact"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
+            style={{ color: '#760CB0', textDecoration: 'none', fontWeight: 700 }}
+          >
+            Contact Us
+          </Link>
           <span>·</span>
-          <Link to="/admin/login" style={{ color: '#760CB0', textDecoration: 'none', fontWeight: 800, background: '#faf5ff', padding: '0.2rem 0.65rem', borderRadius: '6px', border: '1px solid rgba(118,12,176,0.2)' }}>🔐 Staff Portal</Link>
+          <Link
+            to="/admin/login"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
+            style={{ color: '#760CB0', textDecoration: 'none', fontWeight: 800, background: '#faf5ff', padding: '0.2rem 0.65rem', borderRadius: '6px', border: '1px solid rgba(118,12,176,0.2)' }}
+          >
+            🔐 Staff Portal
+          </Link>
         </div>
       </div>
 
