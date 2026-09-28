@@ -652,6 +652,13 @@ ul { list-style: none; }
   transform: translateY(0) !important;
 }
 
+.no-reveal,
+.no-reveal section,
+section.no-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 /* Ambient Hero Orbs Animation */
 section div[style*="radial-gradient(circle, rgba(118,12,176"] {
   animation: floatOrbs 12s ease-in-out infinite alternate !important;

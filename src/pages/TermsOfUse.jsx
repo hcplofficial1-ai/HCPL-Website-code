@@ -672,12 +672,13 @@ export default function TermsOfUse() {
   })
 
   return (
-    <div style={{ background: '#ffffff', minHeight: '100vh', color: '#212121', fontFamily: "'Inter', Arial, sans-serif" }}>
+    <div className="no-reveal" style={{ background: '#ffffff', minHeight: '100vh', color: '#212121', fontFamily: "'Inter', Arial, sans-serif" }}>
       {/* 1. Hero Header */}
       <section
+        className="no-reveal"
         style={{
           background: 'linear-gradient(135deg, #760CB0 0%, #5a0886 100%)',
-          padding: '5.5rem 0 4rem',
+          padding: '6.5rem 0 4rem',
           color: '#ffffff',
           position: 'relative',
         }}
@@ -772,7 +773,7 @@ export default function TermsOfUse() {
       </section>
 
       {/* 2. Preamble Banner */}
-      <section style={{ background: '#faf5ff', borderBottom: '1px solid rgba(118,12,176,0.12)', padding: '2.5rem 0' }}>
+      <section className="no-reveal" style={{ background: '#faf5ff', borderBottom: '1px solid rgba(118,12,176,0.12)', padding: '2.5rem 0' }}>
         <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
           <div
             style={{
@@ -803,7 +804,7 @@ export default function TermsOfUse() {
       </section>
 
       {/* 3. Main Content Grid (Sticky Table of Contents + 30 Sections) */}
-      <section style={{ padding: '3.5rem 0 5rem' }}>
+      <section className="no-reveal" style={{ padding: '3.5rem 0 5rem' }}>
         <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
           <div
             style={{
@@ -853,19 +854,30 @@ export default function TermsOfUse() {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                 {filteredSections.map((s) => (
-                  <a
+                  <button
                     key={s.id}
-                    href={`#${s.id}`}
-                    onClick={() => setActiveSection(s.id)}
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setActiveSection(s.id)
+                      const el = document.getElementById(s.id)
+                      if (el) {
+                        const y = el.getBoundingClientRect().top + window.pageYOffset - 95
+                        window.scrollTo({ top: y, behavior: 'smooth' })
+                      }
+                    }}
                     style={{
                       display: 'block',
+                      width: '100%',
+                      textAlign: 'left',
+                      border: 'none',
+                      cursor: 'pointer',
                       padding: '0.45rem 0.65rem',
                       borderRadius: '6px',
                       fontSize: '0.82rem',
                       fontWeight: activeSection === s.id ? 700 : 500,
                       color: activeSection === s.id ? '#ffffff' : '#444444',
                       background: activeSection === s.id ? '#760CB0' : 'transparent',
-                      textDecoration: 'none',
                       lineHeight: 1.35,
                       transition: 'all 0.15s ease',
                     }}
@@ -874,7 +886,7 @@ export default function TermsOfUse() {
                       {s.num}.
                     </span>
                     {s.title}
-                  </a>
+                  </button>
                 ))}
               </div>
             </aside>
@@ -886,6 +898,7 @@ export default function TermsOfUse() {
                   <article
                     key={s.id}
                     id={s.id}
+                    className="no-reveal"
                     style={{
                       background: '#ffffff',
                       borderRadius: '16px',
@@ -893,6 +906,7 @@ export default function TermsOfUse() {
                       padding: '2.25rem',
                       boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
                       scrollMarginTop: '110px',
+                      opacity: 1,
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem', borderBottom: '1px solid rgba(118,12,176,0.1)', paddingBottom: '0.85rem' }}>

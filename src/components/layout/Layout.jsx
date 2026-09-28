@@ -11,7 +11,6 @@ function ScrollToTopAndAnimate() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
 
-    // IntersectionObserver for smooth scroll-reveal on all sections & cards
     const observerCallback = (entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -22,17 +21,30 @@ function ScrollToTopAndAnimate() {
     }
 
     const observer = new IntersectionObserver(observerCallback, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -40px 0px',
+      threshold: 0,
+      rootMargin: '100px 0px 100px 0px',
     })
 
-    const elements = document.querySelectorAll('section, .reveal-item, .country-card, .purpose-card, .executive-team-card')
+    const elements = document.querySelectorAll('section:not(.no-reveal), .reveal-item, .country-card, .purpose-card, .executive-team-card')
     elements.forEach((el) => {
-      el.classList.add('scroll-reveal-init')
-      observer.observe(el)
+      const rect = el.getBoundingClientRect()
+      if (rect.top < window.innerHeight + 100) {
+        el.classList.add('is-revealed')
+      } else {
+        el.classList.add('scroll-reveal-init')
+        observer.observe(el)
+      }
     })
 
-    return () => observer.disconnect()
+    // Fallback: Ensure all elements are revealed after 400ms so nothing stays hidden
+    const timer = setTimeout(() => {
+      elements.forEach((el) => el.classList.add('is-revealed'))
+    }, 400)
+
+    return () => {
+      clearTimeout(timer)
+      observer.disconnect()
+    }
   }, [pathname])
 
   return null
