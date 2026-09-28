@@ -215,23 +215,10 @@ export default function PrivacyPolicy() {
               fontSize: '1.05rem',
               color: 'rgba(255,255,255,0.92)',
               fontWeight: 600,
-              marginBottom: '0.5rem',
+              marginBottom: '0',
             }}
           >
             HIMAT Consulting Private Limited (HCPL)
-          </div>
-
-          <div
-            style={{
-              display: 'inline-block',
-              background: 'rgba(255,255,255,0.12)',
-              padding: '0.25rem 0.85rem',
-              borderRadius: '6px',
-              fontSize: '0.85rem',
-              color: 'rgba(255,255,255,0.85)',
-            }}
-          >
-            Last Updated: 28 September 2026
           </div>
         </div>
       </section>

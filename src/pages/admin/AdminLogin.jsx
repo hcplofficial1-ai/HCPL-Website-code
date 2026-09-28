@@ -48,21 +48,7 @@ export default function AdminLogin() {
 
         {/* Card */}
         <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '20px', padding: '2.5rem 2rem', boxShadow: '0 20px 60px rgba(0,0,0,0.4)' }}>
-          <h1 style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '1.6rem', fontWeight: 700, color: '#fff', textAlign: 'center', marginBottom: '0.5rem' }}>Staff Portal</h1>
-          <div style={{ background: 'rgba(118,12,176,0.2)', border: '1px solid rgba(192,125,224,0.35)', borderRadius: '12px', padding: '0.85rem 1rem', marginBottom: '1.25rem', fontFamily: "'Inter', sans-serif", fontSize: '0.8rem', color: '#e9d5ff', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '0.4rem', alignItems: 'center' }}>
-            <div>🔑 <strong>Master Admin Login Credentials:</strong></div>
-            <div style={{ fontSize: '0.78rem' }}>Username: <code style={{ background: 'rgba(0,0,0,0.4)', padding: '0.15rem 0.45rem', borderRadius: '4px', color: '#fff', fontWeight: 700 }}>admin</code> | Password: <code style={{ background: 'rgba(0,0,0,0.4)', padding: '0.15rem 0.45rem', borderRadius: '4px', color: '#fff', fontWeight: 700 }}>HimatAdmin2026!</code></div>
-            <button
-              type="button"
-              onClick={() => {
-                setUsername('admin')
-                setPassword('HimatAdmin2026!')
-              }}
-              style={{ marginTop: '0.25rem', background: '#760CB0', color: '#fff', border: 'none', padding: '0.35rem 0.9rem', borderRadius: '6px', fontSize: '0.78rem', fontWeight: 800, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }}
-            >
-              ⚡ Quick Auto-Fill & Click Sign In
-            </button>
-          </div>
+          <h1 style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '1.6rem', fontWeight: 700, color: '#fff', textAlign: 'center', marginBottom: '1.75rem' }}>Staff Portal</h1>
 
           {error && (
             <div style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '8px', padding: '0.75rem 1rem', marginBottom: '1.25rem', fontFamily: "'Inter', sans-serif", fontSize: '0.82rem', color: '#fca5a5', textAlign: 'center' }}>
