@@ -14,6 +14,7 @@ export default function Footer() {
         { to: '/services', label: 'Our Capabilities' },
         { to: '/terms', label: 'Terms of Use' },
         { to: '/privacy', label: 'Privacy Policy' },
+        { to: '/compliance', label: 'Compliance & Ethics' },
       ],
     },
     {
@@ -286,11 +287,11 @@ export default function Footer() {
           </Link>
           <span>·</span>
           <Link
-            to="/certificates"
+            to="/compliance"
             onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
-            style={{ color: '#666', textDecoration: 'none' }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#760CB0')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = '#666')}
+            style={{ color: '#760CB0', textDecoration: 'underline', fontWeight: 700, cursor: 'pointer' }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.8')}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
           >
             Compliance & Ethics
           </Link>
