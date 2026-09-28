@@ -61,7 +61,29 @@ export function applyCompetencyImages(list) {
     if (c.id === 'inclusive-programming' && (!c.image || c.image === './images/inclusive-programming-bg.png')) {
       return { ...c, image: './images/inclusive-programming-bg.jpg', focalPoint: 'center 38%' }
     }
+    if (c.id === 'climate-change-drm') {
+      return {
+        ...c,
+        title: 'Climate Change & DRR',
+        category: 'CLIMATE CHANGE & DISASTER RISK REDUCTION',
+        image: './images/climate-change-drm-bg.jpg',
+        focalPoint: 'center 45%'
+      }
+    }
     return c
+  })
+}
+
+export function applyServicesOverrides(list) {
+  if (!Array.isArray(list)) return []
+  return list.map((s) => {
+    if (s.id === 'tpm') {
+      return { ...s, image: './images/office-automation-erp-bg.jpg' }
+    }
+    if (s.id === 'capacity') {
+      return { ...s, title: 'Organizational Capacity Assessments' }
+    }
+    return s
   })
 }
 
@@ -165,7 +187,7 @@ export function DataProvider({ children }) {
     try {
       const saved = localStorage.getItem(SERVICES_KEY)
       const parsed = saved ? JSON.parse(saved) : null
-      return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_SERVICES
+      return Array.isArray(parsed) && parsed.length > 0 ? applyServicesOverrides(parsed) : DEFAULT_SERVICES
     } catch {
       return DEFAULT_SERVICES
     }
@@ -307,8 +329,9 @@ export function DataProvider({ children }) {
           if (srvRes.ok) {
             const data = await srvRes.json()
             if (Array.isArray(data) && data.length > 0) {
-              setServices(data)
-              safeSaveLocalStorage(SERVICES_KEY, data)
+              const updated = applyServicesOverrides(data)
+              setServices(updated)
+              safeSaveLocalStorage(SERVICES_KEY, updated)
             } else {
               setServices(DEFAULT_SERVICES)
             }
@@ -341,7 +364,7 @@ export function DataProvider({ children }) {
         setConsultants(savedCons ? sortConsultantsList(JSON.parse(savedCons)) : DEFAULT_CONSULTANTS)
 
         const savedSrv = localStorage.getItem(SERVICES_KEY)
-        setServices(savedSrv ? JSON.parse(savedSrv) : DEFAULT_SERVICES)
+        setServices(savedSrv ? applyServicesOverrides(JSON.parse(savedSrv)) : DEFAULT_SERVICES)
       }
     }
 

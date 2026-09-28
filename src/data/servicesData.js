@@ -60,13 +60,13 @@ export const DEFAULT_SERVICES = [
       'Remote Sensing Verification',
       'Fiduciary Monitoring',
     ],
-    image: './images/third-party-monitoring-bg.jpg',
+    image: './images/office-automation-erp-bg.jpg',
     order: 4,
   },
   {
     id: 'capacity',
     icon: '💼',
-    title: 'Capacity Development',
+    title: 'Organizational Capacity Assessments',
     category: 'Institutional Capacity Diagnostics',
     desc: 'Organizational capacity assessments, tailored training programs, MERL system strengthening, and institutional development planning for civil society organizations and government departments.',
     features: [
