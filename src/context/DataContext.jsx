@@ -8,7 +8,7 @@ import { DEFAULT_CONSULTANTS } from '../data/consultantsData'
 import { DEFAULT_SERVICES } from '../data/servicesData'
 
 const DataContext = createContext(null)
-export const API_BASE = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api')
+export const API_BASE = import.meta.env.VITE_API_URL || (['localhost', '127.0.0.1'].includes(window.location.hostname) ? 'http://localhost:5000/api' : '/api')
 
 const PROJECTS_KEY = 'himat_projects_db'
 const TEAM_KEY = 'himat_team_db'
