@@ -28,14 +28,19 @@ export default function Reports() {
       const matchesSector =
         selectedSector === 'All' ||
         r.sector?.toLowerCase().includes(selectedSector.toLowerCase()) ||
-        selectedSector.toLowerCase().includes(r.sector?.toLowerCase())
+        selectedSector.toLowerCase().includes(r.sector?.toLowerCase()) ||
+        (r.secondarySector && (
+          r.secondarySector.toLowerCase().includes(selectedSector.toLowerCase()) ||
+          selectedSector.toLowerCase().includes(r.secondarySector.toLowerCase())
+        ))
 
       const matchesSearch =
         !search.trim() ||
         r.title?.toLowerCase().includes(search.toLowerCase()) ||
         r.client?.toLowerCase().includes(search.toLowerCase()) ||
         r.coverage?.toLowerCase().includes(search.toLowerCase()) ||
-        r.sector?.toLowerCase().includes(search.toLowerCase())
+        r.sector?.toLowerCase().includes(search.toLowerCase()) ||
+        r.secondarySector?.toLowerCase().includes(search.toLowerCase())
 
       return matchesSector && matchesSearch
     })
@@ -415,7 +420,7 @@ export default function Reports() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {filteredReports.map((report, idx) => {
               return (
-                <ScrollCard key={report.id} index={idx} staggerDelay={180}>
+                <ScrollCard key={report.id} index={idx} staggerDelay={60}>
                   <div
                     style={{
                       background: '#ffffff',

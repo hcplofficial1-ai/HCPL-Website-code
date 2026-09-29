@@ -276,7 +276,7 @@ async function autoSeedIfEmpty() {
     }
 
     // Clean up any legacy dummy reports
-    await Report.deleteMany({ id: { $in: ['rep-srso-cif-2024', 'rep-nutrition-survey-2023', 'rep-cpi-success-2021'] } })
+    await Report.deleteMany({ id: { $in: ['rep-nutrition-survey-2023', 'rep-cpi-success-2021'] } })
     for (const r of PUBLISHED_REPORTS) {
       await Report.updateOne({ id: r.id }, { $set: r }, { upsert: true })
     }

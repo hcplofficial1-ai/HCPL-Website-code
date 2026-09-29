@@ -29,6 +29,36 @@ export const PUBLISHED_REPORTS = [
     ]
   },
   {
+    id: 'rep-srso-cif-2024',
+    title: 'Study on the Approach and Impact of Community Investment Fund (CIF) under PPRP on Poor Households',
+    client: 'Sindh Rural Support Organization (SRSO)',
+    clientCategory: 'National Non-Governmental Organization (NGO) / Rural Support Programmes Network',
+    fundingPartner: 'Government of Sindh – Peoples’ Poverty Reduction Programme (PPRP)',
+    authoringFirm: 'HIMAT Consulting Private Limited (HCPL)',
+    year: '2025',
+    sector: 'Enterprise & Economic Growth',
+    secondarySector: 'Poverty Alleviation & Social Protection / Microfinance & Women Empowerment',
+    type: 'Impact Assessment Study / Research Report',
+    coverage: 'Sindh, Pakistan – Jacobabad, Kashmore-Kandhkot, Shikarpur, Larkana, Qambar-Shahdadkot',
+    pages: 'Full Evaluation Dossier (35 MB)',
+    pdfUrl: '/uploads/reports/SRSO_-_Report_Study_on_Approach_Impact_o_1789125407509.pdf',
+    docName: 'SRSO_PPRP_Community_Investment_Fund_Impact_Study_Report.pdf',
+    docType: 'pdf',
+    coverImage: '/uploads/covers/SRSO_-_Report_Study_on_Approach_Impact_o_1789153645204.jpg',
+    logo: '/logos/srso.svg',
+    secondaryLogo: '/logos/rspn.jpg',
+    findingsTitle: 'Key Evaluation Findings & Impact Metrics',
+    summary: 'Commissioned by Sindh Rural Support Organization (SRSO) under the Peoples’ Poverty Reduction Programme (PPRP) financed by the Government of Sindh, this comprehensive impact assessment evaluated the operational approach, targeting efficacy, and socio-economic outcomes of the Community Investment Fund (CIF). The study rigorously investigated household-level poverty graduation, income generation, productive asset creation, women empowerment, revolving fund financial discipline, and institutional sustainability across rural Sindh.',
+    methodology: 'Mixed-methods evaluation framework integrating micro-econometric household surveys across target union councils, difference-in-difference poverty scorecard analysis, focus group discussions with Village Organizations and Women Community Organizations, key informant interviews with district teams, and financial revolving fund portfolio audits.',
+    keyFindings: [
+      'Substantial Poverty Scorecard Graduation: Evidenced significant upward mobility of poorest and vulnerable households out of lower PSC bands through flexible CIF micro-investment capital.',
+      'Empowerment of Women as Financial Decision-Makers: Over 90% of CIF beneficiaries managed by women-led Community Organizations, markedly strengthening female agency, household asset ownership, and financial literacy.',
+      'Productive Asset Formation: Majority of credit disbursements invested directly in livestock, high-yield agricultural inputs, and micro-enterprise trades with verified recurring household income gains.',
+      'High Revolving Fund Discipline & Recovery: Robust community peer-monitoring mechanisms achieved sustainable recovery rates, enabling subsequent cycles of community financing.',
+      'Enhanced Household Economic Resilience: Beneficiary households demonstrated higher capacity to withstand climatic shocks, economic inflation, and seasonal agricultural distress.'
+    ]
+  },
+  {
     id: 'rep-concern-hpcm-2024',
     title: 'Training Participants Manual 2024 – Humanitarian Project Cycle Management (HPCM)',
     client: 'Concern Worldwide – RAPID Program',

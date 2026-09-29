@@ -24,6 +24,27 @@ export default function ScrollCard({
     const handleMotionChange = (e) => setReduceMotion(e.matches)
     mediaQuery.addEventListener('change', handleMotionChange)
 
+    // Check immediate visibility on mount
+    if (cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect()
+      if (rect.top < window.innerHeight + 150 && rect.bottom > -150) {
+        setIsVisible(true)
+      }
+    }
+
+    // Safety fallback: ensure card is unconditionally visible after 400ms even if observer is delayed
+    const fallbackTimer = setTimeout(() => {
+      setIsVisible(true)
+    }, 400)
+
+    if (typeof IntersectionObserver === 'undefined') {
+      setIsVisible(true)
+      return () => {
+        mediaQuery.removeEventListener('change', handleMotionChange)
+        clearTimeout(fallbackTimer)
+      }
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -33,7 +54,10 @@ export default function ScrollCard({
           }
         }
       },
-      { threshold: 0.1 }
+      {
+        threshold: 0,
+        rootMargin: '150px 0px 150px 0px',
+      }
     )
 
     if (cardRef.current) {
@@ -41,12 +65,15 @@ export default function ScrollCard({
     }
 
     return () => {
+      clearTimeout(fallbackTimer)
       mediaQuery.removeEventListener('change', handleMotionChange)
       observer.disconnect()
     }
   }, [])
 
-  const delayInSeconds = (index * (staggerDelay / 1000)).toFixed(2) + 's'
+  // Cap stagger delay so cards lower on the page reveal promptly without staying invisible
+  const actualDelaySec = Math.min((index * (staggerDelay / 1000)), 0.25)
+  const delayInSeconds = actualDelaySec.toFixed(2) + 's'
 
   // Determine initial hidden transform and easing curve based on animation / direction
   let initialTransform = `translateY(${translateY}px)`

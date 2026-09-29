@@ -160,7 +160,7 @@ export function DataProvider({ children }) {
       const saved = localStorage.getItem(REPORTS_KEY)
       const parsed = saved ? JSON.parse(saved) : null
       if (Array.isArray(parsed) && parsed.length > 0) {
-        const cleaned = parsed.filter((r) => !['rep-srso-cif-2024', 'rep-nutrition-survey-2023', 'rep-cpi-success-2021'].includes(r.id))
+        const cleaned = parsed.filter((r) => !['rep-nutrition-survey-2023', 'rep-cpi-success-2021'].includes(r.id))
         const pubMap = new Map(PUBLISHED_REPORTS.map(p => [p.id, p]))
         const updated = cleaned.map(r => pubMap.has(r.id) ? { ...r, ...pubMap.get(r.id) } : r)
         const ids = new Set(updated.map(r => r.id))
@@ -269,7 +269,7 @@ export function DataProvider({ children }) {
           if (repRes.ok) {
             const data = await repRes.json()
             if (Array.isArray(data)) {
-              const cleaned = data.filter((r) => !['rep-srso-cif-2024', 'rep-nutrition-survey-2023', 'rep-cpi-success-2021'].includes(r.id))
+              const cleaned = data.filter((r) => !['rep-nutrition-survey-2023', 'rep-cpi-success-2021'].includes(r.id))
               const pubMap = new Map(PUBLISHED_REPORTS.map(p => [p.id, p]))
               const updated = cleaned.map(r => pubMap.has(r.id) ? { ...r, ...pubMap.get(r.id) } : r)
               const ids = new Set(updated.map(r => r.id))
