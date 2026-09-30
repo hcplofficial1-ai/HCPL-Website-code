@@ -11,13 +11,18 @@ const EMPTY_REPORT = {
   title: '',
   client: '',
   clientCategory: 'Multilateral & Bilateral Partner',
+  fundingPartner: '',
+  authoringFirm: 'HIMAT Consulting Private Limited (HCPL)',
   year: new Date().getFullYear().toString(),
   sector: 'Poverty Alleviation & Social Protection',
+  secondarySector: '',
   type: 'Impact Assessment Study',
   coverage: 'Pakistan (National)',
   pages: '',
   pdfUrl: '',
   coverImage: '',
+  logo: '',
+  secondaryLogo: '',
   summary: '',
   keyFindings: [],
   methodology: '',
@@ -1676,12 +1681,22 @@ export default function AdminDashboard() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Client / Partner Organization *</label>
-                <input value={reportForm.client || ''} onChange={e => setReportForm(f => ({ ...f, client: e.target.value }))} placeholder="e.g. World Bank / UNICEF / Asian Development Bank / RSPN" style={s.input} />
+                <input value={reportForm.client || ''} onChange={e => setReportForm(f => ({ ...f, client: e.target.value }))} placeholder="e.g. Sindh Rural Support Organization (SRSO) / UNICEF / World Bank" style={s.input} />
               </div>
 
               <div>
                 <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Client Category / Classification</label>
-                <input value={reportForm.clientCategory || ''} onChange={e => setReportForm(f => ({ ...f, clientCategory: e.target.value }))} placeholder="e.g. UN Agency / Multilateral Bank / Government Ministry / INGO" style={s.input} />
+                <input value={reportForm.clientCategory || ''} onChange={e => setReportForm(f => ({ ...f, clientCategory: e.target.value }))} placeholder="e.g. National NGO / Multilateral Bank / Government Ministry / INGO" style={s.input} />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Funding Partner (Optional)</label>
+                <input value={reportForm.fundingPartner || ''} onChange={e => setReportForm(f => ({ ...f, fundingPartner: e.target.value }))} placeholder="e.g. Government of Sindh – PPRP / IFAD / USAID / EAC" style={s.input} />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Authoring Firm</label>
+                <input value={reportForm.authoringFirm || 'HIMAT Consulting Private Limited (HCPL)'} onChange={e => setReportForm(f => ({ ...f, authoringFirm: e.target.value }))} placeholder="HIMAT Consulting Private Limited (HCPL)" style={s.input} />
               </div>
 
               <div style={{ gridColumn: 'span 2' }}>
@@ -1690,7 +1705,7 @@ export default function AdminDashboard() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Sector *</label>
+                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Primary Sector *</label>
                 <select value={reportForm.sector || 'Poverty Alleviation & Social Protection'} onChange={e => setReportForm(f => ({ ...f, sector: e.target.value }))} style={s.input}>
                   <option value="Poverty Alleviation & Social Protection">Poverty Alleviation & Social Protection</option>
                   <option value="TVET & Skills">TVET & Skills Development</option>
@@ -1706,8 +1721,18 @@ export default function AdminDashboard() {
               </div>
 
               <div>
+                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Secondary Sector / Sub-Theme (Optional)</label>
+                <input value={reportForm.secondarySector || ''} onChange={e => setReportForm(f => ({ ...f, secondarySector: e.target.value }))} placeholder="e.g. Microfinance & Women Empowerment / Food Security" style={s.input} />
+              </div>
+
+              <div>
                 <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Publication Year</label>
                 <input value={reportForm.year || ''} onChange={e => setReportForm(f => ({ ...f, year: e.target.value }))} placeholder="e.g. 2026" style={s.input} />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', marginBottom: '0.3rem', textTransform: 'uppercase' }}>Client Logo URL / Path (Optional)</label>
+                <input value={reportForm.logo || ''} onChange={e => setReportForm(f => ({ ...f, logo: e.target.value }))} placeholder="Auto-detected from client name if blank (or /logos/srso.svg)" style={s.input} />
               </div>
 
               <div style={{ gridColumn: 'span 2' }}>

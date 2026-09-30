@@ -4,6 +4,49 @@ import { Link } from 'react-router-dom'
 import { useData } from '../context/DataContext'
 import ScrollCard from '../components/common/ScrollCard'
 
+export const CLIENT_LOGOS = [
+  { match: ['unicef'], logo: '/logos/unicef.png' },
+  { match: ['usaid'], logo: '/logos/usaid.png' },
+  { match: ['world bank', 'worldbank', 'ida', 'ibrd'], logo: '/logos/worldbank.png' },
+  { match: ['asian development bank', 'adb'], logo: '/logos/adb.jpg' },
+  { match: ['british council'], logo: '/logos/britishcouncil.png' },
+  { match: ['concern'], logo: '/logos/concern.jpg' },
+  { match: ['srso', 'sindh rural support'], logo: '/logos/srso.svg' },
+  { match: ['rspn', 'rural support programmes network'], logo: '/logos/rspn.jpg' },
+  { match: ['akrsp', 'aga khan rural support'], logo: '/logos/akrsp.jpg' },
+  { match: ['akf', 'aga khan foundation'], logo: '/logos/akf.jpg' },
+  { match: ['gbrsp', 'gilgit-baltistan rural support', 'eti-gb', 'economic transformation initiative'], logo: '/logos/gbrsp.jpg' },
+  { match: ['ifad'], logo: '/logos/ifad.jpg' },
+  { match: ['wfp', 'world food programme'], logo: '/logos/wfp.jpg' },
+  { match: ['irc', 'international rescue committee'], logo: '/logos/irc.jpg' },
+  { match: ['care international', 'care'], logo: '/logos/care.jpg' },
+  { match: ['cbm', 'christoffel'], logo: '/logos/cbm.jpg' },
+  { match: ['giz'], logo: '/logos/giz.png' },
+  { match: ['eu', 'european union'], logo: '/logos/eu.png' },
+  { match: ['sdc', 'swiss agency'], logo: '/logos/sdc.jpg' },
+  { match: ['unesco'], logo: '/logos/unesco.jpg' },
+  { match: ['wwf'], logo: '/logos/wwf.png' },
+  { match: ['ppaf', 'pakistan poverty alleviation'], logo: '/logos/ppaf.jpg' },
+  { match: ['trdp', 'thardeep'], logo: '/logos/trdp.jpg' },
+  { match: ['irsp', 'integrated rural support'], logo: '/logos/irsp.jpg' },
+  { match: ['nca', 'norwegian church aid'], logo: '/logos/nca.jpg' },
+  { match: ['cesvi'], logo: '/logos/cesvi.jpg' },
+  { match: ['helpage'], logo: '/logos/helpage.jpg' },
+  { match: ['lpp', 'lodhran pilot project'], logo: '/logos/lpp.jpg' },
+  { match: ['itc'], logo: '/logos/itc.jpg' },
+  { match: ['jpal'], logo: '/logos/jpal.jpg' },
+  { match: ['better cotton', 'bettercotton'], logo: '/logos/bettercotton.jpg' },
+  { match: ['government of pakistan', 'government of sindh', 'government of punjab', 'government of kp', 'government of balochistan', 'gop', 'government'], logo: '/logos/gop.jpg' },
+]
+
+export function resolveClientLogo(clientName, explicitLogo) {
+  if (explicitLogo && explicitLogo.trim()) return explicitLogo
+  if (!clientName || typeof clientName !== 'string') return null
+  const c = clientName.toLowerCase()
+  const found = CLIENT_LOGOS.find(item => item.match.some(m => c.includes(m)))
+  return found ? found.logo : null
+}
+
 export default function Reports() {
   const { reports, projects = [] } = useData()
   const [search, setSearch] = useState('')
@@ -443,24 +486,89 @@ export default function Reports() {
                           <img src={report.coverImage} alt={report.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => e.currentTarget.style.display = 'none'} />
                         </div>
                       ) : (
-                        <div style={{ width: '100%', height: '140px', background: 'linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)', borderRadius: '14px', border: '1.5px dashed rgba(118,12,176,0.25)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}>
-                          <span style={{ fontSize: '2.5rem' }}>📄</span>
-                          <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>PDF Dossier</span>
+                        <div
+                          style={{
+                            width: '100%',
+                            height: '180px',
+                            background: 'linear-gradient(145deg, #3b0764 0%, #760CB0 55%, #581c87 100%)',
+                            borderRadius: '14px',
+                            border: '1px solid rgba(118,12,176,0.3)',
+                            boxShadow: '0 6px 18px rgba(118,12,176,0.22), inset 0 0 0 1px rgba(255,255,255,0.15)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            padding: '0.85rem 0.75rem',
+                            boxSizing: 'border-box',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            borderLeft: '5px solid #d8b4fe',
+                            textAlign: 'left',
+                          }}
+                        >
+                          {/* Decorative watermark */}
+                          <div style={{ position: 'absolute', right: '-10px', bottom: '-10px', fontSize: '4.2rem', opacity: 0.12, userSelect: 'none', pointerEvents: 'none', lineHeight: 1 }}>
+                            📑
+                          </div>
+
+                          {/* Top Header */}
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
+                            <span style={{ fontSize: '0.62rem', fontWeight: 800, color: '#e9d5ff', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                              HCPL Research
+                            </span>
+                            <span style={{ fontSize: '0.62rem', background: 'rgba(255,255,255,0.2)', color: '#ffffff', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: 800 }}>
+                              {report.year || '2026'}
+                            </span>
+                          </div>
+
+                          {/* Center Title */}
+                          <div style={{ position: 'relative', zIndex: 1, margin: 'auto 0' }}>
+                            <div style={{ fontSize: '0.85rem', marginBottom: '0.2rem' }}>📖</div>
+                            <div style={{
+                              fontFamily: "'Source Serif 4', Georgia, serif",
+                              fontSize: '0.82rem',
+                              fontWeight: 700,
+                              color: '#ffffff',
+                              lineHeight: 1.25,
+                              display: '-webkit-box',
+                              WebkitLineClamp: 3,
+                              WebkitBoxOrient: 'vertical',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                            }}>
+                              {report.title}
+                            </div>
+                          </div>
+
+                          {/* Bottom Footer */}
+                          <div style={{ position: 'relative', zIndex: 1, borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '0.35rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <span style={{ fontSize: '0.6rem', fontWeight: 800, color: '#f3e8ff', letterSpacing: '0.04em' }}>
+                              OFFICIAL DOSSIER
+                            </span>
+                            <span style={{ fontSize: '0.6rem', color: '#e9d5ff', fontWeight: 700 }}>
+                              HCPL
+                            </span>
+                          </div>
                         </div>
                       )}
 
                       {/* Client Logo & Category */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        {report.logo && (
-                          <img src={report.logo} alt={report.client} style={{ height: '26px', maxWidth: '65px', objectFit: 'contain' }} onError={e => e.currentTarget.style.display = 'none'} />
-                        )}
-                        {report.secondaryLogo && (
-                          <img src={report.secondaryLogo} alt="Partner" style={{ height: '26px', maxWidth: '65px', objectFit: 'contain' }} onError={e => e.currentTarget.style.display = 'none'} />
-                        )}
-                        <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#760CB0' }}>{report.client}</span>
-                      </div>
+                      {(() => {
+                        const resolvedLogo = resolveClientLogo(report.client, report.logo)
+                        const resolvedSecondaryLogo = resolveClientLogo(report.fundingPartner, report.secondaryLogo)
+                        return (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                            {resolvedLogo && (
+                              <img src={resolvedLogo} alt={report.client} style={{ height: '26px', maxWidth: '65px', objectFit: 'contain' }} onError={e => e.currentTarget.style.display = 'none'} />
+                            )}
+                            {resolvedSecondaryLogo && (
+                              <img src={resolvedSecondaryLogo} alt="Partner" style={{ height: '26px', maxWidth: '65px', objectFit: 'contain' }} onError={e => e.currentTarget.style.display = 'none'} />
+                            )}
+                            <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#760CB0' }}>{report.client}</span>
+                          </div>
+                        )
+                      })()}
                       <span style={{ background: '#faf5ff', color: '#760CB0', border: '1px solid rgba(118,12,176,0.15)', fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: '0.75rem', padding: '0.2rem 0.65rem', borderRadius: '999px' }}>
-                        Publication {report.year}
+                        Publication {report.year || '2026'}
                       </span>
                     </div>
 
@@ -472,14 +580,15 @@ export default function Reports() {
                           <h3 style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '1.45rem', fontWeight: 700, color: '#111111', margin: '0.25rem 0 0', lineHeight: 1.3 }}>
                             {report.title}
                           </h3>
-                          {report.fundingPartner && (
-                            <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.35rem', lineHeight: 1.4 }}>
-                              <span style={{ fontWeight: 700, color: '#444' }}>Funding Partner:</span> {report.fundingPartner}
-                              {report.authoringFirm && (
-                                <> · <span style={{ fontWeight: 700, color: '#444' }}>Authoring Firm:</span> {report.authoringFirm}</>
-                              )}
-                            </div>
-                          )}
+                          <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.35rem', lineHeight: 1.4 }}>
+                            {report.fundingPartner && (
+                              <>
+                                <span style={{ fontWeight: 700, color: '#444' }}>Funding Partner:</span> {report.fundingPartner}
+                                {' · '}
+                              </>
+                            )}
+                            <span style={{ fontWeight: 700, color: '#444' }}>Authoring Firm:</span> {report.authoringFirm || 'HIMAT Consulting Private Limited (HCPL)'}
+                          </div>
                         </div>
                       </div>
 
@@ -508,71 +617,55 @@ export default function Reports() {
 
                       {/* Actions */}
                       <div style={{ display: 'flex', gap: '0.75rem', marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid rgba(118,12,176,0.08)', flexWrap: 'wrap' }}>
-                        {report.pdfUrl && (report.pdfUrl.includes('.doc') || report.pdfUrl.includes('wordprocessingml') || report.docType === 'word') ? (
-                          <button
-                            onClick={() => handleDownloadPdf(report)}
-                            style={{
-                              background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
-                              color: '#ffffff',
-                              fontFamily: "'Inter', Arial, sans-serif",
-                              fontWeight: 800,
-                              fontSize: '0.85rem',
-                              padding: '0.65rem 1.25rem',
-                              borderRadius: '10px',
-                              border: 'none',
-                              cursor: 'pointer',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '0.4rem',
-                              boxShadow: '0 4px 14px rgba(37, 99, 235, 0.25)',
-                            }}
-                          >
-                            📝 Download Word Document (.docx)
-                          </button>
-                        ) : (
-                          <>
-                            <button
-                              onClick={() => handleOpenPdf(report)}
-                              style={{
-                                background: 'linear-gradient(135deg, #760CB0 0%, #5a0886 100%)',
-                                color: '#ffffff',
-                                fontFamily: "'Inter', Arial, sans-serif",
-                                fontWeight: 800,
-                                fontSize: '0.85rem',
-                                padding: '0.65rem 1.25rem',
-                                borderRadius: '10px',
-                                border: 'none',
-                                cursor: 'pointer',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '0.4rem',
-                                boxShadow: '0 4px 14px rgba(118,12,176,0.25)',
-                              }}
-                            >
-                              📄 Read Official Report
-                            </button>
+                        {(() => {
+                          const isWord = report.pdfUrl && (report.pdfUrl.includes('.doc') || report.pdfUrl.includes('wordprocessingml') || report.docType === 'word')
+                          return (
+                            <>
+                              <button
+                                onClick={() => handleOpenPdf(report)}
+                                style={{
+                                  background: 'linear-gradient(135deg, #760CB0 0%, #5a0886 100%)',
+                                  color: '#ffffff',
+                                  fontFamily: "'Inter', Arial, sans-serif",
+                                  fontWeight: 800,
+                                  fontSize: '0.85rem',
+                                  padding: '0.65rem 1.25rem',
+                                  borderRadius: '10px',
+                                  border: 'none',
+                                  cursor: 'pointer',
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '0.45rem',
+                                  boxShadow: '0 4px 14px rgba(118,12,176,0.25)',
+                                  transition: 'all 0.2s ease',
+                                }}
+                              >
+                                {isWord ? '📝 Read Document' : '📄 Read Official Report'}
+                              </button>
 
-                            <button
-                              onClick={() => handleDownloadPdf(report)}
-                              style={{
-                                background: '#faf5ff',
-                                color: '#760CB0',
-                                fontFamily: "'Inter', Arial, sans-serif",
-                                fontWeight: 800,
-                                fontSize: '0.85rem',
-                                padding: '0.65rem 1.25rem',
-                                borderRadius: '10px',
-                                border: '1.5px solid rgba(118,12,176,0.2)',
-                                cursor: 'pointer',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '0.4rem',
-                              }}
-                            >
-                              📥 Download PDF
-                            </button>
-                          </>
-                        )}
+                              <button
+                                onClick={() => handleDownloadPdf(report)}
+                                style={{
+                                  background: '#faf5ff',
+                                  color: '#760CB0',
+                                  fontFamily: "'Inter', Arial, sans-serif",
+                                  fontWeight: 800,
+                                  fontSize: '0.85rem',
+                                  padding: '0.65rem 1.25rem',
+                                  borderRadius: '10px',
+                                  border: '1.5px solid rgba(118,12,176,0.2)',
+                                  cursor: 'pointer',
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '0.45rem',
+                                  transition: 'all 0.2s ease',
+                                }}
+                              >
+                                {isWord ? '📥 Download Word (.docx)' : '📥 Download PDF'}
+                              </button>
+                            </>
+                          )
+                        })()}
                       </div>
                     </div>
                   </div>
