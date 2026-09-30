@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useData } from '../context/DataContext'
 import { DEFAULT_TEAM } from '../data/team'
 import ScrollCard from '../components/common/ScrollCard'
 
 function ExecutiveMemberCard({ member, index = 0 }) {
+  const [imgError, setImgError] = useState(false)
   const getObjectPosition = (id) => {
     switch (id) {
       case 'himatullah':
@@ -66,7 +68,7 @@ function ExecutiveMemberCard({ member, index = 0 }) {
             position: 'relative',
           }}
         >
-          {member.image ? (
+          {member.image && !imgError ? (
             <img
               src={member.image}
               alt={member.name}
@@ -80,9 +82,7 @@ function ExecutiveMemberCard({ member, index = 0 }) {
                 transition: 'transform 0.4s ease',
               }}
               className="member-portrait-img"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none'
-              }}
+              onError={() => setImgError(true)}
             />
           ) : (
             <div

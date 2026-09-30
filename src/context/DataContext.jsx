@@ -18,23 +18,43 @@ const CERTIFICATES_KEY = 'himat_certificates_db'
 const CONSULTANTS_KEY = 'himat_consultants_db_v2'
 const SERVICES_KEY = 'himat_services_db'
 
+function sanitizeForStorage(data) {
+  if (!Array.isArray(data)) return data
+  return data.map((item) => {
+    if (!item || typeof item !== 'object') return item
+    const copy = { ...item }
+    // Never store heavy base64 binaries in browser localStorage (prevents UI freeze & quota errors)
+    if (typeof copy.pdfUrl === 'string' && copy.pdfUrl.startsWith('data:') && copy.pdfUrl.length > 50000) {
+      copy.pdfUrl = ''
+    }
+    if (typeof copy.downloadUrl === 'string' && copy.downloadUrl.startsWith('data:') && copy.downloadUrl.length > 50000) {
+      copy.downloadUrl = ''
+    }
+    if (typeof copy.coverImage === 'string' && copy.coverImage.startsWith('data:') && copy.coverImage.length > 80000) {
+      copy.coverImage = ''
+    }
+    if (typeof copy.image === 'string' && copy.image.startsWith('data:') && copy.image.length > 80000) {
+      copy.image = ''
+    }
+    return copy
+  })
+}
+
 function safeSaveLocalStorage(key, data) {
-  try {
-    localStorage.setItem(key, JSON.stringify(data))
-  } catch (quotaError) {
-    console.warn(`[LocalStorage Quota Exceeded] Optimizing storage for ${key} by removing heavy PDF payloads.`, quotaError)
+  // Use non-blocking execution so main UI thread and animations never freeze
+  setTimeout(() => {
     try {
-      const sanitized = Array.isArray(data)
-        ? data.map((item) => {
-            const copy = { ...item }
-            if (copy.pdfUrl && copy.pdfUrl.startsWith('data:') && copy.pdfUrl.length > 500000) copy.pdfUrl = ''
-            if (copy.downloadUrl && copy.downloadUrl.startsWith('data:') && copy.downloadUrl.length > 500000) copy.downloadUrl = ''
-            return copy
-          })
-        : data
-      localStorage.setItem(key, JSON.stringify(sanitized))
-    } catch (_) {}
-  }
+      const clean = sanitizeForStorage(data)
+      localStorage.setItem(key, JSON.stringify(clean))
+    } catch (quotaError) {
+      try {
+        if (Array.isArray(data)) {
+          const lean = data.map(({ pdfUrl, downloadUrl, coverImage, image, ...rest }) => rest)
+          localStorage.setItem(key, JSON.stringify(lean))
+        }
+      } catch (_) {}
+    }
+  }, 0)
 }
 
 export function applyCompetencyImages(list) {
@@ -401,7 +421,7 @@ export function DataProvider({ children }) {
     const item = { ...proj, no: projNo }
     setProjects((prev) => {
       const filtered = prev.filter(p => String(p.no) !== projNo)
-      const next = [...filtered, item].sort((a, b) => (Number(a.no) || 0) - (Number(b.no) || 0))
+      const next = [item, ...filtered].sort((a, b) => (Number(b.no) || 0) - (Number(a.no) || 0))
       safeSaveLocalStorage(PROJECTS_KEY, next)
       return next
     })
@@ -415,12 +435,16 @@ export function DataProvider({ children }) {
         const saved = await res.json()
         setProjects((prev) => {
           const filtered = prev.filter(p => String(p.no) !== String(saved.no))
-          const next = [...filtered, saved].sort((a, b) => (Number(a.no) || 0) - (Number(b.no) || 0))
+          const next = [saved, ...filtered].sort((a, b) => (Number(b.no) || 0) - (Number(a.no) || 0))
           safeSaveLocalStorage(PROJECTS_KEY, next)
           return next
         })
+        return { success: true, data: saved }
       }
-    } catch (_) {}
+      return { success: true }
+    } catch (_) {
+      return { success: true }
+    }
   }, [projects])
 
   const updateProject = useCallback(async (id, updates) => {

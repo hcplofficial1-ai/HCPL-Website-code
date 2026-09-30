@@ -106,6 +106,7 @@ export default function AdminDashboard() {
   const [teamForm, setTeamForm] = useState(EMPTY_TEAM_MEMBER)
   const [deleteTeamId, setDeleteTeamId] = useState(null)
   const [specialtyInput, setSpecialtyInput] = useState('')
+  const [isSavingTeam, setIsSavingTeam] = useState(false)
 
   // Certificate State & Modals
   const [showCertModal, setShowCertModal] = useState(false)
@@ -119,6 +120,7 @@ export default function AdminDashboard() {
   const [editProjectObj, setEditProjectObj] = useState(null)
   const [projectForm, setProjectForm] = useState(EMPTY_PROJECT)
   const [deleteProjectId, setDeleteProjectId] = useState(null)
+  const [isSavingProject, setIsSavingProject] = useState(false)
 
   // Report State & Modals
   const [showReportModal, setShowReportModal] = useState(false)
@@ -203,7 +205,7 @@ export default function AdminDashboard() {
       const q = search.toLowerCase()
       list = list.filter(p => p.title?.toLowerCase().includes(q) || p.client?.toLowerCase().includes(q) || p.sector?.toLowerCase().includes(q) || String(p.no).includes(q))
     }
-    return [...list].sort((a, b) => (Number(a.no) || 0) - (Number(b.no) || 0))
+    return [...list].sort((a, b) => (Number(b.no) || 0) - (Number(a.no) || 0))
   }, [projects, search])
 
   const filteredReports = useMemo(() => {
@@ -315,25 +317,33 @@ export default function AdminDashboard() {
     setEditTeamMemberObj(null)
     setTeamForm(EMPTY_TEAM_MEMBER)
     setSpecialtyInput('')
+    setIsSavingTeam(false)
   }
 
-  const handleSaveTeamMember = () => {
+  const handleSaveTeamMember = async () => {
     if (!teamForm.name.trim() || !teamForm.role.trim()) {
       return alert('Full Name and Designation/Role are required.')
     }
-    // Auto-generate initials if blank
-    const calculatedInitials = teamForm.initials.trim() || teamForm.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
-    const memberId = teamForm.id || (editTeamMemberObj ? editTeamMemberObj.id : 'team-' + Date.now().toString().slice(-6))
-    const payload = { ...teamForm, id: memberId, initials: calculatedInitials }
+    setIsSavingTeam(true)
+    try {
+      // Auto-generate initials if blank
+      const calculatedInitials = teamForm.initials.trim() || teamForm.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
+      const memberId = teamForm.id || (editTeamMemberObj ? editTeamMemberObj.id : 'team-' + Date.now().toString().slice(-6))
+      const payload = { ...teamForm, id: memberId, initials: calculatedInitials }
 
-    if (editTeamMemberObj) {
-      updateTeamMember(editTeamMemberObj.id, payload)
-      showToast('Team member updated ✓')
-    } else {
-      addTeamMember(payload)
-      showToast('New team member added to website ✓')
+      if (editTeamMemberObj) {
+        await updateTeamMember(editTeamMemberObj.id, payload)
+        showToast('Team member profile updated ✓')
+      } else {
+        await addTeamMember(payload)
+        showToast('New team member published to website ✓')
+      }
+      closeTeamModal()
+    } catch (err) {
+      alert(`Error saving team member: ${err.message}`)
+    } finally {
+      setIsSavingTeam(false)
     }
-    closeTeamModal()
   }
 
   const confirmDeleteTeam = () => {
@@ -429,19 +439,32 @@ export default function AdminDashboard() {
     setShowProjectModal(true)
   }
   const openEditProject = (p) => { setEditProjectObj(p); setProjectForm({ ...p }); setShowProjectModal(true) }
-  const closeProjectModal = () => { setShowProjectModal(false); setEditProjectObj(null); setProjectForm(EMPTY_PROJECT) }
-  const handleSaveProject = () => {
+  const closeProjectModal = () => {
+    setShowProjectModal(false)
+    setEditProjectObj(null)
+    setProjectForm(EMPTY_PROJECT)
+    setIsSavingProject(false)
+  }
+
+  const handleSaveProject = async () => {
     if (!projectForm.title.trim() || !projectForm.client.trim()) return alert('Title and Client are required.')
-    const numNo = String(projectForm.no || (Math.max(...projects.map(p => Number(p.no) || 0), 0) + 1))
-    const payload = { ...projectForm, no: numNo }
-    if (editProjectObj) {
-      updateProject(editProjectObj.no, payload)
-      showToast(`Project #${numNo} updated ✓`)
-    } else {
-      addProject(payload)
-      showToast(`Project #${numNo} added to end of portfolio ✓`)
+    setIsSavingProject(true)
+    try {
+      const numNo = String(projectForm.no || (Math.max(...projects.map(p => Number(p.no) || 0), 0) + 1))
+      const payload = { ...projectForm, no: numNo }
+      if (editProjectObj) {
+        await updateProject(editProjectObj.no, payload)
+        showToast(`Project #${numNo} updated ✓`)
+      } else {
+        await addProject(payload)
+        showToast(`Project #${numNo} published to website ✓`)
+      }
+      closeProjectModal()
+    } catch (err) {
+      alert(`Error saving project: ${err.message}`)
+    } finally {
+      setIsSavingProject(false)
     }
-    closeProjectModal()
   }
   const confirmDeleteProject = () => { deleteProject(deleteProjectId); setDeleteProjectId(null); showToast('Project deleted ✓') }
 
@@ -1293,8 +1316,10 @@ export default function AdminDashboard() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', marginTop: 'auto', paddingTop: '1rem' }}>
-                  <button type="button" onClick={closeTeamModal} style={{ background: '#f5f5f5', color: '#666', border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 700 }}>Cancel</button>
-                  <button type="button" onClick={handleSaveTeamMember} style={s.btn('#760CB0')}>💾 Save & Publish Team Member</button>
+                  <button type="button" onClick={closeTeamModal} disabled={isSavingTeam} style={{ background: '#f5f5f5', color: '#666', border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 700 }}>Cancel</button>
+                  <button type="button" onClick={handleSaveTeamMember} disabled={isSavingTeam} style={{ ...s.btn('#760CB0'), opacity: isSavingTeam ? 0.7 : 1, cursor: isSavingTeam ? 'not-allowed' : 'pointer' }}>
+                    {isSavingTeam ? '⏳ Publishing Team Member...' : '💾 Save & Publish Team Member'}
+                  </button>
                 </div>
               </div>
             </div>
@@ -1646,8 +1671,10 @@ export default function AdminDashboard() {
             </div>
 
             <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', marginTop: '1.5rem', borderTop: '1px solid rgba(118,12,176,0.1)', paddingTop: '1rem' }}>
-              <button type="button" onClick={closeProjectModal} style={{ background: '#f5f5f5', color: '#666', border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 700 }}>Cancel</button>
-              <button type="button" onClick={handleSaveProject} style={s.btn('#760CB0')}>💾 Save & Append Project #{projectForm.no}</button>
+              <button type="button" onClick={closeProjectModal} disabled={isSavingProject} style={{ background: '#f5f5f5', color: '#666', border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 700 }}>Cancel</button>
+              <button type="button" onClick={handleSaveProject} disabled={isSavingProject} style={{ ...s.btn('#760CB0'), opacity: isSavingProject ? 0.7 : 1, cursor: isSavingProject ? 'not-allowed' : 'pointer' }}>
+                {isSavingProject ? '⏳ Publishing Project...' : `💾 Save & Publish Project #${projectForm.no}`}
+              </button>
             </div>
           </div>
         </div>

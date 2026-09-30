@@ -47,6 +47,82 @@ export function resolveClientLogo(clientName, explicitLogo) {
   return found ? found.logo : null
 }
 
+export function ReportCoverView({ report }) {
+  const [imgError, setImgError] = useState(false)
+
+  if (report.coverImage && !imgError) {
+    return (
+      <div style={{ width: '100%', height: '180px', borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(118,12,176,0.15)', boxShadow: '0 4px 14px rgba(0,0,0,0.08)' }}>
+        <img
+          src={report.coverImage}
+          alt={report.title}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          onError={() => setImgError(true)}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: '180px',
+        background: 'linear-gradient(145deg, #3b0764 0%, #760CB0 55%, #581c87 100%)',
+        borderRadius: '14px',
+        border: '1px solid rgba(118,12,176,0.3)',
+        boxShadow: '0 6px 18px rgba(118,12,176,0.22), inset 0 0 0 1px rgba(255,255,255,0.15)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        padding: '0.85rem 0.75rem',
+        boxSizing: 'border-box',
+        position: 'relative',
+        overflow: 'hidden',
+        borderLeft: '5px solid #d8b4fe',
+        textAlign: 'left',
+      }}
+    >
+      <div style={{ position: 'absolute', right: '-10px', bottom: '-10px', fontSize: '4.2rem', opacity: 0.12, userSelect: 'none', pointerEvents: 'none', lineHeight: 1 }}>
+        📑
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
+        <span style={{ fontSize: '0.62rem', fontWeight: 800, color: '#e9d5ff', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          HCPL Research
+        </span>
+        <span style={{ fontSize: '0.62rem', background: 'rgba(255,255,255,0.2)', color: '#ffffff', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: 800 }}>
+          {report.year || '2026'}
+        </span>
+      </div>
+      <div style={{ position: 'relative', zIndex: 1, margin: 'auto 0' }}>
+        <div style={{ fontSize: '0.85rem', marginBottom: '0.2rem' }}>📖</div>
+        <div style={{
+          fontFamily: "'Source Serif 4', Georgia, serif",
+          fontSize: '0.82rem',
+          fontWeight: 700,
+          color: '#ffffff',
+          lineHeight: 1.25,
+          display: '-webkit-box',
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }}>
+          {report.title}
+        </div>
+      </div>
+      <div style={{ position: 'relative', zIndex: 1, borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '0.35rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <span style={{ fontSize: '0.6rem', fontWeight: 800, color: '#f3e8ff', letterSpacing: '0.04em' }}>
+          OFFICIAL DOSSIER
+        </span>
+        <span style={{ fontSize: '0.6rem', color: '#e9d5ff', fontWeight: 700 }}>
+          HCPL
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export default function Reports() {
   const { reports, projects = [] } = useData()
   const [search, setSearch] = useState('')
@@ -481,75 +557,7 @@ export default function Reports() {
                   >
                     {/* Left Column: Cover / Icon & Client Brand */}
                     <div style={{ width: '180px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem', alignItems: 'center', textAlign: 'center' }}>
-                      {report.coverImage ? (
-                        <div style={{ width: '100%', height: '180px', borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(118,12,176,0.15)', boxShadow: '0 4px 14px rgba(0,0,0,0.08)' }}>
-                          <img src={report.coverImage} alt={report.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => e.currentTarget.style.display = 'none'} />
-                        </div>
-                      ) : (
-                        <div
-                          style={{
-                            width: '100%',
-                            height: '180px',
-                            background: 'linear-gradient(145deg, #3b0764 0%, #760CB0 55%, #581c87 100%)',
-                            borderRadius: '14px',
-                            border: '1px solid rgba(118,12,176,0.3)',
-                            boxShadow: '0 6px 18px rgba(118,12,176,0.22), inset 0 0 0 1px rgba(255,255,255,0.15)',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            padding: '0.85rem 0.75rem',
-                            boxSizing: 'border-box',
-                            position: 'relative',
-                            overflow: 'hidden',
-                            borderLeft: '5px solid #d8b4fe',
-                            textAlign: 'left',
-                          }}
-                        >
-                          {/* Decorative watermark */}
-                          <div style={{ position: 'absolute', right: '-10px', bottom: '-10px', fontSize: '4.2rem', opacity: 0.12, userSelect: 'none', pointerEvents: 'none', lineHeight: 1 }}>
-                            📑
-                          </div>
-
-                          {/* Top Header */}
-                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
-                            <span style={{ fontSize: '0.62rem', fontWeight: 800, color: '#e9d5ff', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                              HCPL Research
-                            </span>
-                            <span style={{ fontSize: '0.62rem', background: 'rgba(255,255,255,0.2)', color: '#ffffff', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: 800 }}>
-                              {report.year || '2026'}
-                            </span>
-                          </div>
-
-                          {/* Center Title */}
-                          <div style={{ position: 'relative', zIndex: 1, margin: 'auto 0' }}>
-                            <div style={{ fontSize: '0.85rem', marginBottom: '0.2rem' }}>📖</div>
-                            <div style={{
-                              fontFamily: "'Source Serif 4', Georgia, serif",
-                              fontSize: '0.82rem',
-                              fontWeight: 700,
-                              color: '#ffffff',
-                              lineHeight: 1.25,
-                              display: '-webkit-box',
-                              WebkitLineClamp: 3,
-                              WebkitBoxOrient: 'vertical',
-                              overflow: 'hidden',
-                              textOverflow: 'ellipsis',
-                            }}>
-                              {report.title}
-                            </div>
-                          </div>
-
-                          {/* Bottom Footer */}
-                          <div style={{ position: 'relative', zIndex: 1, borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '0.35rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <span style={{ fontSize: '0.6rem', fontWeight: 800, color: '#f3e8ff', letterSpacing: '0.04em' }}>
-                              OFFICIAL DOSSIER
-                            </span>
-                            <span style={{ fontSize: '0.6rem', color: '#e9d5ff', fontWeight: 700 }}>
-                              HCPL
-                            </span>
-                          </div>
-                        </div>
-                      )}
+                      <ReportCoverView report={report} />
 
                       {/* Client Logo & Category */}
                       {(() => {

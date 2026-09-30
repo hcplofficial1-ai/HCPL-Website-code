@@ -306,7 +306,7 @@ export default function Projects() {
           p.type?.toLowerCase().includes(q)
       )
     }
-    return [...r].sort((a, b) => (Number(a.no) || 0) - (Number(b.no) || 0))
+    return [...r].sort((a, b) => (Number(b.no) || 0) - (Number(a.no) || 0))
   }, [projects, sector, type, year, status, search])
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE)

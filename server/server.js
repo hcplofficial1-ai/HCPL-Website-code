@@ -334,7 +334,7 @@ app.get('/api/health', async (req, res) => {
 app.get('/api/projects', async (req, res) => {
   try {
     const list = await Project.find()
-    list.sort((a, b) => (Number(a.no) || 0) - (Number(b.no) || 0))
+    list.sort((a, b) => (Number(b.no) || 0) - (Number(a.no) || 0))
     res.json(list)
   } catch (err) {
     res.status(500).json({ error: err.message })
