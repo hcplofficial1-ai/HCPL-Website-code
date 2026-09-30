@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react'
 import { DEFAULT_PROJECTS } from '../data/projects'
 import { DEFAULT_TEAM } from '../data/team'
 import { PUBLISHED_REPORTS } from '../data/reportsData'
