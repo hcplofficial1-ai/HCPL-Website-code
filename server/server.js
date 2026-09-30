@@ -343,7 +343,13 @@ app.get('/api/projects', async (req, res) => {
 
 app.post('/api/projects', async (req, res) => {
   try {
-    const proj = await Project.findOneAndUpdate({ no: req.body.no }, req.body, { upsert: true, new: true })
+    const body = { ...req.body }
+    if (!body.no) {
+      const allProjs = await Project.find()
+      const maxNo = Math.max(0, ...allProjs.map(p => Number(p.no) || 0))
+      body.no = String(maxNo + 1)
+    }
+    const proj = await Project.findOneAndUpdate({ no: body.no }, body, { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true })
     res.json(proj)
   } catch (err) {
     res.status(400).json({ error: err.message })
@@ -352,7 +358,7 @@ app.post('/api/projects', async (req, res) => {
 
 app.put('/api/projects/:no', async (req, res) => {
   try {
-    const updated = await Project.findOneAndUpdate({ no: req.params.no }, req.body, { new: true })
+    const updated = await Project.findOneAndUpdate({ no: req.params.no }, req.body, { returnDocument: 'after' })
     res.json(updated)
   } catch (err) {
     res.status(400).json({ error: err.message })
@@ -380,7 +386,9 @@ app.get('/api/team', async (req, res) => {
 
 app.post('/api/team', async (req, res) => {
   try {
-    const member = await TeamMember.findOneAndUpdate({ id: req.body.id }, req.body, { upsert: true, new: true })
+    const body = { ...req.body }
+    if (!body.id) body.id = 'team-' + Date.now().toString().slice(-6)
+    const member = await TeamMember.findOneAndUpdate({ id: body.id }, body, { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true })
     res.json(member)
   } catch (err) {
     res.status(400).json({ error: err.message })
@@ -425,7 +433,7 @@ app.post('/api/reports', async (req, res) => {
     if (body.coverImage && body.coverImage.startsWith('data:')) {
       body.coverImage = saveBase64File(body.coverImage, 'covers', body.title || 'cover')
     }
-    const rep = await Report.findOneAndUpdate({ id: body.id }, body, { upsert: true, new: true, setDefaultsOnInsert: true })
+    const rep = await Report.findOneAndUpdate({ id: body.id }, body, { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true })
     res.json(rep)
   } catch (err) {
     console.error('Error in POST /api/reports:', err)
@@ -442,7 +450,7 @@ app.put('/api/reports/:id', async (req, res) => {
     if (body.coverImage && body.coverImage.startsWith('data:')) {
       body.coverImage = saveBase64File(body.coverImage, 'covers', body.title || 'cover')
     }
-    const updated = await Report.findOneAndUpdate({ id: req.params.id }, body, { new: true, upsert: true })
+    const updated = await Report.findOneAndUpdate({ id: req.params.id }, body, { returnDocument: 'after', upsert: true })
     res.json(updated)
   } catch (err) {
     console.error('Error in PUT /api/reports/:id:', err)
@@ -476,7 +484,7 @@ app.post('/api/certificates', async (req, res) => {
     if (body.downloadUrl && body.downloadUrl.startsWith('data:')) {
       body.downloadUrl = saveBase64File(body.downloadUrl, 'certificates', body.client || 'certificate')
     }
-    const cert = await Certificate.findOneAndUpdate({ id: body.id }, body, { upsert: true, new: true, setDefaultsOnInsert: true })
+    const cert = await Certificate.findOneAndUpdate({ id: body.id }, body, { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true })
     res.json(cert)
   } catch (err) {
     console.error('Error in POST /api/certificates:', err)
@@ -490,7 +498,7 @@ app.put('/api/certificates/:id', async (req, res) => {
     if (body.downloadUrl && body.downloadUrl.startsWith('data:')) {
       body.downloadUrl = saveBase64File(body.downloadUrl, 'certificates', body.client || 'certificate')
     }
-    const updated = await Certificate.findOneAndUpdate({ id: req.params.id }, body, { new: true, upsert: true })
+    const updated = await Certificate.findOneAndUpdate({ id: req.params.id }, body, { returnDocument: 'after', upsert: true })
     res.json(updated)
   } catch (err) {
     console.error('Error in PUT /api/certificates/:id:', err)
@@ -517,7 +525,9 @@ app.get('/api/consultants', async (req, res) => {
 
 app.post('/api/consultants', async (req, res) => {
   try {
-    const consultant = await Consultant.findOneAndUpdate({ id: req.body.id }, req.body, { upsert: true, new: true })
+    const body = { ...req.body }
+    if (!body.id) body.id = 'cons-' + Date.now().toString().slice(-6)
+    const consultant = await Consultant.findOneAndUpdate({ id: body.id }, body, { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true })
     res.json(consultant)
   } catch (err) {
     res.status(400).json({ error: err.message })
@@ -526,7 +536,7 @@ app.post('/api/consultants', async (req, res) => {
 
 app.put('/api/consultants/:id', async (req, res) => {
   try {
-    const updated = await Consultant.findOneAndUpdate({ id: req.params.id }, req.body, { new: true })
+    const updated = await Consultant.findOneAndUpdate({ id: req.params.id }, req.body, { returnDocument: 'after' })
     res.json(updated)
   } catch (err) {
     res.status(400).json({ error: err.message })

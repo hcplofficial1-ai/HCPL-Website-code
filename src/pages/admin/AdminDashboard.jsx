@@ -318,7 +318,8 @@ export default function AdminDashboard() {
     }
     // Auto-generate initials if blank
     const calculatedInitials = teamForm.initials.trim() || teamForm.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
-    const payload = { ...teamForm, initials: calculatedInitials }
+    const memberId = teamForm.id || (editTeamMemberObj ? editTeamMemberObj.id : 'team-' + Date.now().toString().slice(-6))
+    const payload = { ...teamForm, id: memberId, initials: calculatedInitials }
 
     if (editTeamMemberObj) {
       updateTeamMember(editTeamMemberObj.id, payload)
@@ -589,7 +590,8 @@ export default function AdminDashboard() {
       return alert('Full Name and Designation/Role are required.')
     }
     const calculatedInitials = consultantForm.initials.trim() || consultantForm.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
-    const payload = { ...consultantForm, initials: calculatedInitials }
+    const consultantId = consultantForm.id || (editConsultantObj ? editConsultantObj.id : 'cons-' + Date.now().toString().slice(-6))
+    const payload = { ...consultantForm, id: consultantId, initials: calculatedInitials }
 
     setIsSavingConsultant(true)
     try {

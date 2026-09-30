@@ -397,19 +397,31 @@ export function DataProvider({ children }) {
 
   // PROJECTS CRUD WITH MONGODB ATLAS SYNC
   const addProject = useCallback(async (proj) => {
+    const projNo = String(proj.no || (Math.max(0, ...projects.map(p => Number(p.no) || 0)) + 1))
+    const item = { ...proj, no: projNo }
     setProjects((prev) => {
-      const next = [...prev, proj].sort((a, b) => (Number(a.no) || 0) - (Number(b.no) || 0))
+      const filtered = prev.filter(p => String(p.no) !== projNo)
+      const next = [...filtered, item].sort((a, b) => (Number(a.no) || 0) - (Number(b.no) || 0))
       safeSaveLocalStorage(PROJECTS_KEY, next)
       return next
     })
     try {
-      await fetch(`${API_BASE}/projects`, {
+      const res = await fetch(`${API_BASE}/projects`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(proj),
+        body: JSON.stringify(item),
       })
+      if (res.ok) {
+        const saved = await res.json()
+        setProjects((prev) => {
+          const filtered = prev.filter(p => String(p.no) !== String(saved.no))
+          const next = [...filtered, saved].sort((a, b) => (Number(a.no) || 0) - (Number(b.no) || 0))
+          safeSaveLocalStorage(PROJECTS_KEY, next)
+          return next
+        })
+      }
     } catch (_) {}
-  }, [])
+  }, [projects])
 
   const updateProject = useCallback(async (id, updates) => {
     setProjects((prev) => {
@@ -447,17 +459,29 @@ export function DataProvider({ children }) {
 
   // TEAM CRUD WITH MONGODB ATLAS SYNC
   const addTeamMember = useCallback(async (member) => {
+    const memId = member.id || 'team-' + Date.now().toString().slice(-6)
+    const normalized = { ...member, id: memId }
     setTeam((prev) => {
-      const next = [...prev, member]
+      const filtered = prev.filter(m => m.id !== memId)
+      const next = [...filtered, normalized]
       safeSaveLocalStorage(TEAM_KEY, next)
       return next
     })
     try {
-      await fetch(`${API_BASE}/team`, {
+      const res = await fetch(`${API_BASE}/team`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(member),
+        body: JSON.stringify(normalized),
       })
+      if (res.ok) {
+        const saved = await res.json()
+        setTeam((prev) => {
+          const filtered = prev.filter(m => m.id !== saved.id)
+          const next = [...filtered, saved]
+          safeSaveLocalStorage(TEAM_KEY, next)
+          return next
+        })
+      }
     } catch (_) {}
   }, [])
 
@@ -754,9 +778,11 @@ export function DataProvider({ children }) {
 
   // CONSULTANTS CRUD WITH MONGODB ATLAS SYNC
   const addConsultant = useCallback(async (cons) => {
+    const consId = cons.id || 'cons-' + Date.now().toString().slice(-6)
+    const normalized = { ...cons, id: consId }
     setConsultants((prev) => {
-      const filtered = (prev || []).filter((c) => c.id !== cons.id)
-      const next = sortConsultantsList([cons, ...filtered])
+      const filtered = (prev || []).filter((c) => c.id !== consId)
+      const next = sortConsultantsList([normalized, ...filtered])
       safeSaveLocalStorage(CONSULTANTS_KEY, next)
       return next
     })
@@ -764,13 +790,20 @@ export function DataProvider({ children }) {
       const res = await fetch(`${API_BASE}/consultants`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(cons),
+        body: JSON.stringify(normalized),
       })
       if (!res.ok) {
         const errJson = await res.json().catch(() => ({}))
         console.warn('Backend failed to save consultant:', errJson)
         return { success: false, error: errJson.error || 'Server rejected consultant save' }
       }
+      const saved = await res.json()
+      setConsultants((prev) => {
+        const filtered = (prev || []).filter((c) => c.id !== saved.id)
+        const next = sortConsultantsList([saved, ...filtered])
+        safeSaveLocalStorage(CONSULTANTS_KEY, next)
+        return next
+      })
       return { success: true }
     } catch (err) {
       console.warn('Backend server unreachable, saved locally:', err.message)
@@ -822,7 +855,7 @@ export function DataProvider({ children }) {
   }, [])
 
   // Stats
-  const stats = {
+  const stats = useMemo(() => ({
     total: projects.length,
     ongoing: projects.filter((p) => p.status === 'Ongoing').length,
     completed: projects.filter((p) => p.status === 'Completed').length,
@@ -832,7 +865,7 @@ export function DataProvider({ children }) {
     certificatesCount: certificates.length,
     consultantsCount: consultants.length,
     dbStatus,
-  }
+  }), [projects, reports, competencies, certificates, consultants, dbStatus])
 
   return (
     <DataContext.Provider
