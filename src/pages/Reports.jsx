@@ -133,8 +133,9 @@ export default function Reports() {
 
   const sectors = [
     'All',
-    'Poverty Alleviation & Social Protection',
     'TVET & Skills',
+    'Poverty Alleviation & Social Protection',
+    'Community Infrastructure & Governance',
     'Enterprise & Economic Growth',
     'Education',
     'Climate & Agriculture',
