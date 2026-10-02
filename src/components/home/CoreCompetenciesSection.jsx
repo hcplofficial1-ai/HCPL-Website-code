@@ -23,7 +23,7 @@ export default function CoreCompetenciesSection() {
         overflow: 'hidden',
       }}
     >
-      <div className="container" style={{ maxWidth: 'min(1560px, 94vw)', margin: '0 auto', padding: '0 clamp(1.25rem, 3vw, 2.5rem)', position: 'relative', zIndex: 2 }}>
+      <div className="container" style={{ maxWidth: 'min(1820px, 96vw)', margin: '0 auto', padding: '0 clamp(1.25rem, 3vw, 2.5rem)', position: 'relative', zIndex: 2 }}>
         {/* SECTION HEADER */}
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
           <div

@@ -61,7 +61,7 @@ export default function Footer() {
   return (
     <footer style={{ background: '#ffffff', color: '#212121', borderTop: '1px solid rgba(118, 12, 176, 0.12)', fontFamily: "'Inter', Arial, sans-serif" }}>
       {/* Main Top Grid */}
-      <div style={{ maxWidth: 'min(1560px, 94vw)', margin: '0 auto', padding: '5rem clamp(1.25rem, 3vw, 2.5rem) 3.5rem' }}>
+      <div style={{ maxWidth: 'min(1820px, 96vw)', margin: '0 auto', padding: '5rem clamp(1.25rem, 3vw, 2.5rem) 3.5rem' }}>
         {/* Brand Header */}
         <div style={{ marginBottom: '3.5rem' }}>
           <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none', marginBottom: '1rem' }}>

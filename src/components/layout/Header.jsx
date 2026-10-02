@@ -107,7 +107,7 @@ export default function Header() {
       height: '74px',
     },
     inner: {
-      maxWidth: 'min(1560px, 94vw)',
+      maxWidth: 'min(1820px, 96vw)',
       margin: '0 auto',
       padding: '0 clamp(1.25rem, 3vw, 2.5rem)',
       display: 'flex',
