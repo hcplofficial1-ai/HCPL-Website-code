@@ -32,7 +32,7 @@ export function CircularArrowButton({ to = '/contact', title = 'Explore' }) {
 export function HeroIntro({
   label = 'PAKISTAN-ROOTED • INTERNATIONALLY EXPERIENCED • SINCE 2009',
   heading = null,
-  paragraph = 'HIMAT Consulting (Pvt.) Ltd. delivers independent research, monitoring, evaluation and advisory services that help governments, UN agencies, donors and development partners understand complex challenges, strengthen programmes and achieve measurable results.',
+  paragraph = 'HIMAT Consulting Private Limited (HCPL) is a humanitarian and development sector consulting firm, headquartered in Islamabad, Pakistan, with over 16 years of experience. We provide research, diagnostics, and evaluations to support stakeholders in designing sustainable solutions across economic, social, cultural, political, business, and institutional spheres. Serving clients like the European Union, World Bank, UN agencies, Aga Khan Foundation, governmental, and non-governmental organizations (NGOs). We operate across Pakistan and globally through our partnerships across Europe, Central Asia, and Africa. HCPL also operates HIMAT Consulting Inc. headquartered in Texas, USA, registered with EIN 39-4494498 to strengthen its global footprint and advisory capacity.',
   ctaTo = '/projects',
   ctaText = 'Explore Our Work',
 }) {
@@ -108,7 +108,7 @@ export function HeroIntro({
           fontSize: '1.12rem',
           color: 'rgba(255, 255, 255, 0.95)',
           lineHeight: 1.75,
-          maxWidth: '640px',
+          maxWidth: '780px',
           marginBottom: '2rem',
           textShadow: '0 2px 10px rgba(0, 0, 0, 0.35)',
         }}
