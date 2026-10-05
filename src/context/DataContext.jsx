@@ -156,6 +156,22 @@ export function sortConsultantsList(list) {
   })
 }
 
+export function mergeConsultantsWithDefaults(list) {
+  if (!Array.isArray(list) || list.length === 0) return DEFAULT_CONSULTANTS
+  const defMap = new Map(DEFAULT_CONSULTANTS.map(c => [c.id, c]))
+  const updated = list.map(c => defMap.has(c.id) ? { ...defMap.get(c.id), ...c } : c)
+  const ids = new Set(updated.map(c => c.id))
+  const merged = [...updated]
+  for (const def of DEFAULT_CONSULTANTS) {
+    if (!ids.has(def.id)) {
+      merged.push(def)
+      ids.add(def.id)
+    }
+  }
+  return sortConsultantsList(merged)
+}
+
+
 export function DataProvider({ children }) {
   const [projects, setProjects] = useState(() => {
     try {
@@ -220,7 +236,7 @@ export function DataProvider({ children }) {
     try {
       const saved = localStorage.getItem(CONSULTANTS_KEY)
       const parsed = saved ? JSON.parse(saved) : null
-      return Array.isArray(parsed) && parsed.length > 0 ? sortConsultantsList(parsed) : DEFAULT_CONSULTANTS
+      return Array.isArray(parsed) && parsed.length > 0 ? mergeConsultantsWithDefaults(parsed) : DEFAULT_CONSULTANTS
     } catch {
       return DEFAULT_CONSULTANTS
     }
@@ -355,7 +371,7 @@ export function DataProvider({ children }) {
           if (consRes.ok) {
             const data = await consRes.json()
             if (Array.isArray(data) && data.length > 0) {
-              const sorted = sortConsultantsList(data)
+              const sorted = mergeConsultantsWithDefaults(data)
               setConsultants(sorted)
               safeSaveLocalStorage(CONSULTANTS_KEY, sorted)
             } else {

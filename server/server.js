@@ -213,6 +213,7 @@ const ConsultantSchema = new mongoose.Schema({
   org: String,
   specialties: [String],
   image: String,
+  imagePosition: String,
   initials: String,
   experience: String,
   order: Number,

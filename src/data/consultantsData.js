@@ -66,6 +66,18 @@ export const DEFAULT_CONSULTANTS = [
     experience: 'Dr. Atiq ur Rehman is an institutional development, project management and monitoring and evaluation specialist with over 25 years of experience across Pakistan, Malaysia, Afghanistan and South Sudan. He holds a PhD in Human Resource Development and is a PRINCE2 Practitioner and Certified Corporate Director. Having completed more than 100 consultancy assignments, his expertise includes institutional capacity assessment, public-sector project management, TVET, gender and social inclusion, performance management, value-chain analysis, impact evaluation and organizational development.',
   },
   {
+    id: 'asif-hayat',
+    name: 'Asif Hayat',
+    role: 'Programme Adviser',
+    org: 'Senior Humanitarian & Development Strategy Leader',
+    specialties: ['Country Strategy & Strategic Planning', 'Emergency & Humanitarian Response', 'Consortium Leadership', 'Donor Engagement & Multi-Million Program Direction', 'Complex Crisis Operations'],
+    image: './asif_hayat.jpg',
+    imagePosition: 'center 15%',
+    initials: 'AH',
+    order: 7,
+    experience: 'Experienced humanitarian and development leader with over 25 years experience shaping country strategies, directing multi-million-dollar programs, and leading large-scale emergency responses across Pakistan, Afghanistan, and Yemen. Skilled in senior management, donor engagement, and consortium leadership, with a proven ability to build high-performing teams and deliver results in complex crisis contexts. Dedicated to driving organizational excellence, strengthening partnerships, and creating lasting impact for communities.',
+  },
+  {
     id: 'mahrukh-qazilbash',
     name: 'Mahrukh Qazilbash',
     role: 'Presentation & Client Engagement Specialist',
@@ -73,7 +85,8 @@ export const DEFAULT_CONSULTANTS = [
     specialties: ['Client Engagement', 'Strategic Presentations', 'Program Architecture', 'Donor Liaison', 'Knowledge Translation'],
     image: './mahrukh.png',
     initials: 'MQ',
-    order: 7,
+    order: 8,
     experience: "Mahrukh Qazilbash is a Presentation & Client Engagement Specialist with over 10 years of experience driving multi-country program design, client engagement, institutional presentations, and international reporting. She holds an MSc in Strategic Communications & Development Policy and leads proposal architecture, knowledge translation, and HIMAT's global communications strategy.",
   },
 ]
+
