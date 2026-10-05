@@ -856,11 +856,22 @@ app.post('/api/reset-all', async (req, res) => {
 // SERVE STATIC VITE DIST FRONTEND IN PRODUCTION & SPA CATCH-ALL
 const distPath = path.resolve(__dirname, '../dist')
 if (fs.existsSync(distPath)) {
-  app.use(express.static(distPath))
+  app.use(express.static(distPath, {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.html')) {
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
+        res.setHeader('Pragma', 'no-cache')
+        res.setHeader('Expires', '0')
+      }
+    }
+  }))
   app.use((req, res, next) => {
     if (req.method !== 'GET' || req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
       return next()
     }
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
+    res.setHeader('Pragma', 'no-cache')
+    res.setHeader('Expires', '0')
     res.sendFile('index.html', { root: distPath })
   })
 }
