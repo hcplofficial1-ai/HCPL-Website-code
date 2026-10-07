@@ -59,6 +59,9 @@ const EMPTY_CERTIFICATE = {
   scope: '',
   citation: '',
   signatory: '',
+  badge: 'Official Performance Letter',
+  contractValue: 'Institutional Assignment',
+  rating: 'Exceptional Quality & Timely Delivery',
   downloadUrl: '#',
 }
 
@@ -393,6 +396,9 @@ export default function AdminDashboard() {
       const payload = {
         ...certForm,
         id: certForm.id || 'cert-' + Date.now().toString().slice(-5),
+        badge: certForm.badge || 'Official Performance Letter',
+        contractValue: certForm.contractValue || 'Institutional Assignment',
+        rating: certForm.rating || 'Exceptional Quality & Timely Delivery',
         clientCategory: certForm.clientCategory || (
           certForm.category === 'multilateral' ? 'Multilateral & Bilateral Partner' :
           certForm.category === 'akdn' ? 'Aga Khan Development Network (AKDN)' :
@@ -1553,6 +1559,22 @@ export default function AdminDashboard() {
                 <div>
                   <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, color: '#760CB0', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Authorized Signatory</label>
                   <input value={certForm.signatory || ''} onChange={e => setCertForm(f => ({ ...f, signatory: e.target.value }))} placeholder="Name and official title of signatory..." style={s.input} />
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, color: '#760CB0', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Certificate Badge / Status</label>
+                    <input value={certForm.badge || ''} onChange={e => setCertForm(f => ({ ...f, badge: e.target.value }))} placeholder="e.g. Official Performance Letter" style={s.input} />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, color: '#760CB0', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Performance Rating</label>
+                    <input value={certForm.rating || ''} onChange={e => setCertForm(f => ({ ...f, rating: e.target.value }))} placeholder="e.g. Exceptional Quality & Timely Delivery" style={s.input} />
+                  </div>
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, color: '#760CB0', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Contract / Engagement Nature</label>
+                  <input value={certForm.contractValue || ''} onChange={e => setCertForm(f => ({ ...f, contractValue: e.target.value }))} placeholder="e.g. Institutional Assignment" style={s.input} />
                 </div>
 
                 {/* PDF File Upload Box */}

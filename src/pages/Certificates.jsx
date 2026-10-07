@@ -72,34 +72,23 @@ export default function Certificates() {
 
   // PDF Generator & Print Document Opener
   const handleDownloadPDF = (cert) => {
-    if (cert.downloadUrl && cert.downloadUrl !== '#' && (cert.downloadUrl.startsWith('data:application/pdf') || cert.downloadUrl.endsWith('.pdf'))) {
-      const pdfWindow = window.open('', '_blank')
-      if (pdfWindow) {
-        pdfWindow.document.write(`
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <title>${cert.client} - Certificate PDF</title>
-              <style>
-                body { margin: 0; padding: 0; background: #1e293b; font-family: sans-serif; }
-                .top-bar { position: fixed; top: 0; left: 0; right: 0; height: 50px; background: #760CB0; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 99999; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-                .close-btn { background: #fff; color: #760CB0; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; }
-                .close-btn:hover { background: #f0e0fa; }
-                iframe { position: absolute; top: 50px; left: 0; width: 100%; height: calc(100vh - 50px); border: none; }
-              </style>
-            </head>
-            <body>
-              <div class="top-bar">
-                <span>📄 <strong>${cert.client}</strong> — Certificate Document</span>
-                <button class="close-btn" onclick="window.close()">✕ Close Window</button>
-              </div>
-              <iframe src="${cert.downloadUrl}"></iframe>
-            </body>
-          </html>
-        `)
-        pdfWindow.document.close()
-        return
-      }
+    const rawUrl = cert.downloadUrl && cert.downloadUrl !== '#' ? cert.downloadUrl : ''
+    const hasAttachedDoc = rawUrl && (
+      rawUrl.startsWith('data:') ||
+      rawUrl.toLowerCase().endsWith('.pdf') ||
+      rawUrl.toLowerCase().endsWith('.docx') ||
+      rawUrl.toLowerCase().endsWith('.doc') ||
+      rawUrl.toLowerCase().includes('/uploads/')
+    )
+
+    if (hasAttachedDoc) {
+      const targetUrl = rawUrl.startsWith('http') || rawUrl.startsWith('data:')
+        ? rawUrl
+        : rawUrl.startsWith('/')
+          ? rawUrl
+          : '/' + rawUrl
+      window.open(targetUrl, '_blank')
+      return
     }
 
     const printWindow = window.open('', '_blank', 'width=880,height=1000')
@@ -447,7 +436,8 @@ export default function Certificates() {
             }}
           >
             {filtered.map((cert, index) => {
-              const isVisible = visibleCards[cert.id]
+              const isVisible = visibleCards[cert.id] !== false
+              const clientInitials = (cert.client || 'HC').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
               return (
                 <div
                   key={cert.id}
@@ -465,9 +455,9 @@ export default function Certificates() {
                     flexDirection: 'column',
                     gap: '1rem',
                     position: 'relative',
-                    opacity: isVisible ? 1 : 0,
-                    transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(35px) scale(0.96)',
-                    transition: `all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index % 3 * 0.1}s`,
+                    opacity: isVisible ? 1 : 0.95,
+                    transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.98)',
+                    transition: `all 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${index % 3 * 0.08}s`,
                   }}
                   className="certificate-luxury-card"
                 >
@@ -489,12 +479,16 @@ export default function Certificates() {
                           boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
                         }}
                       >
-                        <img
-                          src={cert.logo}
-                          alt={cert.client}
-                          style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }}
-                          onError={(e) => { e.currentTarget.style.display = 'none' }}
-                        />
+                        {cert.logo ? (
+                          <img
+                            src={cert.logo}
+                            alt={cert.client}
+                            style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }}
+                            onError={(e) => { e.currentTarget.style.display = 'none' }}
+                          />
+                        ) : (
+                          <span style={{ fontSize: '1rem', fontWeight: 800, color: '#760CB0' }}>{clientInitials}</span>
+                        )}
                       </div>
 
                       {cert.secondaryLogo && (
@@ -524,7 +518,7 @@ export default function Certificates() {
 
                       <div>
                         <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                          {cert.clientCategory}
+                          {cert.clientCategory || 'Client Certification'}
                         </div>
                         <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontSize: '0.92rem', fontWeight: 800, color: '#212121' }}>
                           {cert.client}
@@ -580,7 +574,7 @@ export default function Certificates() {
                         border: '1px solid rgba(118, 12, 176, 0.12)',
                       }}
                     >
-                      🏅 {cert.badge || cert.contractValue}
+                      🏅 {cert.badge || cert.contractValue || 'Official Commendation'}
                     </span>
                     <span
                       style={{
@@ -594,13 +588,13 @@ export default function Certificates() {
                         border: '1px solid #e2e8f0',
                       }}
                     >
-                      📅 {cert.date}
+                      📅 {cert.date || 'Verified'}
                     </span>
                   </div>
 
                   {/* Signatory summary */}
                   <div style={{ fontSize: '0.8125rem', color: '#64748b', lineHeight: 1.5, marginTop: 'auto' }}>
-                    <strong style={{ color: '#334155' }}>Signatory:</strong> {cert.signatory.split('—')[0]}
+                    <strong style={{ color: '#334155' }}>Signatory:</strong> {cert.signatory ? (cert.signatory.includes('—') ? cert.signatory.split('—')[0] : cert.signatory) : (cert.client || 'Authorized Signatory')}
                   </div>
 
                   {/* Action Buttons */}
@@ -750,12 +744,18 @@ export default function Certificates() {
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '0.5rem', flexShrink: 0 }}>
-                <div style={{ width: '56px', height: '56px', background: '#fff', border: '1px solid rgba(118,12,176,0.15)', borderRadius: '12px', padding: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img src={selectedCert.logo} alt={selectedCert.client} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }} />
+                <div style={{ width: '56px', height: '56px', background: '#faf5ff', border: '1px solid rgba(118,12,176,0.15)', borderRadius: '12px', padding: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {selectedCert.logo ? (
+                    <img src={selectedCert.logo} alt={selectedCert.client} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }} onError={(e) => { e.currentTarget.style.display = 'none' }} />
+                  ) : (
+                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#760CB0' }}>
+                      {(selectedCert.client || 'H').split(' ').map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase()}
+                    </span>
+                  )}
                 </div>
                 {selectedCert.secondaryLogo && (
                   <div style={{ width: '56px', height: '56px', background: '#fff', border: '1px solid rgba(118,12,176,0.15)', borderRadius: '12px', padding: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <img src={selectedCert.secondaryLogo} alt={selectedCert.client} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }} />
+                    <img src={selectedCert.secondaryLogo} alt={selectedCert.client} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }} onError={(e) => { e.currentTarget.style.display = 'none' }} />
                   </div>
                 )}
               </div>
@@ -816,6 +816,31 @@ export default function Certificates() {
               >
                 📥 Open & Save Certificate as PDF
               </button>
+              {selectedCert.downloadUrl && selectedCert.downloadUrl !== '#' && (
+                <button
+                  onClick={() => {
+                    const raw = selectedCert.downloadUrl
+                    const url = raw.startsWith('http') || raw.startsWith('data:') ? raw : (raw.startsWith('/') ? raw : '/' + raw)
+                    window.open(url, '_blank')
+                  }}
+                  style={{
+                    background: '#f0fdf4',
+                    color: '#16a34a',
+                    fontFamily: "'Inter', Arial, sans-serif",
+                    fontWeight: 800,
+                    fontSize: '0.92rem',
+                    padding: '0.85rem 1.5rem',
+                    borderRadius: '12px',
+                    border: '1.5px solid #86efac',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                  }}
+                >
+                  📄 View Attached Document
+                </button>
+              )}
               <button
                 onClick={() => setSelectedCert(null)}
                 style={{

@@ -28,46 +28,82 @@ app.use(cors())
 app.use(express.json({ limit: '100mb' }))
 app.use(express.urlencoded({ limit: '100mb', extended: true }))
 
-// STATIC UPLOADS DIRECTORY
-const UPLOADS_DIR = path.join(__dirname, '../public/uploads')
-if (!fs.existsSync(UPLOADS_DIR)) {
-  fs.mkdirSync(UPLOADS_DIR, { recursive: true })
-}
-app.use('/uploads', express.static(UPLOADS_DIR))
+// STATIC UPLOADS DIRECTORIES (Both public and dist for full dev & production compatibility)
+const PUBLIC_UPLOADS = path.join(__dirname, '../public/uploads')
+const DIST_UPLOADS = path.join(__dirname, '../dist/uploads')
 
-// Helper to save Base64 files to disk (eliminates 16MB MongoDB BSON limit)
+for (const dir of [PUBLIC_UPLOADS, DIST_UPLOADS]) {
+  for (const sub of ['reports', 'certificates', 'covers', 'team', 'consultants', 'competencies', 'services']) {
+    const subPath = path.join(dir, sub)
+    if (!fs.existsSync(subPath)) {
+      fs.mkdirSync(subPath, { recursive: true })
+    }
+  }
+}
+
+// Serve static uploads from public and dist
+app.use('/uploads', express.static(PUBLIC_UPLOADS))
+app.use('/uploads', express.static(DIST_UPLOADS))
+
+// Direct reliable stream for /uploads to guarantee PDF display with inline headers and avoid Express default 404
+app.get('/uploads/:subfolder/:filename', (req, res, next) => {
+  const sub = (req.params.subfolder || '').replace(/[^a-zA-Z0-9_-]/g, '')
+  const fn = (req.params.filename || '').replace(/[^a-zA-Z0-9_.-]/g, '')
+  const pubPath = path.join(PUBLIC_UPLOADS, sub, fn)
+  const distPath = path.join(DIST_UPLOADS, sub, fn)
+  const target = fs.existsSync(pubPath) ? pubPath : (fs.existsSync(distPath) ? distPath : null)
+
+  if (target) {
+    if (fn.toLowerCase().endsWith('.pdf')) {
+      res.setHeader('Content-Type', 'application/pdf')
+      res.setHeader('Content-Disposition', `inline; filename="${fn}"`)
+    } else if (fn.toLowerCase().endsWith('.docx')) {
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    } else if (fn.toLowerCase().endsWith('.doc')) {
+      res.setHeader('Content-Type', 'application/msword')
+    }
+    return res.sendFile(target)
+  }
+  res.status(404).send('Document not found on server.')
+})
+
+// Robust Helper to save Base64 files to disk (eliminates 16MB MongoDB BSON limit & dual-syncs to public + dist)
 function saveBase64File(dataUrl, subfolder = 'reports', defaultName = 'doc') {
   if (!dataUrl || typeof dataUrl !== 'string' || !dataUrl.startsWith('data:')) {
     return dataUrl
   }
   try {
-    const targetDir = path.join(UPLOADS_DIR, subfolder)
-    if (!fs.existsSync(targetDir)) {
-      fs.mkdirSync(targetDir, { recursive: true })
-    }
+    const commaIndex = dataUrl.indexOf(',')
+    if (commaIndex === -1) return dataUrl
 
-    const matches = dataUrl.match(/^data:([A-Za-z0-9-+/.]+);base64,(.+)$/)
-    if (!matches || matches.length !== 3) {
-      return dataUrl
-    }
+    const header = dataUrl.substring(0, commaIndex).toLowerCase()
+    const rawBase64 = dataUrl.substring(commaIndex + 1).replace(/\s+/g, '')
+    const buffer = Buffer.from(rawBase64, 'base64')
 
-    const mimeType = matches[1].toLowerCase()
-    const base64Data = matches[2]
-    const buffer = Buffer.from(base64Data, 'base64')
+    let ext = '.pdf'
+    if (header.includes('pdf')) ext = '.pdf'
+    else if (header.includes('wordprocessingml') || header.includes('docx')) ext = '.docx'
+    else if (header.includes('msword') || header.includes('doc')) ext = '.doc'
+    else if (header.includes('png')) ext = '.png'
+    else if (header.includes('jpeg') || header.includes('jpg')) ext = '.jpg'
+    else if (header.includes('webp')) ext = '.webp'
+    else if (header.includes('svg')) ext = '.svg'
 
-    let ext = '.bin'
-    if (mimeType.includes('pdf')) ext = '.pdf'
-    else if (mimeType.includes('wordprocessingml') || mimeType.includes('docx')) ext = '.docx'
-    else if (mimeType.includes('msword') || mimeType.includes('doc')) ext = '.doc'
-    else if (mimeType.includes('jpeg') || mimeType.includes('jpg')) ext = '.jpg'
-    else if (mimeType.includes('png')) ext = '.png'
-    else if (mimeType.includes('webp')) ext = '.webp'
-
-    const safeName = (defaultName || 'file').replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 40)
+    const safeName = (defaultName || 'file').replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 45)
     const fileName = `${safeName}_${Date.now()}${ext}`
-    const filePath = path.join(targetDir, fileName)
 
-    fs.writeFileSync(filePath, buffer)
+    // 1. Write to public/uploads
+    const pubTargetDir = path.join(PUBLIC_UPLOADS, subfolder)
+    if (!fs.existsSync(pubTargetDir)) fs.mkdirSync(pubTargetDir, { recursive: true })
+    fs.writeFileSync(path.join(pubTargetDir, fileName), buffer)
+
+    // 2. Write to dist/uploads if dist exists (ensures Vite build / production static servers find it immediately)
+    const distTargetDir = path.join(DIST_UPLOADS, subfolder)
+    if (fs.existsSync(path.join(__dirname, '../dist'))) {
+      if (!fs.existsSync(distTargetDir)) fs.mkdirSync(distTargetDir, { recursive: true })
+      fs.writeFileSync(path.join(distTargetDir, fileName), buffer)
+    }
+
     return `/uploads/${subfolder}/${fileName}`
   } catch (err) {
     console.error('Error saving Base64 file to disk:', err)
@@ -176,8 +212,18 @@ const CertificateSchema = new mongoose.Schema({
   scope: String,
   citation: String,
   signatory: String,
+  signDate: String,
+  badge: String,
+  contractValue: String,
+  rating: String,
   downloadUrl: String,
 }, { timestamps: true })
+
+const DeletedItemSchema = new mongoose.Schema({
+  id: { type: String, required: true, unique: true },
+  collectionName: String,
+}, { timestamps: true })
+const DeletedItem = mongoose.model('DeletedItem', DeletedItemSchema)
 
 import nodemailer from 'nodemailer'
 
@@ -264,28 +310,36 @@ const createTransporter = () => {
 // AUTO SEED FUNCTION
 async function autoSeedIfEmpty() {
   try {
+    const deletedDocs = await DeletedItem.find()
+    const deletedSet = new Set(deletedDocs.map(d => d.id))
+
     const projCount = await Project.countDocuments()
     if (projCount === 0 && DEFAULT_PROJECTS.length > 0) {
-      await Project.insertMany(DEFAULT_PROJECTS)
-      console.log(`🌱 Auto-seeded ${DEFAULT_PROJECTS.length} projects to MongoDB Atlas`)
+      const projsToSeed = DEFAULT_PROJECTS.filter(p => !deletedSet.has(`proj-${p.no}`))
+      if (projsToSeed.length > 0) await Project.insertMany(projsToSeed)
+      console.log(`🌱 Auto-seeded ${projsToSeed.length} projects to MongoDB Atlas`)
     }
 
     const teamCount = await TeamMember.countDocuments()
     if (teamCount === 0 && DEFAULT_TEAM.length > 0) {
-      await TeamMember.insertMany(DEFAULT_TEAM)
-      console.log(`🌱 Auto-seeded ${DEFAULT_TEAM.length} team members to MongoDB Atlas`)
+      const teamToSeed = DEFAULT_TEAM.filter(t => !deletedSet.has(t.id))
+      if (teamToSeed.length > 0) await TeamMember.insertMany(teamToSeed)
+      console.log(`🌱 Auto-seeded ${teamToSeed.length} team members to MongoDB Atlas`)
     }
 
     // Clean up any legacy dummy reports
     await Report.deleteMany({ id: { $in: ['rep-nutrition-survey-2023', 'rep-cpi-success-2021'] } })
     for (const r of PUBLISHED_REPORTS) {
-      await Report.updateOne({ id: r.id }, { $set: r }, { upsert: true })
+      if (!deletedSet.has(r.id)) {
+        await Report.updateOne({ id: r.id }, { $set: r }, { upsert: true })
+      }
     }
 
     const certCount = await Certificate.countDocuments()
     if (certCount === 0 && CLIENT_CERTIFICATES.length > 0) {
-      await Certificate.insertMany(CLIENT_CERTIFICATES)
-      console.log(`🌱 Auto-seeded ${CLIENT_CERTIFICATES.length} certificates to MongoDB Atlas`)
+      const certsToSeed = CLIENT_CERTIFICATES.filter(c => !deletedSet.has(c.id))
+      if (certsToSeed.length > 0) await Certificate.insertMany(certsToSeed)
+      console.log(`🌱 Auto-seeded ${certsToSeed.length} certificates to MongoDB Atlas`)
     }
 
     const compCount = await Competency.countDocuments()
@@ -302,8 +356,9 @@ async function autoSeedIfEmpty() {
 
     const consultantCount = await Consultant.countDocuments()
     if (consultantCount === 0 && DEFAULT_CONSULTANTS.length > 0) {
-      await Consultant.insertMany(DEFAULT_CONSULTANTS)
-      console.log(`🌱 Auto-seeded ${DEFAULT_CONSULTANTS.length} consultants to MongoDB Atlas`)
+      const consultantsToSeed = DEFAULT_CONSULTANTS.filter(c => !deletedSet.has(c.id))
+      if (consultantsToSeed.length > 0) await Consultant.insertMany(consultantsToSeed)
+      console.log(`🌱 Auto-seeded ${consultantsToSeed.length} consultants to MongoDB Atlas`)
     } else {
       await Consultant.updateOne({ id: 'izhar-ali-hunzai' }, { $set: { order: 1 } })
     }
@@ -342,6 +397,28 @@ app.get('/api/projects', async (req, res) => {
   }
 })
 
+// DIRECT FILE UPLOAD API
+app.post('/api/upload', (req, res) => {
+  try {
+    const { dataUrl, subfolder = 'reports', name = 'file' } = req.body
+    if (!dataUrl) return res.status(400).json({ error: 'dataUrl is required' })
+    const savedPath = saveBase64File(dataUrl, subfolder, name)
+    res.json({ success: true, url: savedPath })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+// DELETED IDS TRACKING API
+app.get('/api/deleted-ids', async (req, res) => {
+  try {
+    const list = await DeletedItem.find()
+    res.json(list.map(d => d.id))
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
 app.post('/api/projects', async (req, res) => {
   try {
     const body = { ...req.body }
@@ -350,6 +427,7 @@ app.post('/api/projects', async (req, res) => {
       const maxNo = Math.max(0, ...allProjs.map(p => Number(p.no) || 0))
       body.no = String(maxNo + 1)
     }
+    await DeletedItem.deleteOne({ id: `proj-${body.no}` })
     const proj = await Project.findOneAndUpdate({ no: body.no }, body, { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true })
     res.json(proj)
   } catch (err) {
@@ -359,6 +437,7 @@ app.post('/api/projects', async (req, res) => {
 
 app.put('/api/projects/:no', async (req, res) => {
   try {
+    await DeletedItem.deleteOne({ id: `proj-${req.params.no}` })
     const updated = await Project.findOneAndUpdate({ no: req.params.no }, req.body, { returnDocument: 'after' })
     res.json(updated)
   } catch (err) {
@@ -369,6 +448,7 @@ app.put('/api/projects/:no', async (req, res) => {
 app.delete('/api/projects/:no', async (req, res) => {
   try {
     await Project.findOneAndDelete({ no: req.params.no })
+    await DeletedItem.updateOne({ id: `proj-${req.params.no}` }, { id: `proj-${req.params.no}`, collectionName: 'projects' }, { upsert: true })
     res.json({ success: true })
   } catch (err) {
     res.status(400).json({ error: err.message })
@@ -389,6 +469,7 @@ app.post('/api/team', async (req, res) => {
   try {
     const body = { ...req.body }
     if (!body.id) body.id = 'team-' + Date.now().toString().slice(-6)
+    await DeletedItem.deleteOne({ id: body.id })
     const member = await TeamMember.findOneAndUpdate({ id: body.id }, body, { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true })
     res.json(member)
   } catch (err) {
@@ -398,6 +479,7 @@ app.post('/api/team', async (req, res) => {
 
 app.put('/api/team/:id', async (req, res) => {
   try {
+    await DeletedItem.deleteOne({ id: req.params.id })
     const updated = await TeamMember.findOneAndUpdate({ id: req.params.id }, req.body, { new: true })
     res.json(updated)
   } catch (err) {
@@ -408,6 +490,7 @@ app.put('/api/team/:id', async (req, res) => {
 app.delete('/api/team/:id', async (req, res) => {
   try {
     await TeamMember.findOneAndDelete({ id: req.params.id })
+    await DeletedItem.updateOne({ id: req.params.id }, { id: req.params.id, collectionName: 'team' }, { upsert: true })
     res.json({ success: true })
   } catch (err) {
     res.status(400).json({ error: err.message })
@@ -434,6 +517,7 @@ app.post('/api/reports', async (req, res) => {
     if (body.coverImage && body.coverImage.startsWith('data:')) {
       body.coverImage = saveBase64File(body.coverImage, 'covers', body.title || 'cover')
     }
+    await DeletedItem.deleteOne({ id: body.id })
     const rep = await Report.findOneAndUpdate({ id: body.id }, body, { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true })
     res.json(rep)
   } catch (err) {
@@ -451,6 +535,7 @@ app.put('/api/reports/:id', async (req, res) => {
     if (body.coverImage && body.coverImage.startsWith('data:')) {
       body.coverImage = saveBase64File(body.coverImage, 'covers', body.title || 'cover')
     }
+    await DeletedItem.deleteOne({ id: req.params.id })
     const updated = await Report.findOneAndUpdate({ id: req.params.id }, body, { returnDocument: 'after', upsert: true })
     res.json(updated)
   } catch (err) {
@@ -462,6 +547,7 @@ app.put('/api/reports/:id', async (req, res) => {
 app.delete('/api/reports/:id', async (req, res) => {
   try {
     await Report.findOneAndDelete({ id: req.params.id })
+    await DeletedItem.updateOne({ id: req.params.id }, { id: req.params.id, collectionName: 'reports' }, { upsert: true })
     res.json({ success: true })
   } catch (err) {
     res.status(400).json({ error: err.message })
@@ -485,6 +571,7 @@ app.post('/api/certificates', async (req, res) => {
     if (body.downloadUrl && body.downloadUrl.startsWith('data:')) {
       body.downloadUrl = saveBase64File(body.downloadUrl, 'certificates', body.client || 'certificate')
     }
+    await DeletedItem.deleteOne({ id: body.id })
     const cert = await Certificate.findOneAndUpdate({ id: body.id }, body, { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true })
     res.json(cert)
   } catch (err) {
@@ -499,10 +586,22 @@ app.put('/api/certificates/:id', async (req, res) => {
     if (body.downloadUrl && body.downloadUrl.startsWith('data:')) {
       body.downloadUrl = saveBase64File(body.downloadUrl, 'certificates', body.client || 'certificate')
     }
+    await DeletedItem.deleteOne({ id: req.params.id })
     const updated = await Certificate.findOneAndUpdate({ id: req.params.id }, body, { returnDocument: 'after', upsert: true })
     res.json(updated)
   } catch (err) {
     console.error('Error in PUT /api/certificates/:id:', err)
+    res.status(400).json({ error: err.message })
+  }
+})
+
+app.delete('/api/certificates/:id', async (req, res) => {
+  try {
+    await Certificate.findOneAndDelete({ id: req.params.id })
+    await DeletedItem.updateOne({ id: req.params.id }, { id: req.params.id, collectionName: 'certificates' }, { upsert: true })
+    res.json({ success: true })
+  } catch (err) {
+    console.error('Error in DELETE /api/certificates/:id:', err)
     res.status(400).json({ error: err.message })
   }
 })
@@ -528,6 +627,7 @@ app.post('/api/consultants', async (req, res) => {
   try {
     const body = { ...req.body }
     if (!body.id) body.id = 'cons-' + Date.now().toString().slice(-6)
+    await DeletedItem.deleteOne({ id: body.id })
     const consultant = await Consultant.findOneAndUpdate({ id: body.id }, body, { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true })
     res.json(consultant)
   } catch (err) {
@@ -537,6 +637,7 @@ app.post('/api/consultants', async (req, res) => {
 
 app.put('/api/consultants/:id', async (req, res) => {
   try {
+    await DeletedItem.deleteOne({ id: req.params.id })
     const updated = await Consultant.findOneAndUpdate({ id: req.params.id }, req.body, { returnDocument: 'after' })
     res.json(updated)
   } catch (err) {
@@ -547,6 +648,7 @@ app.put('/api/consultants/:id', async (req, res) => {
 app.delete('/api/consultants/:id', async (req, res) => {
   try {
     await Consultant.findOneAndDelete({ id: req.params.id })
+    await DeletedItem.updateOne({ id: req.params.id }, { id: req.params.id, collectionName: 'consultants' }, { upsert: true })
     res.json({ success: true })
   } catch (err) {
     res.status(400).json({ error: err.message })
@@ -838,6 +940,7 @@ app.post('/api/contact-lead', leadLimiter, async (req, res) => {
 // RESET & SEED ALL COLLECTIONS API
 app.post('/api/reset-all', async (req, res) => {
   try {
+    await DeletedItem.deleteMany({})
     await Project.deleteMany({})
     await TeamMember.deleteMany({})
     await Report.deleteMany({})
