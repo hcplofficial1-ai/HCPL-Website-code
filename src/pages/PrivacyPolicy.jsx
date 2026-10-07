@@ -100,6 +100,57 @@ export default function PrivacyPolicy() {
     {
       id: 'sec-6',
       num: '6',
+      title: "Protecting the People Behind the Data: HCPL's Standard for Ethical Research and Evaluation",
+      content: (
+        <>
+          <p style={{ fontSize: '1.02rem', fontWeight: 600, color: '#760CB0', lineHeight: '1.7', marginBottom: '1rem' }}>
+            At HCPL, no respondent is asked a single question until she understands why the study is being done, how she was chosen, and that every answer is hers to give or withhold.
+          </p>
+          <p>
+            Under the HCPL Informed Consent and Data Protection Protocol, participation is voluntary at every stage: she may skip any question, pause, or stop altogether, without explanation and without consequence. For under 18 children, we require both parent or guardian permission and the girl's own agreement, and her refusal always prevails. Trained female enumerators conduct interviews in private settings, guided by clear steps for responding to distress and reporting any risk of harm.
+          </p>
+          <p>
+            Identities are never stored with answers; they are held in a separate, restricted file and linked only by a unique code, and data is used solely for the analysis explained to the respondent. When a client requests respondent-level data, we first remove direct and indirect identifiers, share only what the purpose requires, and keep a record of every release. The client owns the research data, and HCPL safeguards it as custodian. Named focal points, field spot-checks, audits, a breach-reporting window and an accessible complaints route turn these commitments into practice. The result is research that donors and clients can trust, respondents can take part in safely, and HCPL can stand behind with confidence.
+          </p>
+
+          <div
+            style={{
+              background: '#faf5ff',
+              borderRadius: '14px',
+              border: '1.5px solid rgba(118, 12, 176, 0.2)',
+              padding: '1.5rem 1.75rem',
+              margin: '1.5rem 0 1rem',
+            }}
+          >
+            <h4
+              style={{
+                fontFamily: "'Source Serif 4', Georgia, serif",
+                fontSize: '1.15rem',
+                fontWeight: 700,
+                color: '#760CB0',
+                margin: '0 0 0.65rem',
+              }}
+            >
+              Research Participants and Respondents
+            </h4>
+            <p style={{ margin: '0 0 0.85rem', lineHeight: '1.75' }}>
+              When we collect data for research, surveys, interviews or evaluations, including with adolescent girls, refugees and other vulnerable people, we follow HCPL's Research Data Protection and Safeguarding Protocol. In summary:
+            </p>
+            <ul style={{ paddingLeft: '1.25rem', lineHeight: '1.85', margin: 0 }}>
+              <li><strong>Prior Explanation & Purpose:</strong> We explain the purpose of the study and how you were selected before asking anything.</li>
+              <li><strong>Voluntary at Every Stage:</strong> Taking part is voluntary; you may skip any question or stop at any stage without penalty.</li>
+              <li><strong>Child & Adolescent Protection:</strong> For girls under 18 we obtain parent or guardian permission as well as her own agreement; her refusal always prevails.</li>
+              <li><strong>Strict Purpose Limitation:</strong> We use the information only for analysis explained during the consent process.</li>
+              <li><strong>Identity Removal:</strong> If a client asks for data, we remove respondents' personal identity first.</li>
+              <li><strong>Client Data Ownership:</strong> Under our client contracts the research data belongs to the client, and HCPL holds it only for the project.</li>
+            </ul>
+          </div>
+        </>
+      ),
+    },
+    {
+      id: 'sec-7',
+      num: '7',
       title: 'Cookies, Digital Tracking & External Links',
       content: (
         <>
@@ -113,8 +164,8 @@ export default function PrivacyPolicy() {
       ),
     },
     {
-      id: 'sec-7',
-      num: '7',
+      id: 'sec-8',
+      num: '8',
       title: 'Data Subject Rights & Access Requests',
       content: (
         <>

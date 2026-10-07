@@ -295,6 +295,24 @@ export default function TermsOfUse() {
           <p>
             HCPL's internal policy also requires consent where necessary, secure storage, controlled access and appropriate arrangements when information is shared with third parties.
           </p>
+          <div style={{ background: '#faf5ff', border: '1.5px solid rgba(118,12,176,0.2)', borderRadius: '12px', padding: '1.25rem 1.5rem', margin: '1.25rem 0' }}>
+            <h4 style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '1.1rem', fontWeight: 700, color: '#760CB0', margin: '0 0 0.5rem' }}>
+              Research Participants, Survey Respondents & Project Data Ownership
+            </h4>
+            <p style={{ margin: '0 0 0.75rem', lineHeight: '1.75' }}>
+              When we collect data for research, surveys, interviews or evaluations, including with adolescent girls, refugees and other vulnerable people, we follow HCPL's Research Data Protection and Safeguarding Protocol. In summary:
+            </p>
+            <ul style={{ paddingLeft: '1.25rem', lineHeight: '1.8', margin: '0 0 0.75rem' }}>
+              <li>We explain the purpose of the study and how you were selected before asking anything;</li>
+              <li>Taking part is voluntary; you may skip any question or stop at any stage without penalty;</li>
+              <li>For girls and children under 18 we obtain parent or guardian permission as well as her own agreement (where her refusal always prevails);</li>
+              <li>We use the information only for analysis; and</li>
+              <li>If a client asks for data, we remove respondents' personal identity first.</li>
+            </ul>
+            <p style={{ margin: 0, fontWeight: 600, color: '#334155' }}>
+              Under our client contracts the research data belongs to the client, and HCPL holds it only for the project as safeguarding custodian.
+            </p>
+          </div>
           <p>
             Further information is set out in HCPL's separate <Link to="/privacy" style={{ color: '#760CB0', fontWeight: 700, textDecoration: 'underline' }}>Privacy Policy</Link>. Where there is any inconsistency between these Terms and HCPL's Privacy Policy regarding personal-data processing, the Privacy Policy will govern that processing.
           </p>

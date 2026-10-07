@@ -22,8 +22,8 @@ export const DEFAULT_COMPETENCIES = [
   {
     id: 'organizational-assessment',
     slug: 'organizational-assessment',
-    category: 'ORGANIZATIONAL ASSESSMENT',
-    title: 'Organizational Assessment',
+    category: 'ORGANIZATIONAL CAPACITY ASSESSMENT',
+    title: 'Organizational Capacity Assessment',
     description: 'We excel in facilitating organizational self-capacity assessments and designing practical capacity strengthening plans.',
     expertise: [
       'Self-Capacity Assessment Workshops',
@@ -31,10 +31,10 @@ export const DEFAULT_COMPETENCIES = [
       'Actionable Roadmap Design',
       'Progress Monitoring Systems',
     ],
-    imageFieldName: 'Organizational Assessment Image',
+    imageFieldName: 'Organizational Capacity Assessment Image',
     image: './images/organizational-assessment-workshop.jpg',
     focalPoint: 'center 52%',
-    altText: 'HIMAT Consulting experts conducting organizational assessment and project cycle management workshop',
+    altText: 'HIMAT Consulting experts conducting organizational capacity assessment and project cycle management workshop',
     published: true,
     order: 2,
     detailUrl: '/services',

@@ -428,7 +428,7 @@ export default function ComplianceEthics() {
               </div>
             </article>
 
-            {/* Section 4: Reporting Concerns & Whistleblower Mechanisms */}
+            {/* Section 4: Protecting the People Behind the Data */}
             <article
               className="no-reveal"
               style={{
@@ -457,6 +457,103 @@ export default function ComplianceEthics() {
                   }}
                 >
                   4
+                </span>
+                <h2
+                  style={{
+                    fontFamily: "'Source Serif 4', Georgia, serif",
+                    fontSize: '1.45rem',
+                    fontWeight: 700,
+                    color: '#111111',
+                    margin: 0,
+                    lineHeight: 1.3,
+                  }}
+                >
+                  Protecting the People Behind the Data: HCPL's Standard for Ethical Research and Evaluation
+                </h2>
+              </div>
+
+              <div
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '0.96rem',
+                  lineHeight: '1.8',
+                  color: '#424242',
+                }}
+              >
+                <p style={{ fontSize: '1.02rem', fontWeight: 600, color: '#760CB0', marginBottom: '1rem' }}>
+                  At HCPL, no respondent is asked a single question until she understands why the study is being done, how she was chosen, and that every answer is hers to give or withhold.
+                </p>
+                <p>
+                  Under the HCPL Informed Consent and Data Protection Protocol, participation is voluntary at every stage: she may skip any question, pause, or stop altogether, without explanation and without consequence. For under 18 children, we require both parent or guardian permission and the girl's own agreement, and her refusal always prevails. Trained female enumerators conduct interviews in private settings, guided by clear steps for responding to distress and reporting any risk of harm.
+                </p>
+                <p>
+                  Identities are never stored with answers; they are held in a separate, restricted file and linked only by a unique code, and data is used solely for the analysis explained to the respondent. When a client requests respondent-level data, we first remove direct and indirect identifiers, share only what the purpose requires, and keep a record of every release. The client owns the research data, and HCPL safeguards it as custodian. Named focal points, field spot-checks, audits, a breach-reporting window and an accessible complaints route turn these commitments into practice. The result is research that donors and clients can trust, respondents can take part in safely, and HCPL can stand behind with confidence.
+                </p>
+
+                <div
+                  style={{
+                    background: '#faf5ff',
+                    borderRadius: '14px',
+                    border: '1.5px solid rgba(118, 12, 176, 0.2)',
+                    padding: '1.5rem 1.75rem',
+                    marginTop: '1.5rem',
+                  }}
+                >
+                  <h3
+                    style={{
+                      fontFamily: "'Source Serif 4', Georgia, serif",
+                      fontSize: '1.2rem',
+                      fontWeight: 700,
+                      color: '#760CB0',
+                      margin: '0 0 0.65rem',
+                    }}
+                  >
+                    Research Participants and Respondents
+                  </h3>
+                  <p style={{ margin: '0 0 0.85rem', lineHeight: '1.75' }}>
+                    When we collect data for research, surveys, interviews or evaluations, including with adolescent girls, refugees and other vulnerable people, we follow HCPL's Research Data Protection and Safeguarding Protocol. In summary:
+                  </p>
+                  <ul style={{ paddingLeft: '1.25rem', lineHeight: '1.85', margin: 0 }}>
+                    <li><strong>Prior Purpose Explanation:</strong> We explain the purpose of the study and how you were selected before asking anything.</li>
+                    <li><strong>Voluntary Participation:</strong> Taking part is voluntary; you may skip any question or stop at any stage without penalty.</li>
+                    <li><strong>Minors & Adolescent Safeguards:</strong> For girls under 18 we obtain parent or guardian permission as well as her own agreement; the minor's refusal always prevails.</li>
+                    <li><strong>Data Purpose Limitation:</strong> We use the information only for analysis as explained during consent.</li>
+                    <li><strong>Full De-identification:</strong> If a client asks for data, we remove respondents' personal identity first.</li>
+                    <li><strong>Client Ownership & Custodianship:</strong> Under our client contracts the research data belongs to the client, and HCPL holds it only for the project.</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            {/* Section 5: Reporting Concerns & Whistleblower Mechanisms */}
+            <article
+              className="no-reveal"
+              style={{
+                background: '#ffffff',
+                borderRadius: '16px',
+                border: '1.5px solid rgba(118,12,176,0.18)',
+                padding: '2rem 2.25rem',
+                boxShadow: '0 10px 30px rgba(118,12,176,0.06)',
+                opacity: 1,
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem', borderBottom: '1px solid rgba(118,12,176,0.1)', paddingBottom: '0.85rem' }}>
+                <span
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '8px',
+                    background: 'linear-gradient(135deg, #760CB0 0%, #5a0886 100%)',
+                    color: '#ffffff',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '0.85rem',
+                    fontWeight: 800,
+                    flexShrink: 0,
+                  }}
+                >
+                  5
                 </span>
                 <h2
                   style={{

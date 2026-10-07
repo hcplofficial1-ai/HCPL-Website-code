@@ -74,7 +74,13 @@ export function applyCompetencyImages(list) {
       return { ...c, image: './images/program-development-bg.jpg', focalPoint: 'center 40%' }
     }
     if (c.id === 'organizational-assessment') {
-      return { ...c, image: './images/organizational-assessment-workshop.jpg', focalPoint: 'center 52%' }
+      return {
+        ...c,
+        title: 'Organizational Capacity Assessment',
+        category: 'ORGANIZATIONAL CAPACITY ASSESSMENT',
+        image: './images/organizational-assessment-workshop.jpg',
+        focalPoint: 'center 52%'
+      }
     }
     if (c.id === 'capacity-building') {
       return {
