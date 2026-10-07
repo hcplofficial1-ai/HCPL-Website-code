@@ -21,7 +21,7 @@ function queryOfflineKnowledge(userMessage, projectCount = 121) {
   ) {
     return {
       reply:
-        "We welcome the opportunity to partner with your organization! You can click the **Request a Proposal** button above to submit your project requirements directly to our technical directorate.\n\nAlternatively, you can reach our advisory team:\n- **Email:** [info@himatconsulting.com](mailto:info@himatconsulting.com)\n- **Phone:** +92 51 6131366\n- **WhatsApp:** +92 343 4484598\n\nOur team typically responds to proposal inquiries within 1 business day.",
+        "We welcome the opportunity to partner with your organization! You can click the **Request a Proposal** button above to submit your project requirements directly to our technical directorate.\n\nAlternatively, you can reach our advisory team:\n- **Email:** [info@himatconsulting.com](mailto:info@himatconsulting.com)\n- **Phone:** +92 334 5259088\n- **WhatsApp:** +92 343 4484598\n\nOur team typically responds to proposal inquiries within 1 business day.",
       quickActions: ['Request a Proposal', 'WhatsApp Chat', 'Our Services']
     }
   }
@@ -84,7 +84,7 @@ function queryOfflineKnowledge(userMessage, projectCount = 121) {
   ) {
     return {
       reply:
-        "**HIMAT Consulting Official Contact Information:**\n\n- **Head Office:** Office # 14, 3rd Floor, Al-Babar Centre, F-8 Markaz, Islamabad, 44000, Pakistan\n- **US Affiliate:** HCPL LLC, Texas, United States\n- **Telephone:** +92 51 6131366\n- **WhatsApp:** +92 343 4484598\n- **Official Email:** [info@himatconsulting.com](mailto:info@himatconsulting.com)\n- **Website:** [https://himatconsulting.com](https://himatconsulting.com)",
+        "**HIMAT Consulting Official Contact Information:**\n\n- **Head Office:** Office # 14, 3rd Floor, Al-Babar Centre, F-8 Markaz, Islamabad, 44000, Pakistan\n- **US Affiliate:** HCPL LLC, Texas, United States\n- **Telephone:** +92 334 5259088\n- **WhatsApp:** +92 343 4484598\n- **Official Email:** [info@himatconsulting.com](mailto:info@himatconsulting.com)\n- **Website:** [https://himatconsulting.com](https://himatconsulting.com)",
       quickActions: ['WhatsApp Chat', 'Request a Proposal', 'Our Services']
     }
   }

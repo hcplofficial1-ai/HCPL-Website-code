@@ -10,7 +10,7 @@ export const CHAT_CONFIG = {
 
   contact: {
     email: 'info@himatconsulting.com',
-    phone: '+92 51 6131366',
+    phone: '+92 334 5259088',
     whatsappNumber: '923434484598',
     whatsappDisplay: '+92 343 4484598',
     address: 'Office # 14, 3rd Floor, Al-Babar Centre, F-8 Markaz, Islamabad, Pakistan',

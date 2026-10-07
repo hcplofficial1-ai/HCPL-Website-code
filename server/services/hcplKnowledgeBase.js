@@ -14,7 +14,7 @@ export const HCPL_KNOWLEDGE = {
     internationalPresence: "Registered corporate entity in Texas, United States (HCPL LLC)",
     headquarters: {
       address: "Office # 14, 3rd Floor, Al-Babar Centre, F-8 Markaz, Islamabad, 44000, Pakistan",
-      phone: "+92 51 6131366",
+      phone: "+92 334 5259088",
       whatsapp: "+92 343 4484598",
       email: "info@himatconsulting.com",
       website: "https://himatconsulting.com"

@@ -25,7 +25,7 @@ CORE COMPANY FACTS & STATS (Strict Ground Truth):
 - Geographic Reach: Nationwide across all 4 provinces of Pakistan (Punjab, Sindh, KP, Balochistan), Gilgit-Baltistan, AJK, and international assignments in South/Central Asia and the Middle East.
 - Official Contacts:
   - Email: info@himatconsulting.com
-  - Phone: +92 51 6131366
+  - Phone: +92 334 5259088
   - WhatsApp: +92 343 4484598
   - Website: https://himatconsulting.com
 
@@ -54,7 +54,7 @@ function queryOfflineKnowledgeEngine(userMessage) {
     query.includes('rfp')
   ) {
     return {
-      reply: `We would be pleased to collaborate with your organization! You can submit your requirements directly using the **Request a Proposal** button in this chat window.\n\nAlternatively, you can contact our technical team:\n- **Email:** [info@himatconsulting.com](mailto:info@himatconsulting.com)\n- **Phone:** +92 51 6131366\n- **WhatsApp:** +92 343 4484598\n\nOur team typically reviews and responds to project inquiries within 1 business day.`,
+      reply: `We would be pleased to collaborate with your organization! You can submit your requirements directly using the **Request a Proposal** button in this chat window.\n\nAlternatively, you can contact our technical team:\n- **Email:** [info@himatconsulting.com](mailto:info@himatconsulting.com)\n- **Phone:** +92 334 5259088\n- **WhatsApp:** +92 343 4484598\n\nOur team typically reviews and responds to project inquiries within 1 business day.`,
       quickActions: ['Request a Proposal', 'Chat on WhatsApp', 'Our Core Services']
     }
   }
