@@ -84,7 +84,7 @@ function queryOfflineKnowledge(userMessage, projectCount = 121) {
   ) {
     return {
       reply:
-        "**HIMAT Consulting Official Contact Information:**\n\n- **Head Office:** Office # 14, 3rd Floor, Al-Babar Centre, F-8 Markaz, Islamabad, 44000, Pakistan\n- **US Affiliate:** HCPL LLC, Texas, United States\n- **Telephone:** +92 334 5259088\n- **WhatsApp:** +92 343 4484598\n- **Official Email:** [info@himatconsulting.com](mailto:info@himatconsulting.com)\n- **Website:** [https://himatconsulting.com](https://himatconsulting.com)",
+        "**HIMAT Consulting Official Contact Information:**\n\n- **Head Office:** Office # 14, 3rd Floor, Al-Babar Centre, F-8 Markaz, Islamabad, 44000, Pakistan\n- **US Affiliate:** HCPL LLC, Texas, United States\n- **Phone:** +92 334 5259088\n- **Telephone:** +92 51 6131366\n- **Official Email:** [info@himatconsulting.com](mailto:info@himatconsulting.com)\n- **Website:** [https://himatconsulting.com](https://himatconsulting.com)",
       quickActions: ['WhatsApp Chat', 'Request a Proposal', 'Our Services']
     }
   }

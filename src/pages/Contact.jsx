@@ -75,8 +75,8 @@ export default function Contact() {
     { icon: '📍', label: 'Pakistan Head Office', val: 'Office no 23 Ground Floor, Khudadad heights, Golra E11/4 E-11, Islamabad, Pakistan' },
     { icon: '🏢', label: 'USA Office', val: '10498 Fountain Lake Dr, Apt 1028, Stafford, Texas 77477, United States of America' },
     { icon: '✉️', label: 'Email', val: 'info@himatconsulting.com', href: 'mailto:info@himatconsulting.com' },
-    { icon: '📞', label: 'Phone', val: '+923434484598', href: 'tel:+923434484598' },
-    { icon: '☎️', label: 'Telephone', val: '+92 334 5259088', href: 'tel:+923345259088' },
+    { icon: '📞', label: 'Phone', val: '+92 334 5259088', href: 'tel:+923345259088' },
+    { icon: '☎️', label: 'Telephone', val: '+92 51 6131366', href: 'tel:+92516131366' },
     { icon: '🌐', label: 'Website', val: 'www.himatconsulting.com', href: 'https://himatconsulting.com' },
     { icon: '💼', label: 'LinkedIn', val: 'Himat Consulting pvt ltd', href: 'https://pk.linkedin.com/company/himat-consulting' },
   ]
