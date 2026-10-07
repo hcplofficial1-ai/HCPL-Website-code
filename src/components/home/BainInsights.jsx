@@ -8,7 +8,6 @@ const INSIGHTS = [
     category: 'TVET & Labour Policy',
     readTime: '6 Min Read',
     title: 'Bridging the Skills Gap in Fragile & Post-Conflict Economies: Lessons from South Sudan',
-    author: 'Dr. Jawad Khan, PhD & Research Directorate',
     desc: 'How targeted market diagnostics and public-private TVET linkages can accelerate youth employment absorption in developing economies.',
     year: '2025',
     link: '/reports',
@@ -19,7 +18,6 @@ const INSIGHTS = [
     category: 'Econometrics & Startups',
     readTime: '8 Min Read',
     title: 'Measuring Early-Stage Incubation Impact: A Difference-in-Differences Evaluation Framework',
-    author: 'Prof. Dr. Tariq Mahmood, PhD',
     desc: 'Methodological approaches for isolating entrepreneurial treatment effects across heterogeneous micro-enterprise cohorts in Central Asia.',
     year: '2025',
     link: '/reports',
@@ -30,7 +28,6 @@ const INSIGHTS = [
     category: 'Climate & Agronomy',
     readTime: '5 Min Read',
     title: 'Regenerative Agriculture in High-Heat Corridors: Soil Carbon & Water Stewardship Baselines',
-    author: 'Engr. Kamran Farooq, MSc',
     desc: 'Empirical benchmarks from Punjab and Sindh smallholders demonstrating the economic feasibility of water-saving cotton cultivation.',
     year: '2024',
     link: '/reports',
@@ -231,17 +228,6 @@ export default function BainInsights() {
                       </h3>
                     </Link>
 
-                    {/* Author Tag */}
-                    <div
-                      style={{
-                        fontSize: '0.85rem',
-                        color: isWhiteCard ? '#950db7' : 'rgba(255, 255, 255, 0.95)',
-                        fontWeight: 700,
-                        fontFamily: "'Inter', Arial, sans-serif",
-                      }}
-                    >
-                      By {ins.author}
-                    </div>
 
                     {/* Short Description */}
                     <p
