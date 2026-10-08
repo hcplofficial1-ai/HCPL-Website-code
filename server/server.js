@@ -325,6 +325,11 @@ async function autoSeedIfEmpty() {
       const teamToSeed = DEFAULT_TEAM.filter(t => !deletedSet.has(t.id))
       if (teamToSeed.length > 0) await TeamMember.insertMany(teamToSeed)
       console.log(`🌱 Auto-seeded ${teamToSeed.length} team members to MongoDB Atlas`)
+    } else {
+      const hassanDef = DEFAULT_TEAM.find(t => t.id === 'hassan')
+      if (hassanDef && !deletedSet.has('hassan')) {
+        await TeamMember.updateOne({ id: 'hassan' }, { $set: { experience: hassanDef.experience } })
+      }
     }
 
     // Clean up any legacy dummy reports

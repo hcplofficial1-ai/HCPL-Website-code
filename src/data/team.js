@@ -100,7 +100,7 @@ export const DEFAULT_TEAM = [
     linkedin: 'https://pk.linkedin.com/company/himat-consulting',
     image: './hassan.jpg',
     education: 'BS Economics (NUST, Islamabad)',
-    experience: 'Hassan Khan is an Economics graduate from NUST, Islamabad with nearly three years of experience in Business development and international development consultancy. He has worked on proposal development, donor and market research, data partner coordination, and business development assignments for projects linked to organizations such as UNICEF, GIZ, WFP, the World Bank Group, and the Green Climate Fund. His experience spans sectors including health, education, WASH, climate change, child protection, and refugee-related programming, along with growing skills in AI-assisted content development and visual communication & stakeholder consultations.',
+    experience: 'Hassan Khan is an Economics graduate from NUST with nearly three years of experience in business development and international development management consultancy. His expertise includes proposal development, research, partner coordination, and business development. He has experience supporting consulting engagements from opportunity scoping and bid strategy through proposal development and partnership management. His analytical and strategic approach enables him to contribute effectively to the design and positioning of evidence-based, high-quality consulting solutions for development partners and international clients.',
     specialties: ['Business Development', 'Proposal Architecture', 'Donor & Market Research', 'Data Partner Coordination', 'AI-Assisted Content', 'Stakeholder Consultations'],
     initials: 'HK',
     order: 7,
