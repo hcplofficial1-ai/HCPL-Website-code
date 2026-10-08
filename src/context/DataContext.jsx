@@ -158,7 +158,7 @@ export function applyTeamImages(list) {
     if (m.id === 'hassan') {
       return {
         ...m,
-        experience: "Hassan Khan is an Economics graduate from NUST with nearly three years of experience in business development and international development management consultancy. His expertise includes proposal development, research, partner coordination, and business development. He has experience supporting consulting engagements from opportunity scoping and bid strategy through proposal development and partnership management. His analytical and strategic approach enables him to contribute effectively to the design and positioning of evidence-based, high-quality consulting solutions for development partners and international clients."
+        experience: "Hassan Khan is an Economics graduate from NUST with nearly three years of experience in business development and international development consultancy. He has worked on proposal development, donor research, partner coordination, and assignments for organizations including UNICEF, GIZ, WFP, and the World Bank Group, across sectors such as health, education, WASH, climate change, and child protection."
       }
     }
     if (m.id === 'urooj') {
