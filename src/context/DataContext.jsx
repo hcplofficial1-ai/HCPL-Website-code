@@ -161,6 +161,12 @@ export function applyTeamImages(list) {
         experience: "Hassan Khan is an Economics graduate from NUST with nearly three years of experience in business development and international development management consultancy. His expertise includes proposal development, research, partner coordination, and business development. He has experience supporting consulting engagements from opportunity scoping and bid strategy through proposal development and partnership management. His analytical and strategic approach enables him to contribute effectively to the design and positioning of evidence-based, high-quality consulting solutions for development partners and international clients."
       }
     }
+    if (m.id === 'urooj') {
+      return {
+        ...m,
+        experience: "Computer Science graduate and IT Associate with experience in business development support, proposal preparation, website development, digital systems, corporate documentation, and IT support. Skilled in developing responsive websites and web applications using React.js, JavaScript, Node.js, and modern web technologies, with additional experience in AI-powered applications and database management."
+      }
+    }
     return m
   })
 }

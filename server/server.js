@@ -330,6 +330,10 @@ async function autoSeedIfEmpty() {
       if (hassanDef && !deletedSet.has('hassan')) {
         await TeamMember.updateOne({ id: 'hassan' }, { $set: { experience: hassanDef.experience } })
       }
+      const uroojDef = DEFAULT_TEAM.find(t => t.id === 'urooj')
+      if (uroojDef && !deletedSet.has('urooj')) {
+        await TeamMember.updateOne({ id: 'urooj' }, { $set: { experience: uroojDef.experience, specialties: uroojDef.specialties } })
+      }
     }
 
     // Clean up any legacy dummy reports
