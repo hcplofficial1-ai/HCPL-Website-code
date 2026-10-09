@@ -146,7 +146,8 @@ export function HeroIntro({
           <span>{ctaText}</span>
         </Link>
         <Link
-          to="/contact"
+          to="/reports"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
           onMouseEnter={() => setIsDiscussHovered(true)}
           onMouseLeave={() => setIsDiscussHovered(false)}
           style={{
