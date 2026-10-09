@@ -88,5 +88,17 @@ export const DEFAULT_CONSULTANTS = [
     order: 8,
     experience: "Mahrukh Qazilbash is a Presentation & Client Engagement Specialist with over 10 years of experience driving multi-country program design, client engagement, institutional presentations, and international reporting. She holds an MSc in Strategic Communications & Development Policy and leads proposal architecture, knowledge translation, and HIMAT's global communications strategy.",
   },
+  {
+    id: 'arshad-mahmood',
+    name: 'Arshad Mahmood',
+    role: 'Governance, Human Rights & Programme Management Specialist',
+    org: 'Senior Development Leader · Former British Council, UNICEF & Save the Children Advisor',
+    specialties: ['Governance & Policy Reform', 'Human Rights & Child Protection', 'Institutional Strengthening', 'Programme Management & Advocacy', 'Legislative & Policy Reform'],
+    image: './arshad_mahmood.jpg',
+    imagePosition: 'center 12%',
+    initials: 'AM',
+    order: 9,
+    experience: 'Arshad Mahmood is a seasoned development professional with over 25 years of national and international experience in governance, human rights, child protection, policy reform, advocacy, institutional strengthening, and programme management. He holds an MSc in Human Rights from the London School of Economics and Political Science (LSE) and has held senior leadership and consultancy positions with the British Council, UNICEF, USAID/DAI, Save the Children International, SPARC, and EU-funded programmes. His expertise includes managing large-scale donor-funded programmes, developing national strategies, supporting legislative reforms, strengthening civil society institutions, and leading research and evaluations. He has extensive experience working with government institutions, UN agencies, international development partners, and civil society organizations in Pakistan, Jordan, and the Maldives.',
+  },
 ]
 

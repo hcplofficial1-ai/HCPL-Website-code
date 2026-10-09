@@ -370,6 +370,11 @@ async function autoSeedIfEmpty() {
       console.log(`🌱 Auto-seeded ${consultantsToSeed.length} consultants to MongoDB Atlas`)
     } else {
       await Consultant.updateOne({ id: 'izhar-ali-hunzai' }, { $set: { order: 1 } })
+      for (const c of DEFAULT_CONSULTANTS) {
+        if (!deletedSet.has(c.id)) {
+          await Consultant.updateOne({ id: c.id }, { $set: c }, { upsert: true })
+        }
+      }
     }
 
     const serviceCount = await Service.countDocuments()
