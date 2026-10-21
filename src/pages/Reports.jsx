@@ -36,7 +36,8 @@ export const CLIENT_LOGOS = [
   { match: ['itc'], logo: '/logos/itc.jpg' },
   { match: ['jpal'], logo: '/logos/jpal.jpg' },
   { match: ['better cotton', 'bettercotton'], logo: '/logos/bettercotton.jpg' },
-  { match: ['government of pakistan', 'government of sindh', 'government of punjab', 'government of kp', 'government of balochistan', 'gop', 'government'], logo: '/logos/gop.jpg' },
+  { match: ['ntu', 'ntu international'], logo: '/logos/ntu.svg' },
+  { match: ['government of pakistan', 'government of sindh', 'government of punjab', 'government of kp', 'government of balochistan', 'government of gilgit-baltistan', 'gilgit-baltistan', 'water management and irrigation', 'dowm&i', 'gop', 'government'], logo: '/logos/gop.jpg' },
 ]
 
 export function resolveClientLogo(clientName, explicitLogo) {
