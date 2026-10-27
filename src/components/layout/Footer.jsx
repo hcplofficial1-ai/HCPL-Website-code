@@ -96,8 +96,8 @@ export default function Footer() {
             <p
               style={{
                 fontFamily: "'Inter', Arial, sans-serif",
-                fontSize: '1.08rem',
-                lineHeight: 1.75,
+                fontSize: '1.12rem',
+                lineHeight: 1.8,
                 color: '#2d3748',
                 margin: 0,
                 fontWeight: 500,
@@ -116,7 +116,7 @@ export default function Footer() {
               alignItems: 'center',
               justifyContent: 'center',
               borderLeft: '1.5px solid rgba(118, 12, 176, 0.16)',
-              paddingLeft: '3rem',
+              paddingLeft: '3.5rem',
               flexShrink: 0,
             }}
             className="footer-iso-badge-box"
@@ -125,7 +125,7 @@ export default function Footer() {
               src="/images/iso-9001-certified.png"
               alt="Certified ISO 9001 Certified"
               style={{
-                height: '128px',
+                height: '165px',
                 width: 'auto',
                 display: 'block',
                 objectFit: 'contain',
@@ -140,11 +140,11 @@ export default function Footer() {
             <span
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: '0.88rem',
-                fontWeight: 700,
+                fontSize: '0.94rem',
+                fontWeight: 800,
                 color: '#760CB0',
                 textAlign: 'center',
-                marginTop: '0.45rem',
+                marginTop: '0.55rem',
                 whiteSpace: 'nowrap',
               }}
             >
@@ -181,7 +181,7 @@ export default function Footer() {
               </div>
             </div>
           </Link>
-          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.95rem', color: '#666', maxWidth: '580px', lineHeight: 1.75, margin: 0 }}>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.95rem', color: '#666', maxWidth: '580px', lineHeight: 1.8, margin: 0 }}>
             Evidence-based consulting, diagnostic research, and OECD-DAC evaluations across South Asia, Central Asia, and global development corridors.
           </p>
         </div>
