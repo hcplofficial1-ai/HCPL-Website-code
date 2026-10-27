@@ -33,7 +33,7 @@ export default function Footer() {
       name: 'LinkedIn',
       href: 'https://pk.linkedin.com/company/himat-consulting',
       icon: (
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
         </svg>
       ),
@@ -42,7 +42,7 @@ export default function Footer() {
       name: 'Facebook',
       href: 'https://www.facebook.com/share/18MGcCVuG5/',
       icon: (
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
         </svg>
       ),
@@ -51,7 +51,7 @@ export default function Footer() {
       name: 'Instagram',
       href: 'https://www.instagram.com/himatconsulting?igsi=MXhraWN2ams5bXJqdQ==',
       icon: (
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
         </svg>
       ),
@@ -60,12 +60,12 @@ export default function Footer() {
 
   return (
     <footer style={{ background: '#ffffff', color: '#212121', borderTop: '1px solid rgba(118, 12, 176, 0.12)', fontFamily: "'Inter', Arial, sans-serif" }}>
-      {/* Main Footer Container */}
-      <div style={{ maxWidth: 'min(1820px, 96vw)', margin: '0 auto', padding: '2.5rem clamp(1.25rem, 3vw, 2.5rem) 2rem' }}>
+      {/* Main Top Grid */}
+      <div style={{ maxWidth: 'min(1820px, 96vw)', margin: '0 auto', padding: '4.5rem clamp(1.25rem, 3vw, 2.5rem) 3.5rem' }}>
         
         {/* Brand Header */}
-        <div style={{ marginBottom: '1.75rem' }}>
-          <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none', marginBottom: '0.75rem' }}>
+        <div style={{ marginBottom: '3.5rem' }}>
+          <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none', marginBottom: '1rem' }}>
             <img
               src="/himat-logo.png"
               alt="HIMAT Consulting Logo"
@@ -88,88 +88,9 @@ export default function Footer() {
               </div>
             </div>
           </Link>
-          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.95rem', color: '#666', maxWidth: '640px', lineHeight: 1.65, margin: 0 }}>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.95rem', color: '#666', maxWidth: '580px', lineHeight: 1.75, margin: 0 }}>
             Evidence-based consulting, diagnostic research, and OECD-DAC evaluations across South Asia, Central Asia, and global development corridors.
           </p>
-        </div>
-
-        {/* ISO 9001 Quality Certification Strip: Text and Badge Closely Paired */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '2.5rem',
-            background: 'linear-gradient(135deg, #fdfbf7 0%, #faf5ff 100%)',
-            border: '1.5px solid rgba(118, 12, 176, 0.14)',
-            borderRadius: '16px',
-            padding: '1.25rem 2rem',
-            marginBottom: '2.5rem',
-            flexWrap: 'wrap',
-            maxWidth: '1080px',
-            boxShadow: '0 2px 10px rgba(118, 12, 176, 0.04)',
-          }}
-          className="iso-quality-strip"
-        >
-          {/* ISO Quality Statement */}
-          <div style={{ flex: '1 1 500px', maxWidth: '660px' }}>
-            <p
-              style={{
-                fontFamily: "'Inter', Arial, sans-serif",
-                fontSize: '0.98rem',
-                lineHeight: 1.7,
-                color: '#2d3748',
-                margin: 0,
-                fontWeight: 500,
-              }}
-            >
-              Backed by ISO 9001 certification, we operate with globally benchmarked quality controls, ensuring reliable, responsible, and high-standard project delivery.
-            </p>
-          </div>
-
-          {/* ISO 9001 Badge placed immediately next to the text */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderLeft: '1.5px solid rgba(118, 12, 176, 0.16)',
-              paddingLeft: '2rem',
-              flexShrink: 0,
-            }}
-            className="iso-badge-box"
-          >
-            <img
-              src="/images/iso-9001-certified.png"
-              alt="Certified ISO 9001 Certified"
-              style={{
-                height: '130px',
-                width: 'auto',
-                display: 'block',
-                objectFit: 'contain',
-                filter: 'drop-shadow(0 3px 8px rgba(0,0,0,0.08))',
-              }}
-              onError={(e) => {
-                if (e.currentTarget.src.indexOf('iso-9001-certified.png') !== -1) {
-                  e.currentTarget.src = '/iso-9001-certified.png'
-                }
-              }}
-            />
-            <div
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: '0.84rem',
-                fontWeight: 700,
-                color: '#760CB0',
-                textAlign: 'center',
-                marginTop: '0.4rem',
-                letterSpacing: '0.01em',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              Quality Controls and management
-            </div>
-          </div>
         </div>
 
         {/* 4-Column Layout */}
@@ -182,7 +103,7 @@ export default function Footer() {
           className="footer-grid-layout"
         >
           {/* Column 1: Company */}
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div>
             <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '1.25rem' }}>
               Company
             </div>
@@ -192,7 +113,7 @@ export default function Footer() {
                   key={l.to}
                   to={l.to}
                   onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
-                  style={{ color: '#424242', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s', lineHeight: 1.4 }}
+                  style={{ color: '#424242', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s' }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = '#760CB0')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = '#424242')}
                 >
@@ -203,7 +124,7 @@ export default function Footer() {
           </div>
 
           {/* Column 2: Work & Evidence */}
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div>
             <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '1.25rem' }}>
               Work & Evidence
             </div>
@@ -213,7 +134,7 @@ export default function Footer() {
                   key={l.to}
                   to={l.to}
                   onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
-                  style={{ color: '#424242', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s', lineHeight: 1.4 }}
+                  style={{ color: '#424242', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s' }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = '#760CB0')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = '#424242')}
                 >
@@ -224,7 +145,7 @@ export default function Footer() {
           </div>
 
           {/* Column 3: Global Presence */}
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div>
             <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '1.25rem' }}>
               Global Locations
             </div>
@@ -256,7 +177,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 4: Digital Knowledge Platform & Scannable QR Graphic (In Its Own Place) */}
+          {/* Column 4: Digital Knowledge Platform & Scannable QR Graphic */}
           <div
             style={{
               background: '#faf5ff',
@@ -307,6 +228,82 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        {/* Small Section for ISO 9001 Badge & Quality Statement (Just Little Bit Down) */}
+        <div
+          style={{
+            marginTop: '3.5rem',
+            paddingTop: '1.75rem',
+            borderTop: '1px solid rgba(118, 12, 176, 0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '2.5rem',
+            flexWrap: 'wrap',
+          }}
+          className="footer-iso-strip"
+        >
+          {/* Quality Statement */}
+          <div style={{ flex: '1 1 520px', maxWidth: '820px' }}>
+            <p
+              style={{
+                fontFamily: "'Inter', Arial, sans-serif",
+                fontSize: '0.95rem',
+                lineHeight: 1.7,
+                color: '#424242',
+                margin: 0,
+                fontWeight: 500,
+              }}
+            >
+              Backed by ISO 9001 certification, we operate with globally benchmarked quality controls, ensuring reliable, responsible, and high-standard project delivery.
+            </p>
+          </div>
+
+          {/* ISO 9001 Badge with caption */}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderLeft: '1px solid rgba(118, 12, 176, 0.15)',
+              paddingLeft: '2.25rem',
+              flexShrink: 0,
+            }}
+            className="footer-iso-badge-box"
+          >
+            <img
+              src="/images/iso-9001-certified.png"
+              alt="Certified ISO 9001 Certified"
+              style={{
+                height: '96px',
+                width: 'auto',
+                display: 'block',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.06))',
+              }}
+              onError={(e) => {
+                if (e.currentTarget.src.indexOf('iso-9001-certified.png') !== -1) {
+                  e.currentTarget.src = '/iso-9001-certified.png'
+                }
+              }}
+            />
+            <span
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                color: '#760CB0',
+                textAlign: 'center',
+                marginTop: '0.35rem',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Quality Controls and management
+            </span>
+          </div>
+        </div>
+
       </div>
 
       {/* Divider */}
@@ -324,8 +321,8 @@ export default function Footer() {
               rel="noopener noreferrer"
               aria-label={s.name}
               style={{
-                width: '38px',
-                height: '38px',
+                width: '40px',
+                height: '40px',
                 borderRadius: '50%',
                 background: '#212121',
                 color: '#ffffff',
@@ -406,19 +403,18 @@ export default function Footer() {
       </div>
 
       {/* Final Copyright Bar */}
-      <div style={{ background: '#faf5ff', borderTop: '1px solid rgba(118, 12, 176, 0.06)', padding: '0.85rem 1.5rem', textAlign: 'center', fontSize: '0.8125rem', color: '#757575' }}>
+      <div style={{ background: '#faf5ff', borderTop: '1px solid rgba(118, 12, 176, 0.06)', padding: '1rem 1.5rem', textAlign: 'center', fontSize: '0.8125rem', color: '#757575' }}>
         © 2009–2026 HIMAT Consulting Private Limited. All rights reserved. Registered in Pakistan & United States of America.
       </div>
 
       <style>{`
         @media (max-width: 768px) {
-          .iso-quality-strip {
+          .footer-iso-strip {
             flex-direction: column !important;
             align-items: flex-start !important;
             gap: 1.5rem !important;
-            padding: 1.25rem !important;
           }
-          .iso-badge-box {
+          .footer-iso-badge-box {
             border-left: none !important;
             padding-left: 0 !important;
             align-self: center !important;
