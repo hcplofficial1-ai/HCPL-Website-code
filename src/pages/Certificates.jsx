@@ -558,8 +558,8 @@ export default function Certificates() {
                     </span>
                   </div>
 
-                  {/* Certificate Document Thumbnail Preview (if attached) */}
-                  {cert.downloadUrl && cert.downloadUrl !== '#' && (
+                  {/* Certificate Document Thumbnail Preview (For ALL Certificates) */}
+                  {cert.downloadUrl && cert.downloadUrl !== '#' ? (
                     <div
                       onClick={(e) => {
                         e.stopPropagation()
@@ -567,16 +567,25 @@ export default function Certificates() {
                       }}
                       style={{
                         position: 'relative',
-                        borderRadius: '12px',
+                        borderRadius: '14px',
                         overflow: 'hidden',
                         border: '1.5px solid rgba(118, 12, 176, 0.16)',
                         cursor: 'pointer',
                         background: '#f8fafc',
-                        height: '160px',
+                        height: '165px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         boxShadow: '0 3px 12px rgba(0,0,0,0.04)',
+                        transition: 'transform 0.35s ease, border-color 0.25s ease',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.02)'
+                        e.currentTarget.style.borderColor = 'rgba(118, 12, 176, 0.35)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)'
+                        e.currentTarget.style.borderColor = 'rgba(118, 12, 176, 0.16)'
                       }}
                       title="Click to open official certificate document in high resolution"
                     >
@@ -588,10 +597,7 @@ export default function Certificates() {
                           height: '100%',
                           objectFit: 'cover',
                           objectPosition: 'top center',
-                          transition: 'transform 0.35s ease',
                         }}
-                        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.04)')}
-                        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
                       />
                       <div
                         style={{
@@ -612,6 +618,157 @@ export default function Certificates() {
                         }}
                       >
                         <span>🔍 Open Certificate ↗</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleDownloadPDF(cert)
+                      }}
+                      style={{
+                        position: 'relative',
+                        borderRadius: '14px',
+                        overflow: 'hidden',
+                        border: '1.5px solid rgba(118, 12, 176, 0.16)',
+                        cursor: 'pointer',
+                        background: 'linear-gradient(135deg, #ffffff 0%, #faf8fc 100%)',
+                        height: '165px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        padding: '12px 14px',
+                        boxShadow: '0 3px 12px rgba(0,0,0,0.04)',
+                        boxSizing: 'border-box',
+                        transition: 'transform 0.35s ease, border-color 0.25s ease',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.02)'
+                        e.currentTarget.style.borderColor = 'rgba(118, 12, 176, 0.35)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)'
+                        e.currentTarget.style.borderColor = 'rgba(118, 12, 176, 0.16)'
+                      }}
+                      title="Click to open official certificate document"
+                    >
+                      {/* Inner certificate watermark / border */}
+                      <div
+                        style={{
+                          position: 'absolute',
+                          inset: '5px',
+                          border: '1px solid rgba(118, 12, 176, 0.18)',
+                          borderRadius: '9px',
+                          pointerEvents: 'none',
+                        }}
+                      />
+
+                      {/* Header row */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative', zIndex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          {cert.logo ? (
+                            <img
+                              src={cert.logo}
+                              alt={cert.client}
+                              style={{ height: '22px', maxWidth: '65px', objectFit: 'contain', mixBlendMode: 'multiply' }}
+                              onError={(e) => { e.currentTarget.style.display = 'none' }}
+                            />
+                          ) : null}
+                          <span style={{ fontSize: '0.66rem', fontWeight: 800, color: '#760CB0', letterSpacing: '0.07em', textTransform: 'uppercase' }}>
+                            Official Completion Record
+                          </span>
+                        </div>
+                        <span
+                          style={{
+                            fontSize: '0.62rem',
+                            fontWeight: 800,
+                            color: '#16a34a',
+                            background: '#f0fdf4',
+                            border: '1px solid #bbf7d0',
+                            padding: '1px 6px',
+                            borderRadius: '4px',
+                          }}
+                        >
+                          ✓ VERIFIED
+                        </span>
+                      </div>
+
+                      {/* Center content */}
+                      <div style={{ textAlign: 'center', margin: 'auto 0', position: 'relative', zIndex: 1, padding: '0 4px' }}>
+                        <div
+                          style={{
+                            fontFamily: "'Playfair Display', 'Source Serif 4', Georgia, serif",
+                            fontSize: '0.86rem',
+                            fontWeight: 700,
+                            color: '#1e293b',
+                            letterSpacing: '0.04em',
+                            textTransform: 'uppercase',
+                            lineHeight: 1.25,
+                          }}
+                        >
+                          Certificate of Completion
+                        </div>
+                        <div
+                          style={{
+                            fontSize: '0.68rem',
+                            color: '#64748b',
+                            marginTop: '3px',
+                            fontFamily: "'Inter', sans-serif",
+                          }}
+                        >
+                          Conferred upon <strong>HIMAT Consulting (Pvt) Ltd</strong>
+                        </div>
+                        <div
+                          style={{
+                            fontSize: '0.64rem',
+                            color: '#760CB0',
+                            fontWeight: 700,
+                            marginTop: '2px',
+                            fontFamily: "'Inter', sans-serif",
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          Ref: {cert.verifiedRef || 'HCPL-VERIFIED-RECORD'}
+                        </div>
+                      </div>
+
+                      {/* Footer row */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', position: 'relative', zIndex: 1 }}>
+                        <div
+                          style={{
+                            fontSize: '0.6rem',
+                            fontWeight: 800,
+                            color: '#760CB0',
+                            border: '1px solid rgba(118, 12, 176, 0.25)',
+                            padding: '2px 6px',
+                            borderRadius: '4px',
+                            letterSpacing: '0.05em',
+                            textTransform: 'uppercase',
+                            background: '#ffffff',
+                          }}
+                        >
+                          ★ {cert.clientCategory ? cert.clientCategory.split(' ')[0] : 'OFFICIAL'}
+                        </div>
+
+                        <div
+                          style={{
+                            background: 'rgba(118, 12, 176, 0.92)',
+                            backdropFilter: 'blur(4px)',
+                            color: '#ffffff',
+                            padding: '4px 10px',
+                            borderRadius: '999px',
+                            fontSize: '0.75rem',
+                            fontWeight: 800,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
+                          }}
+                        >
+                          <span>🔍 Open Certificate ↗</span>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -699,13 +856,13 @@ export default function Certificates() {
                       onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-2px)')}
                       onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
                     >
-                      <span>📄 View Official Letter</span>
+                      <span>📄 View Official Record</span>
                       <span>→</span>
                     </button>
 
                     <button
                       onClick={() => handleDownloadPDF(cert)}
-                      title="Open Printable Official Certificate PDF"
+                      title="Open Official Certificate Document"
                       style={{
                         background: '#faf5ff',
                         color: '#760CB0',
@@ -731,7 +888,7 @@ export default function Certificates() {
                         e.currentTarget.style.color = '#760CB0'
                       }}
                     >
-                      <span>📥 PDF</span>
+                      <span>🔍 Open Certificate</span>
                     </button>
                   </div>
                 </div>
@@ -831,8 +988,8 @@ export default function Certificates() {
               </div>
             </div>
 
-            {/* Verified Document Preview (if attached) */}
-            {selectedCert.downloadUrl && selectedCert.downloadUrl !== '#' && (
+            {/* Verified Document Preview (For ALL Certificates in Modal) */}
+            {selectedCert.downloadUrl && selectedCert.downloadUrl !== '#' ? (
               <div
                 style={{
                   background: '#faf5ff',
@@ -907,6 +1064,81 @@ export default function Certificates() {
                     }}
                   >
                     🔍 Click document to open in high-resolution new tab ↗
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div
+                style={{
+                  background: 'linear-gradient(135deg, #ffffff 0%, #faf8fc 100%)',
+                  border: '1.5px solid rgba(118, 12, 176, 0.22)',
+                  borderRadius: '16px',
+                  padding: '1.25rem',
+                  marginBottom: '1.5rem',
+                  boxShadow: '0 4px 20px rgba(118,12,176,0.05)',
+                  position: 'relative',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
+                  <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                    Verified Official Completion Record
+                  </div>
+                  <button
+                    onClick={() => handleDownloadPDF(selectedCert)}
+                    style={{
+                      background: 'linear-gradient(135deg, #760CB0 0%, #5a0886 100%)',
+                      color: '#ffffff',
+                      fontFamily: "'Inter', Arial, sans-serif",
+                      fontWeight: 800,
+                      fontSize: '0.78rem',
+                      padding: '0.4rem 0.95rem',
+                      borderRadius: '8px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.35rem',
+                      boxShadow: '0 2px 8px rgba(118,12,176,0.25)',
+                    }}
+                  >
+                    <span>🖨️ Open Full Printable Certificate ↗</span>
+                  </button>
+                </div>
+                <div
+                  onClick={() => handleDownloadPDF(selectedCert)}
+                  style={{
+                    position: 'relative',
+                    cursor: 'pointer',
+                    borderRadius: '12px',
+                    border: '1.5px solid rgba(118,12,176,0.15)',
+                    background: '#ffffff',
+                    padding: '1.25rem',
+                    boxShadow: '0 2px 12px rgba(0,0,0,0.03)',
+                  }}
+                  title="Click to open official certificate document in printable format"
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1.5px solid rgba(118,12,176,0.15)', paddingBottom: '0.75rem', marginBottom: '0.85rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                      {selectedCert.logo && (
+                        <img src={selectedCert.logo} alt={selectedCert.client} style={{ height: '30px', maxWidth: '70px', objectFit: 'contain', mixBlendMode: 'multiply' }} />
+                      )}
+                      <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#760CB0' }}>{selectedCert.client}</div>
+                    </div>
+                    <div style={{ border: '1px solid #760CB0', color: '#760CB0', padding: '2px 8px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 800 }}>
+                      OFFICIAL VERIFIED
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'center', padding: '0.5rem 0' }}>
+                    <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.15rem', fontWeight: 700, color: '#1e293b' }}>
+                      Certificate of Completion & Evaluation
+                    </div>
+                    <div style={{ fontSize: '0.8125rem', color: '#64748b', marginTop: '0.25rem' }}>
+                      Conferred upon <strong>HIMAT Consulting Private Limited</strong>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.75rem', paddingTop: '0.65rem', borderTop: '1px solid #f1f5f9', fontSize: '0.75rem', color: '#64748b' }}>
+                    <div><strong>Ref:</strong> {selectedCert.verifiedRef}</div>
+                    <div><strong>Date:</strong> {selectedCert.date}</div>
                   </div>
                 </div>
               </div>
