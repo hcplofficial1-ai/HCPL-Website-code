@@ -60,19 +60,95 @@ export default function Footer() {
 
   return (
     <footer style={{ background: '#ffffff', color: '#212121', borderTop: '1px solid rgba(118, 12, 176, 0.12)', fontFamily: "'Inter', Arial, sans-serif" }}>
-      {/* Main Top Grid */}
-      <div style={{ maxWidth: 'min(1820px, 96vw)', margin: '0 auto', padding: '5rem clamp(1.25rem, 3vw, 2.5rem) 3.5rem' }}>
-        {/* Brand Header */}
-        <div style={{ marginBottom: '3.5rem' }}>
-          <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none', marginBottom: '1rem' }}>
+      {/* ISO 9001 Quality Certification Banner (Above Footer Content) */}
+      <div
+        style={{
+          borderBottom: '1px solid rgba(118, 12, 176, 0.1)',
+          background: '#ffffff',
+          position: 'relative',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 'min(1820px, 96vw)',
+            margin: '0 auto',
+            padding: '2.5rem clamp(1.25rem, 3vw, 2.5rem)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '2.5rem',
+            flexWrap: 'wrap',
+          }}
+          className="iso-banner-container"
+        >
+          {/* Quality Statement Text */}
+          <div style={{ flex: '1 1 540px', maxWidth: '820px' }}>
+            <p
+              style={{
+                fontFamily: "'Inter', Arial, sans-serif",
+                fontSize: '1.025rem',
+                lineHeight: 1.75,
+                color: '#333333',
+                margin: 0,
+                fontWeight: 400,
+                letterSpacing: '-0.01em',
+              }}
+            >
+              Backed by ISO 9001 certification, we operate with globally benchmarked quality controls, ensuring reliable, responsible, and high-standard project delivery.
+            </p>
+          </div>
+
+          {/* ISO 9001 Badge with vertical frame lines */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderLeft: '1px solid rgba(118, 12, 176, 0.15)',
+              borderRight: '1px solid rgba(118, 12, 176, 0.15)',
+              padding: '0.5rem 3rem',
+              flexShrink: 0,
+            }}
+            className="iso-badge-wrapper"
+          >
             <img
-              src="./himat-logo.png"
+              src="/images/iso-9001-certified.png"
+              alt="Certified ISO 9001 Certified"
+              style={{
+                height: '112px',
+                width: 'auto',
+                display: 'block',
+                objectFit: 'contain',
+              }}
+              onError={(e) => {
+                if (e.currentTarget.src.indexOf('iso-9001-certified.png') !== -1) {
+                  e.currentTarget.src = '/iso-9001-certified.png'
+                }
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Main Top Grid */}
+      <div style={{ maxWidth: 'min(1820px, 96vw)', margin: '0 auto', padding: '4.5rem clamp(1.25rem, 3vw, 2.5rem) 4rem' }}>
+        {/* Brand Header */}
+        <div style={{ marginBottom: '4.25rem' }}>
+          <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none', marginBottom: '1.25rem' }}>
+            <img
+              src="/himat-logo.png"
               alt="HIMAT Consulting Logo"
-              style={{ height: '46px', width: 'auto', display: 'block' }}
-              onError={(e) => { e.currentTarget.style.display = 'none' }}
+              style={{ height: '48px', width: 'auto', display: 'block' }}
+              onError={(e) => {
+                if (e.currentTarget.src.indexOf('./') === -1) {
+                  e.currentTarget.src = './himat-logo.png'
+                } else {
+                  e.currentTarget.style.display = 'none'
+                }
+              }}
             />
             <div>
-              <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '2rem', color: '#212121', lineHeight: 1.1 }}>
+              <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '2.05rem', color: '#212121', lineHeight: 1.1 }}>
                 <strong style={{ fontWeight: 700 }}>HIMAT</strong>{' '}
                 <span style={{ fontWeight: 400, fontSize: '0.82em' }}>Consulting</span>
               </div>
@@ -81,7 +157,7 @@ export default function Footer() {
               </div>
             </div>
           </Link>
-          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.95rem', color: '#666', maxWidth: '580px', lineHeight: 1.75, margin: 0 }}>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '1rem', color: '#555555', maxWidth: '640px', lineHeight: 1.8, margin: 0 }}>
             Evidence-based consulting, diagnostic research, and OECD-DAC evaluations across South Asia, Central Asia, and global development corridors.
           </p>
         </div>
@@ -90,23 +166,24 @@ export default function Footer() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '1.1fr 1.1fr 1.6fr 2fr',
-            gap: '3rem',
+            gridTemplateColumns: '1.15fr 1.15fr 1.65fr 1.85fr',
+            gap: '3.5rem',
+            paddingTop: '0.5rem',
           }}
           className="footer-grid-layout"
         >
           {/* Column 1: Company */}
-          <div>
-            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '1.25rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.85rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '1.5rem' }}>
               Company
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
               {NAV_COLUMNS[0].links.map((l) => (
                 <Link
                   key={l.to}
                   to={l.to}
                   onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
-                  style={{ color: '#424242', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s' }}
+                  style={{ color: '#424242', textDecoration: 'none', fontSize: '0.94rem', fontWeight: 600, transition: 'color 0.2s', lineHeight: 1.4 }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = '#760CB0')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = '#424242')}
                 >
@@ -117,17 +194,17 @@ export default function Footer() {
           </div>
 
           {/* Column 2: Work & Evidence */}
-          <div>
-            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '1.25rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.85rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '1.5rem' }}>
               Work & Evidence
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               {NAV_COLUMNS[1].links.map((l) => (
                 <Link
                   key={l.to}
                   to={l.to}
                   onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
-                  style={{ color: '#424242', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s' }}
+                  style={{ color: '#424242', textDecoration: 'none', fontSize: '0.94rem', fontWeight: 600, transition: 'color 0.2s', lineHeight: 1.4 }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = '#760CB0')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = '#424242')}
                 >
@@ -138,32 +215,32 @@ export default function Footer() {
           </div>
 
           {/* Column 3: Global Presence */}
-          <div>
-            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '1.25rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.85rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '1.5rem' }}>
               Global Locations
             </div>
 
             {/* Pakistan HQ */}
-            <div style={{ background: '#faf5ff', padding: '0.85rem 1rem', borderRadius: '12px', border: '1px solid rgba(118,12,176,0.1)', marginBottom: '0.75rem' }}>
-              <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.2rem' }}>
+            <div style={{ background: '#faf5ff', padding: '1rem 1.15rem', borderRadius: '12px', border: '1px solid rgba(118,12,176,0.1)', marginBottom: '1rem' }}>
+              <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.35rem' }}>
                 🇵🇰 Pakistan Head Office
               </div>
-              <div style={{ fontSize: '0.8125rem', color: '#424242', lineHeight: 1.45 }}>
+              <div style={{ fontSize: '0.84rem', color: '#424242', lineHeight: 1.5 }}>
                 Office no 23 Ground Floor, Khudadad heights, Golra E11/4, Islamabad
               </div>
             </div>
 
             {/* USA Office */}
-            <div style={{ background: '#faf5ff', padding: '0.85rem 1rem', borderRadius: '12px', border: '1px solid rgba(118,12,176,0.1)' }}>
-              <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.2rem' }}>
+            <div style={{ background: '#faf5ff', padding: '1rem 1.15rem', borderRadius: '12px', border: '1px solid rgba(118,12,176,0.1)', marginBottom: '1.25rem' }}>
+              <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.35rem' }}>
                 🇺🇸 HIMAT Consulting Inc. – USA
               </div>
-              <div style={{ fontSize: '0.8125rem', color: '#424242', lineHeight: 1.45 }}>
+              <div style={{ fontSize: '0.84rem', color: '#424242', lineHeight: 1.5 }}>
                 10498 Fountain Lake Dr, Apt 1028, Stafford, Texas 77477
               </div>
             </div>
 
-            <div style={{ marginTop: '0.75rem', fontSize: '0.82rem', color: '#666', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+            <div style={{ fontSize: '0.85rem', color: '#666', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <div>✉️ <a href="mailto:info@himatconsulting.com" style={{ color: '#760CB0', fontWeight: 700, textDecoration: 'none' }}>info@himatconsulting.com</a></div>
               <div>📞 <a href="tel:+923345259088" style={{ color: '#424242', fontWeight: 600, textDecoration: 'none' }}>+92 334 5259088</a></div>
               <div>☎️ <a href="tel:+92516131366" style={{ color: '#424242', fontWeight: 600, textDecoration: 'none' }}>+92 51 6131366</a></div>
@@ -174,7 +251,7 @@ export default function Footer() {
           <div
             style={{
               background: '#faf5ff',
-              padding: '1.5rem',
+              padding: '1.65rem',
               borderRadius: '20px',
               border: '1.5px solid rgba(118, 12, 176, 0.14)',
               display: 'flex',
@@ -203,7 +280,7 @@ export default function Footer() {
               }}
             >
               <img
-                src="./images/hcpl-digital-insights.png"
+                src="/images/hcpl-digital-insights.png"
                 alt="HCPL Digital Insights and Mobile Knowledge Platform with Scannable QR Code"
                 style={{
                   width: '100%',
@@ -211,6 +288,11 @@ export default function Footer() {
                   display: 'block',
                   borderRadius: '8px',
                   objectFit: 'contain',
+                }}
+                onError={(e) => {
+                  if (e.currentTarget.src.indexOf('./') === -1) {
+                    e.currentTarget.src = './images/hcpl-digital-insights.png'
+                  }
                 }}
               />
             </div>
@@ -320,6 +402,20 @@ export default function Footer() {
       </div>
 
       <style>{`
+        @media (max-width: 900px) {
+          .iso-banner-container {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            text-align: left !important;
+            gap: 1.5rem !important;
+          }
+          .iso-badge-wrapper {
+            border-left: none !important;
+            border-right: none !important;
+            padding: 0.5rem 0 !important;
+            align-self: center !important;
+          }
+        }
         @media (max-width: 1024px) {
           .footer-grid-layout {
             grid-template-columns: 1fr 1fr !important;
