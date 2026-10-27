@@ -199,6 +199,22 @@ export function mergeConsultantsWithDefaults(list, deletedSet = new Set()) {
   return sortConsultantsList(merged)
 }
 
+export function mergeCertificatesWithDefaults(list, deletedSet = new Set()) {
+  const filteredList = (Array.isArray(list) ? list : []).filter(c => !deletedSet.has(c.id))
+  const defMap = new Map(CLIENT_CERTIFICATES.map(c => [c.id, c]))
+  const updated = filteredList.map(c => defMap.has(c.id) ? { ...c, ...defMap.get(c.id) } : c)
+  const ids = new Set(updated.map(c => c.id))
+  const merged = [...updated]
+  for (const def of CLIENT_CERTIFICATES) {
+    if (!ids.has(def.id) && !deletedSet.has(def.id)) {
+      merged.unshift(def)
+      ids.add(def.id)
+    }
+  }
+  return merged
+}
+
+
 
 export function DataProvider({ children }) {
   const [deletedIds, setDeletedIds] = useState(getInitialDeletedIds)
@@ -290,7 +306,7 @@ export function DataProvider({ children }) {
       const saved = localStorage.getItem(CERTIFICATES_KEY)
       const parsed = saved ? JSON.parse(saved) : null
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed.filter(c => !initDel.has(c.id))
+        return mergeCertificatesWithDefaults(parsed, initDel)
       }
       return CLIENT_CERTIFICATES.filter(c => !initDel.has(c.id))
     } catch {
@@ -418,9 +434,9 @@ export function DataProvider({ children }) {
           if (certRes.ok) {
             const data = await certRes.json()
             if (Array.isArray(data)) {
-              const filtered = data.filter(c => !currentDeleted.has(c.id))
-              setCertificates(filtered)
-              safeSaveLocalStorage(CERTIFICATES_KEY, filtered)
+              const merged = mergeCertificatesWithDefaults(data, currentDeleted)
+              setCertificates(merged)
+              safeSaveLocalStorage(CERTIFICATES_KEY, merged)
             } else {
               setCertificates(CLIENT_CERTIFICATES.filter(c => !currentDeleted.has(c.id)))
             }

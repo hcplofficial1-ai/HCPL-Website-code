@@ -1,4 +1,44 @@
 export const CLIENT_CERTIFICATES = [
+  // 1. ISO 9001:2015 Quality Management System Certification (QRO / IAF / EGAC)
+  {
+    id: 'cert-iso-9001-2015-qro',
+    category: 'corporate',
+    title: 'ISO 9001:2015 Quality Management System Certification',
+    client: 'Quality Research Organization (QRO) · IAF & EGAC',
+    clientCategory: 'International ISO Accreditation & Quality Standards',
+    logo: './logos/qro-logo.png',
+    secondaryLogo: './iso-9001-certified.png',
+    date: 'January 5, 2026 – January 4, 2029',
+    verifiedRef: 'Certificate No: 3050260105123Q',
+    contractValue: 'ISO 9001:2015 Certified QMS',
+    badge: 'ISO 9001:2015 · IAF & EGAC Accredited',
+    scope: 'Program Development, Assessment & Evaluation, Third Party Monitoring (TPM), Organizational Assessment, Capacity Building, Inclusive Programming, Climate Change & Disaster Risk Management, Web Development and Office Automation.',
+    rating: 'Compliant with ISO 9001:2015 International Standard',
+    citation: '“This is to certify that HIMAT CONSULTING (PVT) LTD (Office 23, Ground Floor, Khudadad Heights, E-11/4, Islamabad, Pakistan) has been independently assessed by QRO and is compliant with the requirement of ISO 9001:2015 Quality Management System for Program Development, Assessment & Evaluation, Third Party Monitoring, Organizational Assessment, Capacity Building, Inclusive Programming, Climate Change & Disaster Risk Management, Web Development and Office Automation. Validity verified at www.qrocert.org.”',
+    signatory: 'Head of Certification — Quality Research Organization (QRO), Member of IAF Multilateral Recognition Arrangement & EGAC Accredited (CAB # 119005)',
+    signDate: 'January 5, 2026',
+    downloadUrl: './certificates/iso-9001-2015-qro-certificate.jpg',
+  },
+
+  // 2. State of Texas Office of the Secretary of State (USA) - Corporate Filing
+  {
+    id: 'cert-texas-sos-filing',
+    category: 'corporate',
+    title: 'Certificate of Filing & Corporate Registration — Himat Consulting Inc.',
+    client: 'State of Texas — Office of the Secretary of State',
+    clientCategory: 'United States Government / Corporate Registration',
+    logo: './logos/texas-seal.png',
+    date: 'October 23, 2025',
+    verifiedRef: 'Filing / Entity No. 806223073 (Doc: 1528926430002)',
+    contractValue: 'United States Corporate Entity',
+    badge: 'State of Texas Corporate Filing',
+    scope: 'Official Certificate of Filing issued under the authority of the Secretary of State of Texas pursuant to the Texas Business Organizations Code, certifying the legal registration, corporate filing compliance, and statutory recognition of Himat Consulting Inc.',
+    rating: 'Official State Corporate Filing Evidencing Statutory Recognition & Good Standing',
+    citation: '“The undersigned, as Secretary of State of Texas, hereby certifies that a Certificate of Correction relating to an instrument that has been filed by the Secretary for the above named entity (Himat Consulting Inc, 806223073) has been received in this office and has been found to conform to the applicable provisions of law. ACCORDINGLY the undersigned, as Secretary of State, and by virtue of the authority vested in the secretary by law, hereby issues this certificate evidencing filing.”',
+    signatory: 'Jane Nelson — Secretary of State, State of Texas (Austin, Texas, USA)',
+    signDate: 'October 23, 2025',
+    downloadUrl: './certificates/texas-sos-certificate-of-filing.jpg',
+  },
   // 1. Planning Commission - Ministry of Planning (SDGs Section)
   {
     id: 'cert-planning-commission-sdgs',

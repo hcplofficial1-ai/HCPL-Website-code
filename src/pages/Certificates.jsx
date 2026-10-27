@@ -12,7 +12,8 @@ export default function Certificates() {
   const modalContentRef = useRef(null)
 
   const CATEGORIES = [
-    { key: 'all', label: 'All Certificates & Letters', count: certificates.length },
+    { key: 'all', label: 'All Certificates & Registrations', count: certificates.length },
+    { key: 'corporate', label: 'Corporate & ISO 9001 (USA & Global)', count: certificates.filter(c => c.category === 'corporate').length },
     { key: 'multilateral', label: 'Planning Commission, World Bank & GIZ', count: certificates.filter(c => c.category === 'multilateral').length },
     { key: 'akdn', label: 'Aga Khan Network & SJDA', count: certificates.filter(c => c.category === 'akdn').length },
     { key: 'ingo', label: 'INGOs & Bilaterals (Concern, IRC, CBM, CARE)', count: certificates.filter(c => c.category === 'ingo').length },
@@ -70,6 +71,16 @@ export default function Certificates() {
     return () => observer.disconnect()
   }, [filtered])
 
+  const handleOpenDoc = (url) => {
+    if (!url || url === '#') return
+    const targetUrl = url.startsWith('http') || url.startsWith('data:')
+      ? url
+      : url.startsWith('/')
+        ? url
+        : '/' + url
+    window.open(targetUrl, '_blank')
+  }
+
   // PDF Generator & Print Document Opener
   const handleDownloadPDF = (cert) => {
     const rawUrl = cert.downloadUrl && cert.downloadUrl !== '#' ? cert.downloadUrl : ''
@@ -78,16 +89,17 @@ export default function Certificates() {
       rawUrl.toLowerCase().endsWith('.pdf') ||
       rawUrl.toLowerCase().endsWith('.docx') ||
       rawUrl.toLowerCase().endsWith('.doc') ||
-      rawUrl.toLowerCase().includes('/uploads/')
+      rawUrl.toLowerCase().endsWith('.jpg') ||
+      rawUrl.toLowerCase().endsWith('.jpeg') ||
+      rawUrl.toLowerCase().endsWith('.png') ||
+      rawUrl.toLowerCase().endsWith('.webp') ||
+      rawUrl.toLowerCase().includes('/uploads/') ||
+      rawUrl.toLowerCase().includes('/certificates/') ||
+      rawUrl.toLowerCase().includes('/images/')
     )
 
     if (hasAttachedDoc) {
-      const targetUrl = rawUrl.startsWith('http') || rawUrl.startsWith('data:')
-        ? rawUrl
-        : rawUrl.startsWith('/')
-          ? rawUrl
-          : '/' + rawUrl
-      window.open(targetUrl, '_blank')
+      handleOpenDoc(rawUrl)
       return
     }
 
@@ -375,7 +387,7 @@ export default function Certificates() {
               margin: 0,
             }}
           >
-            A verified portfolio of <strong>20 official completion certificates</strong>, donor evaluations, and letters of commendation from the <strong>Government of Pakistan, World Bank, Aga Khan Foundation, UNICEF, GIZ, CARE, and Concern Worldwide</strong>.
+            A verified portfolio of <strong>{certificates.length || 22} official completion certificates</strong>, corporate registrations, and international accreditations from the <strong>State of Texas (USA), QRO ISO 9001:2015, Government of Pakistan, World Bank, Aga Khan Foundation, UNICEF, GIZ, and CARE</strong>.
           </p>
         </div>
       </section>
@@ -545,6 +557,64 @@ export default function Certificates() {
                       <span>✓</span> Verified
                     </span>
                   </div>
+
+                  {/* Certificate Document Thumbnail Preview (if attached) */}
+                  {cert.downloadUrl && cert.downloadUrl !== '#' && (
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleOpenDoc(cert.downloadUrl)
+                      }}
+                      style={{
+                        position: 'relative',
+                        borderRadius: '12px',
+                        overflow: 'hidden',
+                        border: '1.5px solid rgba(118, 12, 176, 0.16)',
+                        cursor: 'pointer',
+                        background: '#f8fafc',
+                        height: '160px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 3px 12px rgba(0,0,0,0.04)',
+                      }}
+                      title="Click to open official certificate document in high resolution"
+                    >
+                      <img
+                        src={cert.downloadUrl.startsWith('http') || cert.downloadUrl.startsWith('data:') ? cert.downloadUrl : (cert.downloadUrl.startsWith('/') ? cert.downloadUrl : '/' + cert.downloadUrl)}
+                        alt={cert.title}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          objectPosition: 'top center',
+                          transition: 'transform 0.35s ease',
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.04)')}
+                        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                      />
+                      <div
+                        style={{
+                          position: 'absolute',
+                          bottom: '8px',
+                          right: '8px',
+                          background: 'rgba(118, 12, 176, 0.92)',
+                          backdropFilter: 'blur(4px)',
+                          color: '#ffffff',
+                          padding: '4px 10px',
+                          borderRadius: '999px',
+                          fontSize: '0.75rem',
+                          fontWeight: 800,
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
+                        }}
+                      >
+                        <span>🔍 Open Certificate ↗</span>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Title */}
                   <h3
@@ -761,6 +831,87 @@ export default function Certificates() {
               </div>
             </div>
 
+            {/* Verified Document Preview (if attached) */}
+            {selectedCert.downloadUrl && selectedCert.downloadUrl !== '#' && (
+              <div
+                style={{
+                  background: '#faf5ff',
+                  border: '1.5px solid rgba(118, 12, 176, 0.2)',
+                  borderRadius: '16px',
+                  padding: '1rem',
+                  marginBottom: '1.5rem',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                  <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                    Verified Official Certificate Document
+                  </div>
+                  <button
+                    onClick={() => handleOpenDoc(selectedCert.downloadUrl)}
+                    style={{
+                      background: 'linear-gradient(135deg, #760CB0 0%, #5a0886 100%)',
+                      color: '#ffffff',
+                      fontFamily: "'Inter', Arial, sans-serif",
+                      fontWeight: 800,
+                      fontSize: '0.78rem',
+                      padding: '0.4rem 0.95rem',
+                      borderRadius: '8px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.35rem',
+                      boxShadow: '0 2px 8px rgba(118,12,176,0.25)',
+                    }}
+                  >
+                    <span>🔍 Open Full Resolution ↗</span>
+                  </button>
+                </div>
+                <div
+                  onClick={() => handleOpenDoc(selectedCert.downloadUrl)}
+                  style={{
+                    position: 'relative',
+                    cursor: 'pointer',
+                    overflow: 'hidden',
+                    borderRadius: '10px',
+                    border: '1px solid rgba(118,12,176,0.12)',
+                    boxShadow: '0 4px 18px rgba(0,0,0,0.08)',
+                    background: '#ffffff',
+                  }}
+                  title="Click to open certificate document in full window"
+                >
+                  <img
+                    src={selectedCert.downloadUrl.startsWith('http') || selectedCert.downloadUrl.startsWith('data:') ? selectedCert.downloadUrl : (selectedCert.downloadUrl.startsWith('/') ? selectedCert.downloadUrl : '/' + selectedCert.downloadUrl)}
+                    alt={selectedCert.title}
+                    style={{
+                      width: '100%',
+                      maxHeight: '480px',
+                      objectFit: 'contain',
+                      display: 'block',
+                      margin: '0 auto',
+                      background: '#ffffff',
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      background: 'linear-gradient(transparent, rgba(15, 23, 42, 0.85))',
+                      color: '#ffffff',
+                      padding: '0.75rem',
+                      fontSize: '0.8125rem',
+                      fontWeight: 700,
+                      textAlign: 'center',
+                    }}
+                  >
+                    🔍 Click document to open in high-resolution new tab ↗
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Metadata Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.85rem', marginBottom: '1.5rem' }}>
               <div style={{ background: '#faf5ff', padding: '0.85rem 1rem', borderRadius: '10px', border: '1px solid rgba(118,12,176,0.1)' }}>
@@ -795,63 +946,82 @@ export default function Certificates() {
             </div>
 
             {/* Modal Actions */}
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <button
-                onClick={() => handleDownloadPDF(selectedCert)}
-                style={{
-                  background: 'linear-gradient(135deg, #760CB0 0%, #5a0886 100%)',
-                  color: '#ffffff',
-                  fontFamily: "'Inter', Arial, sans-serif",
-                  fontWeight: 800,
-                  fontSize: '0.92rem',
-                  padding: '0.85rem 1.75rem',
-                  borderRadius: '12px',
-                  border: 'none',
-                  cursor: 'pointer',
-                  boxShadow: '0 6px 20px rgba(118,12,176,0.35)',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                }}
-              >
-                📥 Open & Save Certificate as PDF
-              </button>
+            <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap' }}>
+              {selectedCert.downloadUrl && selectedCert.downloadUrl !== '#' ? (
+                <button
+                  onClick={() => handleOpenDoc(selectedCert.downloadUrl)}
+                  style={{
+                    background: 'linear-gradient(135deg, #760CB0 0%, #5a0886 100%)',
+                    color: '#ffffff',
+                    fontFamily: "'Inter', Arial, sans-serif",
+                    fontWeight: 800,
+                    fontSize: '0.92rem',
+                    padding: '0.85rem 1.75rem',
+                    borderRadius: '12px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    boxShadow: '0 6px 20px rgba(118,12,176,0.35)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                  }}
+                >
+                  🔍 Open Full Certificate Document ↗
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleDownloadPDF(selectedCert)}
+                  style={{
+                    background: 'linear-gradient(135deg, #760CB0 0%, #5a0886 100%)',
+                    color: '#ffffff',
+                    fontFamily: "'Inter', Arial, sans-serif",
+                    fontWeight: 800,
+                    fontSize: '0.92rem',
+                    padding: '0.85rem 1.75rem',
+                    borderRadius: '12px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    boxShadow: '0 6px 20px rgba(118,12,176,0.35)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                  }}
+                >
+                  📥 Open & Save Certificate as PDF
+                </button>
+              )}
               {selectedCert.downloadUrl && selectedCert.downloadUrl !== '#' && (
                 <button
-                  onClick={() => {
-                    const raw = selectedCert.downloadUrl
-                    const url = raw.startsWith('http') || raw.startsWith('data:') ? raw : (raw.startsWith('/') ? raw : '/' + raw)
-                    window.open(url, '_blank')
-                  }}
+                  onClick={() => handleDownloadPDF({ ...selectedCert, downloadUrl: '' })}
                   style={{
-                    background: '#f0fdf4',
-                    color: '#16a34a',
+                    background: '#faf5ff',
+                    color: '#760CB0',
                     fontFamily: "'Inter', Arial, sans-serif",
                     fontWeight: 800,
                     fontSize: '0.92rem',
                     padding: '0.85rem 1.5rem',
                     borderRadius: '12px',
-                    border: '1.5px solid #86efac',
+                    border: '1.5px solid rgba(118,12,176,0.25)',
                     cursor: 'pointer',
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '0.4rem',
                   }}
                 >
-                  📄 View Attached Document
+                  🖨️ Printable PDF View
                 </button>
               )}
               <button
                 onClick={() => setSelectedCert(null)}
                 style={{
-                  background: '#faf5ff',
-                  color: '#760CB0',
+                  background: '#f8fafc',
+                  color: '#475569',
                   fontFamily: "'Inter', Arial, sans-serif",
                   fontWeight: 700,
                   fontSize: '0.92rem',
                   padding: '0.85rem 1.5rem',
                   borderRadius: '12px',
-                  border: '1.5px solid rgba(118,12,176,0.2)',
+                  border: '1px solid #cbd5e1',
                   cursor: 'pointer',
                 }}
               >
