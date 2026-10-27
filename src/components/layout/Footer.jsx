@@ -33,7 +33,7 @@ export default function Footer() {
       name: 'LinkedIn',
       href: 'https://pk.linkedin.com/company/himat-consulting',
       icon: (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
         </svg>
       ),
@@ -42,7 +42,7 @@ export default function Footer() {
       name: 'Facebook',
       href: 'https://www.facebook.com/share/18MGcCVuG5/',
       icon: (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
         </svg>
       ),
@@ -51,7 +51,7 @@ export default function Footer() {
       name: 'Instagram',
       href: 'https://www.instagram.com/himatconsulting?igsi=MXhraWN2ams5bXJqdQ==',
       icon: (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
         </svg>
       ),
@@ -60,78 +60,90 @@ export default function Footer() {
 
   return (
     <footer style={{ background: '#ffffff', color: '#212121', borderTop: '1px solid rgba(118, 12, 176, 0.12)', fontFamily: "'Inter', Arial, sans-serif" }}>
-      {/* Unified Compact Main Grid */}
-      <div style={{ maxWidth: 'min(1820px, 96vw)', margin: '0 auto', padding: '1.75rem clamp(1.25rem, 3vw, 2.5rem) 1.25rem' }}>
+      {/* Main Footer Container */}
+      <div style={{ maxWidth: 'min(1820px, 96vw)', margin: '0 auto', padding: '2.5rem clamp(1.25rem, 3vw, 2.5rem) 2rem' }}>
         
-        {/* Top Header Row: HIMAT Consulting Brand (Left) & Enlarged ISO 9001 Badge (Right, moved towards left) */}
+        {/* Brand Header */}
+        <div style={{ marginBottom: '1.75rem' }}>
+          <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none', marginBottom: '0.75rem' }}>
+            <img
+              src="/himat-logo.png"
+              alt="HIMAT Consulting Logo"
+              style={{ height: '46px', width: 'auto', display: 'block' }}
+              onError={(e) => {
+                if (e.currentTarget.src.indexOf('./') === -1) {
+                  e.currentTarget.src = './himat-logo.png'
+                } else {
+                  e.currentTarget.style.display = 'none'
+                }
+              }}
+            />
+            <div>
+              <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '2rem', color: '#212121', lineHeight: 1.1 }}>
+                <strong style={{ fontWeight: 700 }}>HIMAT</strong>{' '}
+                <span style={{ fontWeight: 400, fontSize: '0.82em' }}>Consulting</span>
+              </div>
+              <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                Private Limited
+              </div>
+            </div>
+          </Link>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.95rem', color: '#666', maxWidth: '640px', lineHeight: 1.65, margin: 0 }}>
+            Evidence-based consulting, diagnostic research, and OECD-DAC evaluations across South Asia, Central Asia, and global development corridors.
+          </p>
+        </div>
+
+        {/* ISO 9001 Quality Certification Strip: Text and Badge Closely Paired */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '2rem',
-            marginBottom: '1.25rem',
-            paddingBottom: '1.15rem',
-            borderBottom: '1px solid rgba(118, 12, 176, 0.08)',
+            gap: '2.5rem',
+            background: 'linear-gradient(135deg, #fdfbf7 0%, #faf5ff 100%)',
+            border: '1.5px solid rgba(118, 12, 176, 0.14)',
+            borderRadius: '16px',
+            padding: '1.25rem 2rem',
+            marginBottom: '2.5rem',
             flexWrap: 'wrap',
+            maxWidth: '1080px',
+            boxShadow: '0 2px 10px rgba(118, 12, 176, 0.04)',
           }}
-          className="footer-top-header"
+          className="iso-quality-strip"
         >
-          {/* Left: HIMAT Consulting Brand & Subtitle & ISO Quality Statement */}
-          <div style={{ flex: '1 1 520px', maxWidth: '780px' }}>
-            <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', marginBottom: '0.4rem' }}>
-              <img
-                src="/himat-logo.png"
-                alt="HIMAT Consulting Logo"
-                style={{ height: '42px', width: 'auto', display: 'block' }}
-                onError={(e) => {
-                  if (e.currentTarget.src.indexOf('./') === -1) {
-                    e.currentTarget.src = './himat-logo.png'
-                  } else {
-                    e.currentTarget.style.display = 'none'
-                  }
-                }}
-              />
-              <div>
-                <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '1.85rem', color: '#212121', lineHeight: 1.1 }}>
-                  <strong style={{ fontWeight: 700 }}>HIMAT</strong>{' '}
-                  <span style={{ fontWeight: 400, fontSize: '0.82em' }}>Consulting</span>
-                </div>
-                <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontSize: '0.78rem', fontWeight: 800, color: '#760CB0', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                  Private Limited
-                </div>
-              </div>
-            </Link>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.88rem', color: '#555555', maxWidth: '640px', lineHeight: 1.5, margin: '0 0 0.45rem 0' }}>
-              Evidence-based consulting, diagnostic research, and OECD-DAC evaluations across South Asia, Central Asia, and global development corridors.
-            </p>
-            <p style={{ fontFamily: "'Inter', Arial, sans-serif", fontSize: '0.86rem', lineHeight: 1.5, color: '#374151', maxWidth: '700px', margin: 0, fontWeight: 500 }}>
+          {/* ISO Quality Statement */}
+          <div style={{ flex: '1 1 500px', maxWidth: '660px' }}>
+            <p
+              style={{
+                fontFamily: "'Inter', Arial, sans-serif",
+                fontSize: '0.98rem',
+                lineHeight: 1.7,
+                color: '#2d3748',
+                margin: 0,
+                fontWeight: 500,
+              }}
+            >
               Backed by ISO 9001 certification, we operate with globally benchmarked quality controls, ensuring reliable, responsible, and high-standard project delivery.
             </p>
           </div>
 
-          {/* Right: Enlarged ISO 9001 Badge with caption, shifted inward towards left */}
+          {/* ISO 9001 Badge placed immediately next to the text */}
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              borderLeft: '1px solid rgba(118, 12, 176, 0.14)',
-              borderRight: '1px solid rgba(118, 12, 176, 0.14)',
-              padding: '0.4rem 2.25rem',
-              marginRight: 'clamp(1rem, 7vw, 10rem)',
+              borderLeft: '1.5px solid rgba(118, 12, 176, 0.16)',
+              paddingLeft: '2rem',
               flexShrink: 0,
-              background: 'rgba(250, 245, 255, 0.4)',
-              borderRadius: '12px',
             }}
-            className="iso-badge-wrapper"
+            className="iso-badge-box"
           >
             <img
               src="/images/iso-9001-certified.png"
               alt="Certified ISO 9001 Certified"
               style={{
-                height: '135px',
+                height: '130px',
                 width: 'auto',
                 display: 'block',
                 objectFit: 'contain',
@@ -150,7 +162,7 @@ export default function Footer() {
                 fontWeight: 700,
                 color: '#760CB0',
                 textAlign: 'center',
-                marginTop: '0.35rem',
+                marginTop: '0.4rem',
                 letterSpacing: '0.01em',
                 whiteSpace: 'nowrap',
               }}
@@ -164,23 +176,23 @@ export default function Footer() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '1.15fr 1.15fr 1.65fr 1.85fr',
-            gap: '2.25rem',
+            gridTemplateColumns: '1.1fr 1.1fr 1.6fr 2fr',
+            gap: '3rem',
           }}
           className="footer-grid-layout"
         >
           {/* Column 1: Company */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '0.75rem' }}>
+            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '1.25rem' }}>
               Company
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {NAV_COLUMNS[0].links.map((l) => (
                 <Link
                   key={l.to}
                   to={l.to}
                   onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
-                  style={{ color: '#424242', textDecoration: 'none', fontSize: '0.86rem', fontWeight: 600, transition: 'color 0.2s', lineHeight: 1.35 }}
+                  style={{ color: '#424242', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s', lineHeight: 1.4 }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = '#760CB0')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = '#424242')}
                 >
@@ -192,16 +204,16 @@ export default function Footer() {
 
           {/* Column 2: Work & Evidence */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '0.75rem' }}>
+            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '1.25rem' }}>
               Work & Evidence
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {NAV_COLUMNS[1].links.map((l) => (
                 <Link
                   key={l.to}
                   to={l.to}
                   onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
-                  style={{ color: '#424242', textDecoration: 'none', fontSize: '0.86rem', fontWeight: 600, transition: 'color 0.2s', lineHeight: 1.35 }}
+                  style={{ color: '#424242', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600, transition: 'color 0.2s', lineHeight: 1.4 }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = '#760CB0')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = '#424242')}
                 >
@@ -213,67 +225,67 @@ export default function Footer() {
 
           {/* Column 3: Global Presence */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '0.75rem' }}>
+            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '1.25rem' }}>
               Global Locations
             </div>
 
             {/* Pakistan HQ */}
-            <div style={{ background: '#faf5ff', padding: '0.65rem 0.85rem', borderRadius: '10px', border: '1px solid rgba(118,12,176,0.1)', marginBottom: '0.55rem' }}>
-              <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.2rem' }}>
+            <div style={{ background: '#faf5ff', padding: '0.85rem 1rem', borderRadius: '12px', border: '1px solid rgba(118,12,176,0.1)', marginBottom: '0.75rem' }}>
+              <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.2rem' }}>
                 🇵🇰 Pakistan Head Office
               </div>
-              <div style={{ fontSize: '0.8rem', color: '#424242', lineHeight: 1.4 }}>
+              <div style={{ fontSize: '0.8125rem', color: '#424242', lineHeight: 1.45 }}>
                 Office no 23 Ground Floor, Khudadad heights, Golra E11/4, Islamabad
               </div>
             </div>
 
             {/* USA Office */}
-            <div style={{ background: '#faf5ff', padding: '0.65rem 0.85rem', borderRadius: '10px', border: '1px solid rgba(118,12,176,0.1)', marginBottom: '0.65rem' }}>
-              <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.2rem' }}>
+            <div style={{ background: '#faf5ff', padding: '0.85rem 1rem', borderRadius: '12px', border: '1px solid rgba(118,12,176,0.1)' }}>
+              <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.2rem' }}>
                 🇺🇸 HIMAT Consulting Inc. – USA
               </div>
-              <div style={{ fontSize: '0.8rem', color: '#424242', lineHeight: 1.4 }}>
+              <div style={{ fontSize: '0.8125rem', color: '#424242', lineHeight: 1.45 }}>
                 10498 Fountain Lake Dr, Apt 1028, Stafford, Texas 77477
               </div>
             </div>
 
-            <div style={{ fontSize: '0.82rem', color: '#666', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+            <div style={{ marginTop: '0.75rem', fontSize: '0.82rem', color: '#666', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
               <div>✉️ <a href="mailto:info@himatconsulting.com" style={{ color: '#760CB0', fontWeight: 700, textDecoration: 'none' }}>info@himatconsulting.com</a></div>
               <div>📞 <a href="tel:+923345259088" style={{ color: '#424242', fontWeight: 600, textDecoration: 'none' }}>+92 334 5259088</a></div>
               <div>☎️ <a href="tel:+92516131366" style={{ color: '#424242', fontWeight: 600, textDecoration: 'none' }}>+92 51 6131366</a></div>
             </div>
           </div>
 
-          {/* Column 4: Digital Knowledge Platform & Scannable QR Graphic */}
+          {/* Column 4: Digital Knowledge Platform & Scannable QR Graphic (In Its Own Place) */}
           <div
             style={{
               background: '#faf5ff',
-              padding: '1.15rem',
-              borderRadius: '16px',
+              padding: '1.5rem',
+              borderRadius: '20px',
               border: '1.5px solid rgba(118, 12, 176, 0.14)',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              boxShadow: '0 4px 16px rgba(118, 12, 176, 0.05)',
+              boxShadow: '0 4px 16px rgba(118, 12, 176, 0.06)',
             }}
           >
-            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.78rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '0.25rem' }}>
+            <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#760CB0', marginBottom: '0.35rem' }}>
               Digital Platform & Insights
             </div>
-            <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '1.05rem', fontWeight: 700, color: '#212121', lineHeight: 1.2, marginBottom: '0.65rem' }}>
+            <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: '1.15rem', fontWeight: 700, color: '#212121', lineHeight: 1.25, marginBottom: '0.85rem' }}>
               Scan QR to Connect & Explore
             </div>
             <div
               style={{
                 background: '#ffffff',
-                borderRadius: '10px',
-                padding: '0.4rem',
+                borderRadius: '12px',
+                padding: '0.5rem',
                 border: '1px solid rgba(118, 12, 176, 0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 overflow: 'hidden',
-                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.03)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
               }}
             >
               <img
@@ -281,9 +293,9 @@ export default function Footer() {
                 alt="HCPL Digital Insights and Mobile Knowledge Platform with Scannable QR Code"
                 style={{
                   width: '100%',
-                  maxHeight: '115px',
+                  height: 'auto',
                   display: 'block',
-                  borderRadius: '6px',
+                  borderRadius: '8px',
                   objectFit: 'contain',
                 }}
                 onError={(e) => {
@@ -301,9 +313,9 @@ export default function Footer() {
       <div style={{ borderTop: '1px solid rgba(118, 12, 176, 0.1)', maxWidth: 'min(1560px, 94vw)', margin: '0 auto' }} />
 
       {/* Bottom Social Icons & Legal Strip */}
-      <div style={{ maxWidth: 'min(1560px, 94vw)', margin: '0 auto', padding: '0.85rem clamp(1.25rem, 3vw, 2.5rem)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+      <div style={{ maxWidth: 'min(1560px, 94vw)', margin: '0 auto', padding: '1.75rem clamp(1.25rem, 3vw, 2.5rem)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem' }}>
         {/* Social Media Circular Buttons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           {socialLinks.map((s) => (
             <a
               key={s.name}
@@ -312,8 +324,8 @@ export default function Footer() {
               rel="noopener noreferrer"
               aria-label={s.name}
               style={{
-                width: '34px',
-                height: '34px',
+                width: '38px',
+                height: '38px',
                 borderRadius: '50%',
                 background: '#212121',
                 color: '#ffffff',
@@ -322,29 +334,29 @@ export default function Footer() {
                 justifyContent: 'center',
                 textDecoration: 'none',
                 transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
-                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = '#760CB0'
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(118, 12, 176, 0.3)'
+                e.currentTarget.style.transform = 'translateY(-3px)'
+                e.currentTarget.style.boxShadow = '0 6px 18px rgba(118, 12, 176, 0.35)'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = '#212121'
                 e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.1)'
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)'
               }}
             >
               {s.icon}
             </a>
           ))}
-          <span style={{ fontSize: '0.8rem', color: '#666', fontWeight: 600, marginLeft: '0.25rem' }}>
+          <span style={{ fontSize: '0.82rem', color: '#666', fontWeight: 600, marginLeft: '0.35rem' }}>
             Follow @HimatConsulting
           </span>
         </div>
 
         {/* Legal & Utility Links */}
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', fontSize: '0.78rem', color: '#666', fontWeight: 600, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', fontSize: '0.8125rem', color: '#666', fontWeight: 600, alignItems: 'center' }}>
           <Link
             to="/privacy"
             onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
@@ -386,7 +398,7 @@ export default function Footer() {
           <Link
             to="/admin/login"
             onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
-            style={{ color: '#760CB0', textDecoration: 'none', fontWeight: 800, background: '#faf5ff', padding: '0.2rem 0.6rem', borderRadius: '6px', border: '1px solid rgba(118,12,176,0.2)' }}
+            style={{ color: '#760CB0', textDecoration: 'none', fontWeight: 800, background: '#faf5ff', padding: '0.2rem 0.65rem', borderRadius: '6px', border: '1px solid rgba(118,12,176,0.2)' }}
           >
             🔐 Staff Portal
           </Link>
@@ -394,35 +406,34 @@ export default function Footer() {
       </div>
 
       {/* Final Copyright Bar */}
-      <div style={{ background: '#faf5ff', borderTop: '1px solid rgba(118, 12, 176, 0.06)', padding: '0.55rem 1rem', textAlign: 'center', fontSize: '0.78rem', color: '#757575' }}>
+      <div style={{ background: '#faf5ff', borderTop: '1px solid rgba(118, 12, 176, 0.06)', padding: '0.85rem 1.5rem', textAlign: 'center', fontSize: '0.8125rem', color: '#757575' }}>
         © 2009–2026 HIMAT Consulting Private Limited. All rights reserved. Registered in Pakistan & United States of America.
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
-          .footer-top-header {
+        @media (max-width: 768px) {
+          .iso-quality-strip {
             flex-direction: column !important;
             align-items: flex-start !important;
-            gap: 1.25rem !important;
+            gap: 1.5rem !important;
+            padding: 1.25rem !important;
           }
-          .iso-badge-wrapper {
-            margin-right: 0 !important;
-            align-self: center !important;
+          .iso-badge-box {
             border-left: none !important;
-            border-right: none !important;
-            padding: 0.5rem 0 !important;
+            padding-left: 0 !important;
+            align-self: center !important;
           }
         }
         @media (max-width: 1024px) {
           .footer-grid-layout {
             grid-template-columns: 1fr 1fr !important;
-            gap: 1.75rem !important;
+            gap: 2.5rem !important;
           }
         }
         @media (max-width: 640px) {
           .footer-grid-layout {
             grid-template-columns: 1fr !important;
-            gap: 1.5rem !important;
+            gap: 2rem !important;
           }
         }
       `}</style>
