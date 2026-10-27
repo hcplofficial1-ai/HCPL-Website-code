@@ -60,15 +60,16 @@ export default function Footer() {
 
   return (
     <footer style={{ background: '#ffffff', color: '#212121', borderTop: '1px solid rgba(118, 12, 176, 0.12)', fontFamily: "'Inter', Arial, sans-serif" }}>
-      {/* Centered ISO 9001 Accreditation Card (Above the Footer) - Enlarged Size */}
+      {/* Centered ISO 9001 Accreditation Section (Above the Footer) - Enlarged White Card on Light Purple Background */}
       <div
         style={{
-          padding: '2.75rem clamp(1.25rem, 3vw, 2.5rem) 2.25rem',
+          padding: '3.25rem clamp(1.25rem, 3vw, 2.5rem)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          borderBottom: '1px solid rgba(118, 12, 176, 0.08)',
-          background: '#ffffff',
+          borderTop: '1px solid rgba(118, 12, 176, 0.12)',
+          borderBottom: '1px solid rgba(118, 12, 176, 0.12)',
+          background: '#faf5ff',
           width: '100%',
         }}
       >
@@ -77,27 +78,27 @@ export default function Footer() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: '2.75rem',
-            background: '#faf5ff',
-            border: '1.5px solid rgba(118, 12, 176, 0.15)',
-            borderRadius: '20px',
-            padding: '1.5rem 2.75rem',
-            maxWidth: '1080px',
+            gap: '3rem',
+            background: '#ffffff',
+            border: '1.5px solid rgba(118, 12, 176, 0.16)',
+            borderRadius: '24px',
+            padding: '2.25rem 3.5rem',
+            maxWidth: '1180px',
             width: '100%',
             margin: '0 auto',
-            boxShadow: '0 4px 16px rgba(118, 12, 176, 0.05)',
+            boxShadow: '0 8px 32px rgba(118, 12, 176, 0.08)',
             flexWrap: 'wrap',
           }}
           className="footer-iso-strip"
         >
           {/* Quality Statement */}
-          <div style={{ flex: '1 1 520px', maxWidth: '700px' }}>
+          <div style={{ flex: '1 1 540px', maxWidth: '720px' }}>
             <p
               style={{
                 fontFamily: "'Inter', Arial, sans-serif",
-                fontSize: '1.04rem',
+                fontSize: '1.08rem',
                 lineHeight: 1.75,
-                color: '#374151',
+                color: '#2d3748',
                 margin: 0,
                 fontWeight: 500,
                 letterSpacing: '-0.01em',
@@ -115,7 +116,7 @@ export default function Footer() {
               alignItems: 'center',
               justifyContent: 'center',
               borderLeft: '1.5px solid rgba(118, 12, 176, 0.16)',
-              paddingLeft: '2.75rem',
+              paddingLeft: '3rem',
               flexShrink: 0,
             }}
             className="footer-iso-badge-box"
@@ -124,11 +125,11 @@ export default function Footer() {
               src="/images/iso-9001-certified.png"
               alt="Certified ISO 9001 Certified"
               style={{
-                height: '118px',
+                height: '128px',
                 width: 'auto',
                 display: 'block',
                 objectFit: 'contain',
-                filter: 'drop-shadow(0 3px 8px rgba(0,0,0,0.08))',
+                filter: 'drop-shadow(0 3px 10px rgba(0,0,0,0.1))',
               }}
               onError={(e) => {
                 if (e.currentTarget.src.indexOf('iso-9001-certified.png') !== -1) {
@@ -139,11 +140,11 @@ export default function Footer() {
             <span
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: '0.86rem',
+                fontSize: '0.88rem',
                 fontWeight: 700,
                 color: '#760CB0',
                 textAlign: 'center',
-                marginTop: '0.4rem',
+                marginTop: '0.45rem',
                 whiteSpace: 'nowrap',
               }}
             >

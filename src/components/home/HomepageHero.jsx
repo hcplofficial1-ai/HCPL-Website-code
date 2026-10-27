@@ -189,8 +189,9 @@ export function HeroIntro({
         {[
           'Since 2009',
           `${projects.length} Documented Assignments`,
-          '5-Country Experience',
           '58+ Institutional Clients',
+          'ISO-9001 Certified',
+          '5-Country Experience',
         ].map((b) => (
           <div key={b} style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
             <span style={{ color: '#4ade80', fontWeight: 900, fontSize: '1rem' }}>✓</span>
