@@ -388,25 +388,25 @@ export default function Reports() {
 
   // Open / Read Document Handler
   const handleOpenPdf = (report) => {
-    const isWord = report.pdfUrl && (report.pdfUrl.includes('.doc') || report.pdfUrl.includes('wordprocessingml') || report.docType === 'word')
-    if (isWord) {
-      handleDownloadPdf(report)
-      return
-    }
-    if (report.pdfUrl && report.pdfUrl.trim() && report.pdfUrl !== '#') {
+    const isWord = !report.pdfUrl || report.pdfUrl.endsWith('.docx') || report.pdfUrl.endsWith('.doc') || report.docType === 'word'
+    // If it has a PDF file attached, open the embedded PDF viewer
+    if (report.pdfUrl && report.pdfUrl.trim() && report.pdfUrl !== '#' && !isWord) {
       const resolvedUrl = report.pdfUrl.startsWith('data:') ? dataURLtoBlobUrl(report.pdfUrl) : report.pdfUrl
       setPdfViewerReport({ ...report, resolvedPdfUrl: resolvedUrl })
     } else {
+      // Word documents cannot be embedded directly in browser iframes.
+      // Generate the official high-resolution publication reading window with all sections, findings, and print/save controls
       generateReportPdfWindow(report, 'view')
     }
   }
 
   // Download Document Handler (PDF or Word .docx)
-  const handleDownloadPdf = (report) => {
-    if (report.pdfUrl && report.pdfUrl.trim() && report.pdfUrl !== '#') {
-      const isWord = report.pdfUrl.includes('.doc') || report.pdfUrl.includes('wordprocessingml') || report.docType === 'word'
+  const handleDownloadPdf = (report, forcedType = null) => {
+    const downloadTarget = (forcedType === 'word' && report.docxUrl) ? report.docxUrl : (report.pdfUrl || report.docxUrl)
+    if (downloadTarget && downloadTarget.trim() && downloadTarget !== '#') {
+      const isWord = forcedType === 'word' || downloadTarget.includes('.doc') || downloadTarget.includes('wordprocessingml') || report.docType === 'word'
       const ext = isWord ? '.docx' : '.pdf'
-      const resolvedUrl = report.pdfUrl.startsWith('data:') ? dataURLtoBlobUrl(report.pdfUrl) : report.pdfUrl
+      const resolvedUrl = downloadTarget.startsWith('data:') ? dataURLtoBlobUrl(downloadTarget) : downloadTarget
       const link = document.createElement('a')
       link.href = resolvedUrl
       link.download = report.docName || `${(report.title || 'report').replace(/[^a-z0-9]/gi, '_')}${ext}`
@@ -654,7 +654,7 @@ export default function Reports() {
                               </button>
 
                               <button
-                                onClick={() => handleDownloadPdf(report)}
+                                onClick={() => handleDownloadPdf(report, 'pdf')}
                                 style={{
                                   background: '#faf5ff',
                                   color: '#760CB0',
@@ -671,8 +671,33 @@ export default function Reports() {
                                   transition: 'all 0.2s ease',
                                 }}
                               >
-                                {isWord ? '📥 Download Word (.docx)' : '📥 Download PDF'}
+                                {isWord ? '📥 Download Document' : '📥 Download PDF'}
                               </button>
+
+                              {(report.docxUrl || isWord) && (
+                                <a
+                                  href={report.docxUrl || report.pdfUrl}
+                                  download={report.docName || `${report.title || 'report'}.docx`}
+                                  style={{
+                                    background: '#f0fdf4',
+                                    color: '#16a34a',
+                                    fontFamily: "'Inter', Arial, sans-serif",
+                                    fontWeight: 800,
+                                    fontSize: '0.85rem',
+                                    padding: '0.65rem 1.25rem',
+                                    borderRadius: '10px',
+                                    border: '1.5px solid rgba(22,163,74,0.3)',
+                                    cursor: 'pointer',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '0.45rem',
+                                    textDecoration: 'none',
+                                    transition: 'all 0.2s ease',
+                                  }}
+                                >
+                                  📝 Download Word (.docx)
+                                </a>
+                              )}
                             </>
                           )
                         })()}

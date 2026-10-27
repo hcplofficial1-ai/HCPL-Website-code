@@ -1901,7 +1901,7 @@ export default function AdminDashboard() {
                     </span>
                   </div>
                   <div style={{ display: 'flex', gap: '0.4rem' }}>
-                    {reportForm.pdfUrl.startsWith('data:application/pdf') && (
+                    {reportForm.pdfUrl.startsWith('data:application/pdf') ? (
                       <button
                         type="button"
                         onClick={() => {
@@ -1911,6 +1911,22 @@ export default function AdminDashboard() {
                         style={{ background: '#16a34a', color: '#fff', border: 'none', padding: '0.3rem 0.75rem', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 800, cursor: 'pointer' }}
                       >
                         👁️ Preview PDF
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const a = document.createElement('a')
+                          a.href = reportForm.pdfUrl
+                          a.download = reportForm.docName || 'document'
+                          a.target = '_blank'
+                          document.body.appendChild(a)
+                          a.click()
+                          document.body.removeChild(a)
+                        }}
+                        style={{ background: '#2563eb', color: '#fff', border: 'none', padding: '0.3rem 0.75rem', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        📥 Test Download File
                       </button>
                     )}
                     <button
