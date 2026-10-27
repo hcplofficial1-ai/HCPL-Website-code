@@ -229,78 +229,95 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Small Section for ISO 9001 Badge & Quality Statement (Just Little Bit Down) */}
+        {/* Small Section for ISO 9001 Badge & Quality Statement - Perfectly Centered */}
         <div
           style={{
             marginTop: '3.5rem',
-            paddingTop: '1.75rem',
+            paddingTop: '2rem',
             borderTop: '1px solid rgba(118, 12, 176, 0.1)',
             display: 'flex',
+            justifyContent: 'center',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '2.5rem',
-            flexWrap: 'wrap',
+            width: '100%',
           }}
-          className="footer-iso-strip"
         >
-          {/* Quality Statement */}
-          <div style={{ flex: '1 1 520px', maxWidth: '820px' }}>
-            <p
-              style={{
-                fontFamily: "'Inter', Arial, sans-serif",
-                fontSize: '0.95rem',
-                lineHeight: 1.7,
-                color: '#424242',
-                margin: 0,
-                fontWeight: 500,
-              }}
-            >
-              Backed by ISO 9001 certification, we operate with globally benchmarked quality controls, ensuring reliable, responsible, and high-standard project delivery.
-            </p>
-          </div>
-
-          {/* ISO 9001 Badge with caption */}
           <div
             style={{
               display: 'flex',
-              flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center',
-              borderLeft: '1px solid rgba(118, 12, 176, 0.15)',
-              paddingLeft: '2.25rem',
-              flexShrink: 0,
+              justifyContent: 'space-between',
+              gap: '2.5rem',
+              background: '#faf5ff',
+              border: '1.5px solid rgba(118, 12, 176, 0.14)',
+              borderRadius: '18px',
+              padding: '1.25rem 2.25rem',
+              maxWidth: '960px',
+              width: '100%',
+              margin: '0 auto',
+              boxShadow: '0 2px 12px rgba(118, 12, 176, 0.04)',
+              flexWrap: 'wrap',
             }}
-            className="footer-iso-badge-box"
+            className="footer-iso-strip"
           >
-            <img
-              src="/images/iso-9001-certified.png"
-              alt="Certified ISO 9001 Certified"
+            {/* Quality Statement */}
+            <div style={{ flex: '1 1 480px', maxWidth: '620px' }}>
+              <p
+                style={{
+                  fontFamily: "'Inter', Arial, sans-serif",
+                  fontSize: '0.95rem',
+                  lineHeight: 1.7,
+                  color: '#424242',
+                  margin: 0,
+                  fontWeight: 500,
+                }}
+              >
+                Backed by ISO 9001 certification, we operate with globally benchmarked quality controls, ensuring reliable, responsible, and high-standard project delivery.
+              </p>
+            </div>
+
+            {/* ISO 9001 Badge with caption */}
+            <div
               style={{
-                height: '96px',
-                width: 'auto',
-                display: 'block',
-                objectFit: 'contain',
-                filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.06))',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderLeft: '1px solid rgba(118, 12, 176, 0.16)',
+                paddingLeft: '2.25rem',
+                flexShrink: 0,
               }}
-              onError={(e) => {
-                if (e.currentTarget.src.indexOf('iso-9001-certified.png') !== -1) {
-                  e.currentTarget.src = '/iso-9001-certified.png'
-                }
-              }}
-            />
-            <span
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                color: '#760CB0',
-                textAlign: 'center',
-                marginTop: '0.35rem',
-                whiteSpace: 'nowrap',
-              }}
+              className="footer-iso-badge-box"
             >
-              Quality Controls and management
-            </span>
+              <img
+                src="/images/iso-9001-certified.png"
+                alt="Certified ISO 9001 Certified"
+                style={{
+                  height: '96px',
+                  width: 'auto',
+                  display: 'block',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.06))',
+                }}
+                onError={(e) => {
+                  if (e.currentTarget.src.indexOf('iso-9001-certified.png') !== -1) {
+                    e.currentTarget.src = '/iso-9001-certified.png'
+                  }
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '0.8rem',
+                  fontWeight: 700,
+                  color: '#760CB0',
+                  textAlign: 'center',
+                  marginTop: '0.35rem',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Quality Controls and management
+              </span>
+            </div>
           </div>
         </div>
 
