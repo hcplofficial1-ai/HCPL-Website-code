@@ -111,6 +111,7 @@ export function HeroIntro({
           maxWidth: '780px',
           marginBottom: '2rem',
           textShadow: '0 2px 10px rgba(0, 0, 0, 0.35)',
+          textAlign: 'justify',
         }}
       >
         {paragraph}
@@ -187,11 +188,10 @@ export function HeroIntro({
         }}
       >
         {[
-          'Since 2009',
+          '5-Country Experience',
           `${projects.length} Documented Assignments`,
           '58+ Institutional Clients',
           'ISO-9001 Certified',
-          '5-Country Experience',
         ].map((b) => (
           <div key={b} style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
             <span style={{ color: '#4ade80', fontWeight: 900, fontSize: '1rem' }}>✓</span>
