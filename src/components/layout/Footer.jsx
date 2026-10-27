@@ -246,7 +246,7 @@ export default function Footer() {
             {/* Pakistan HQ */}
             <div style={{ background: '#faf5ff', padding: '0.85rem 1rem', borderRadius: '12px', border: '1px solid rgba(118,12,176,0.1)', marginBottom: '0.75rem' }}>
               <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.2rem' }}>
-                🇵🇰 Pakistan Head Office
+                Pakistan Head Office
               </div>
               <div style={{ fontSize: '0.8125rem', color: '#424242', lineHeight: 1.45 }}>
                 Office no 23 Ground Floor, Khudadad heights, Golra E11/4, Islamabad
@@ -256,7 +256,7 @@ export default function Footer() {
             {/* USA Office */}
             <div style={{ background: '#faf5ff', padding: '0.85rem 1rem', borderRadius: '12px', border: '1px solid rgba(118,12,176,0.1)' }}>
               <div style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#760CB0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.2rem' }}>
-                🇺🇸 HIMAT Consulting Inc. – USA
+                HIMAT Consulting Inc. – USA
               </div>
               <div style={{ fontSize: '0.8125rem', color: '#424242', lineHeight: 1.45 }}>
                 10498 Fountain Lake Dr, Apt 1028, Stafford, Texas 77477
