@@ -311,7 +311,7 @@ export default function HeroInteractiveVisual() {
         <span style={{ fontSize: '1.25rem' }}>📊</span>
         <div>
           <div style={{ fontFamily: "'Inter', Arial, sans-serif", fontSize: '0.8125rem', fontWeight: 800, color: '#212121', lineHeight: 1.1 }}>
-            58+ Institutional Clients
+            60+ Institutional Clients
           </div>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.78rem', color: '#760CB0', fontWeight: 700, marginTop: '0.15rem' }}>
             ISO-9001 Certified · UN · World Bank

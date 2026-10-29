@@ -11,7 +11,9 @@ const CASE_STUDIES = [
     title: 'Transforming Youth Employment Gaps Across 4 Conflict Corridors',
     stat: '+78%',
     statLabel: 'Employer Job Absorption Demand Identified',
-    desc: 'Led a landmark 4-state diagnostic evaluating vocational skills mismatches, employer hiring requirements, and socio-economic integration for returning youth.',
+    objective: 'Diagnose structural vocational skill mismatches, employer absorption demand, and sustainable employment pathways for conflict-affected youth across 4 states.',
+    methodology: 'Mixed-methods diagnostic combining 1,200+ employer enterprise surveys, TVET institutional capacity audits, and participatory youth focus groups.',
+    results: 'Mapped high-growth trades across renewable energy and construction, guiding a multi-million dollar donor TVET curriculum overhaul.',
     link: '/reports',
     image: './images/unicef-south-sudan-bg.jpg',
   },
@@ -23,19 +25,23 @@ const CASE_STUDIES = [
     title: 'Accelerating 450+ High-Impact Startups Across Central & South Asia',
     stat: '+42%',
     statLabel: 'Average Enterprise Revenue Increase Over 3 Years',
-    desc: 'Delivered an econometric Difference-in-Differences (DiD) evaluation tracking capital incubation across Kazakhstan, Tajikistan, Afghanistan, and Pakistan.',
+    objective: 'Evaluate business acceleration impact, financing sustainability, and revenue growth across 450+ incubated micro-enterprises.',
+    methodology: 'Econometric Difference-in-Differences (DiD) quasi-experimental design tracking capital recipients against matched non-incubated controls.',
+    results: 'Demonstrated 42% higher revenue trajectories and confirmed sustainable enterprise job creation across Kazakhstan, Tajikistan, Afghanistan, and Pakistan.',
     link: '/reports',
     image: './images/akf-startups-bg.png',
   },
   {
     id: 'cs-03',
-    client: 'World Bank & SED Sindh',
+    client: 'World Bank & Government of Sindh',
     logo: './logos/worldbank.png',
     category: 'Education & Gender Parity',
     title: 'Strengthening Early Learning & School Safety in 12 Priority Districts',
     stat: '0.88',
     statLabel: 'Gender Parity Index Achieved in Targeted Schools',
-    desc: 'Conducted a comprehensive process evaluation measuring classroom infrastructure, female teacher retention, and conditional cash grant disbursements.',
+    objective: 'Assess classroom infrastructure quality, female teacher recruitment retention, and equity of conditional school stipends.',
+    methodology: 'Large-scale multi-district field verification, CAPI household surveys, classroom observational audits, and fiduciary spot checks.',
+    results: 'Verified school improvement grant utilization across 200+ schools, validating 0.88 Gender Parity Index achievement in vulnerable rural districts.',
     link: '/certificates',
     image: './images/education-gender-parity-bg.jpg',
   },
@@ -267,20 +273,21 @@ export default function BainCaseStudies() {
                       </div>
                     </div>
 
-                    {/* Short Description */}
-                    <p
-                      style={{
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: '0.92rem',
-                        color: isWhiteCard ? '#555555' : 'rgba(255, 255, 255, 0.95)',
-                        lineHeight: 1.68,
-                        margin: 0,
-                        fontWeight: isWhiteCard ? 400 : 500,
-                        transition: 'color 0.3s ease',
-                      }}
-                    >
-                      {cs.desc}
-                    </p>
+                    {/* Structured Evidence Breakdown: Objective, Methodology, Results */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', margin: 0, fontSize: '0.86rem', lineHeight: 1.55 }}>
+                      <div>
+                        <strong style={{ color: isWhiteCard ? '#760CB0' : '#ffffff', fontWeight: 800 }}>🎯 Objective:</strong>{' '}
+                        <span style={{ color: isWhiteCard ? '#444' : 'rgba(255, 255, 255, 0.92)' }}>{cs.objective}</span>
+                      </div>
+                      <div>
+                        <strong style={{ color: isWhiteCard ? '#760CB0' : '#ffffff', fontWeight: 800 }}>🔬 Methodology:</strong>{' '}
+                        <span style={{ color: isWhiteCard ? '#444' : 'rgba(255, 255, 255, 0.92)' }}>{cs.methodology}</span>
+                      </div>
+                      <div>
+                        <strong style={{ color: isWhiteCard ? '#760CB0' : '#ffffff', fontWeight: 800 }}>📈 Results & Impact:</strong>{' '}
+                        <span style={{ color: isWhiteCard ? '#444' : 'rgba(255, 255, 255, 0.92)' }}>{cs.results}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </ScrollCard>

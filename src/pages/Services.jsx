@@ -1,3 +1,4 @@
+import usePageSEO from '../hooks/usePageSEO'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ScrollCard from '../components/common/ScrollCard'
@@ -71,6 +72,7 @@ const METHODS = [
 ]
 
 export default function Services() {
+  usePageSEO('Services & Practice Areas', 'Explore HIMAT Consulting’s specialized development advisory practice areas: OECD-DAC evaluations, third-party monitoring, applied research, and digital data collection solutions.')
   const { services } = useData()
   const displayServices = (services && services.length > 0) ? services : DEFAULT_SERVICES
   const [hoveredId, setHoveredId] = useState(null)
@@ -354,6 +356,121 @@ export default function Services() {
                 </ScrollCard>
               )
             })}
+          </div>
+        </div>
+      </section>
+
+      
+      {/* Specialized Digital Solutions & Survey Technologies Division */}
+      <section style={{ background: '#ffffff', padding: '5.5rem 0 5rem', borderTop: '1px solid rgba(118,12,176,0.1)', borderBottom: '1px solid rgba(118,12,176,0.1)' }}>
+        <div className="container" style={{ maxWidth: '1440px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <div
+              style={{
+                fontFamily: 'Arial, Helvetica, sans-serif',
+                fontSize: '13px',
+                fontWeight: 400,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: '#760CB0',
+                background: 'rgba(118, 12, 176, 0.1)',
+                padding: '0.45rem 1.4rem',
+                borderRadius: '999px',
+                border: '1.5px solid rgba(118, 12, 176, 0.25)',
+                display: 'inline-block',
+                marginBottom: '1rem',
+              }}
+            >
+              DIGITAL & TECHNOLOGY DIVISION
+            </div>
+            <h2
+              style={{
+                fontFamily: 'Arial, Helvetica, sans-serif',
+                fontSize: '26px',
+                fontWeight: 700,
+                color: '#210238',
+                lineHeight: 1.25,
+                marginBottom: '0.75rem',
+                textTransform: 'uppercase',
+              }}
+            >
+              Digital Survey Systems & Web Platforms
+            </h2>
+            <p
+              style={{
+                fontFamily: 'Arial, Helvetica, sans-serif',
+                fontSize: '15px',
+                fontWeight: 400,
+                color: '#555',
+                maxWidth: '720px',
+                margin: '0 auto',
+                lineHeight: 1.65,
+              }}
+            >
+              Dedicated digital systems engineering and field technology solutions built to support large-scale evidence generation, CAPI survey logistics, and real-time donor dashboards.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
+            {[
+              {
+                icon: '📱',
+                title: 'CAPI & Mobile Data Collection',
+                desc: 'End-to-end deployment of mobile survey tools utilizing KoBoToolbox, ODK, and SurveyCTO with automated validation rules, GPS geotagging, audio audit logging, and offline synchronization for high-risk field environments.',
+                features: ['KoBoToolbox & ODK Custom Scripts', 'Real-time GPS Audit Tracking', 'Offline Multi-Lingual Forms', 'Automated Field Validation Logic']
+              },
+              {
+                icon: '💻',
+                title: 'Web Platforms & Donor Dashboards',
+                desc: 'Custom web portal development using modern React, Node.js, and cloud backends. We build secure donor-facing progress dashboards, real-time KPI trackers, and interactive data visualization systems.',
+                features: ['Custom Progress Portals', 'Interactive PowerBI & Web Dashboards', 'Role-Based Stakeholder Access', 'Automated Report Generation']
+              },
+              {
+                icon: '🗄️',
+                title: 'Survey Data Architecture & Analytics',
+                desc: 'Secure database pipelines ensuring rigorous data cleaning, consistency verification, anonymization for human subject protection, and structured exports formatted for SPSS, Stata, R, and Python.',
+                features: ['Data Anonymization & PII Security', 'SPSS & Stata Automated Pipelines', 'Cross-Sectional Cleaning Rules', 'Fiduciary Audit Documentation']
+              },
+              {
+                icon: '⚙️',
+                title: 'Office Automation & Institutional ERP',
+                desc: 'Bespoke administrative tools, inventory tracking, field monitor dispatch systems, and project compliance workflows designed to streamline organizational operations and donor accountability.',
+                features: ['Monitor Dispatch & Route Tracking', 'Institutional Asset Tracking', 'Automated Timesheet Verification', 'Secure Cloud Document Archives']
+              }
+            ].map((tech) => (
+              <div
+                key={tech.title}
+                style={{
+                  background: '#faf5ff',
+                  borderRadius: '16px',
+                  border: '1.5px solid rgba(118, 12, 176, 0.15)',
+                  padding: '2rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem',
+                  boxShadow: '0 4px 18px rgba(118, 12, 176, 0.04)',
+                }}
+              >
+                <div style={{ fontSize: '2rem', width: '54px', height: '54px', borderRadius: '12px', background: '#ffffff', border: '1px solid rgba(118,12,176,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+                  {tech.icon}
+                </div>
+                <div>
+                  <h3 style={{ fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '18px', fontWeight: 700, color: '#210238', margin: '0 0 0.5rem' }}>
+                    {tech.title}
+                  </h3>
+                  <p style={{ fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '14px', color: '#555', lineHeight: 1.6, margin: 0 }}>
+                    {tech.desc}
+                  </p>
+                </div>
+                <div style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid rgba(118,12,176,0.1)' }}>
+                  <ul style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '13px', color: '#760CB0', lineHeight: 1.6, fontWeight: 600 }}>
+                    {tech.features.map(f => (
+                      <li key={f}>{f}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

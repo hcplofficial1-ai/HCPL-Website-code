@@ -409,14 +409,7 @@ export default function Footer() {
           >
             Contact Us
           </Link>
-          <span>·</span>
-          <Link
-            to="/admin/login"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
-            style={{ color: '#760CB0', textDecoration: 'none', fontWeight: 800, background: '#faf5ff', padding: '0.2rem 0.65rem', borderRadius: '6px', border: '1px solid rgba(118,12,176,0.2)' }}
-          >
-            🔐 Staff Portal
-          </Link>
+
         </div>
       </div>
 

@@ -85,7 +85,7 @@ export default function AnimatedStatsStrip() {
     { val: '16+', label: 'Years of Proven Impact' },
     { val: `${projects.length || stats?.total || 121}+`, label: 'Completed Assignments' },
     { val: String(team.length || 8), label: 'Core Advisory Leads' },
-    { val: '58+', label: 'Global Institutional Donors' },
+    { val: '60+', label: 'Global Institutional Donors' },
   ]
 
   return (

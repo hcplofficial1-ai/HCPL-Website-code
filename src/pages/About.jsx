@@ -1,3 +1,4 @@
+import usePageSEO from '../hooks/usePageSEO'
 import { Link } from 'react-router-dom'
 import { useData } from '../context/DataContext'
 
@@ -11,6 +12,10 @@ const VALUES = [
 const SECTORS = ['WASH', 'Health', 'Education', 'Agriculture', 'Economic Development', 'Governance & Policy', 'DRR', 'TVET', 'Women Empowerment', 'Humanitarian', 'Nutrition', 'Urban Planning', 'Climate Smart Agriculture', 'Social Protection', 'Renewable Energy', 'SDGs', 'Child Rights', 'Inclusion']
 
 export default function About() {
+  usePageSEO(
+    'About Us | 16+ Years of Proven Impact',
+    'Learn about HIMAT Consulting Private Limited (HCPL) — over 16 years of evidence-driven development advisory, corporate governance, ISO-9001 quality assurance, and international presence in Pakistan and the United States.'
+  )
   const { projects = [] } = useData()
 
   const TIMELINE = [

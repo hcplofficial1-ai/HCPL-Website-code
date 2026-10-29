@@ -1,9 +1,14 @@
+import usePageSEO from '../hooks/usePageSEO'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const SUBJECTS = ['Project Inquiry', 'Evaluation Consultancy', 'Research Collaboration', 'Partnership Proposal', 'Employment', 'Other']
 
 export default function Contact() {
+  usePageSEO(
+    'Contact Us | Islamabad & Global Inquiries',
+    'Get in touch with HIMAT Consulting Private Limited for project evaluations, diagnostic studies, research tenders, or institutional partnerships at our Islamabad headquarters or USA corporate office.'
+  )
   const [form, setForm] = useState({ name: '', org: '', email: '', phone: '', subject: '', message: '' })
   const [sent, setSent] = useState(false)
   const [errors, setErrors] = useState({})

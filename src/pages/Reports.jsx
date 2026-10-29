@@ -1,3 +1,4 @@
+import usePageSEO from '../hooks/usePageSEO'
 import { useState, useMemo, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
@@ -125,9 +126,16 @@ export function ReportCoverView({ report }) {
 }
 
 export default function Reports() {
+  usePageSEO('Published Reports & Studies', 'Browse official research studies, sector diagnostics, and evaluation reports delivered by HIMAT Consulting for global development partners.')
   const { reports, projects = [] } = useData()
   const [search, setSearch] = useState('')
   const [selectedSector, setSelectedSector] = useState('All')
+  const [selectedYear, setSelectedYear] = useState('All')
+
+  const years = useMemo(() => {
+    const list = [...new Set((reports || []).map(r => r.year).filter(Boolean))]
+    return ['All', ...list.sort((a, b) => b.localeCompare(a))]
+  }, [reports])
   const [pdfViewerReport, setPdfViewerReport] = useState(null)
   const [requestModalReport, setRequestModalReport] = useState(null)
   const [requestedSuccess, setRequestedSuccess] = useState(false)
@@ -155,6 +163,8 @@ export default function Reports() {
           selectedSector.toLowerCase().includes(r.secondarySector.toLowerCase())
         ))
 
+      const matchesYear = selectedYear === 'All' || r.year === selectedYear
+
       const matchesSearch =
         !search.trim() ||
         r.title?.toLowerCase().includes(search.toLowerCase()) ||
@@ -163,9 +173,9 @@ export default function Reports() {
         r.sector?.toLowerCase().includes(search.toLowerCase()) ||
         r.secondarySector?.toLowerCase().includes(search.toLowerCase())
 
-      return matchesSector && matchesSearch
+      return matchesSector && matchesYear && matchesSearch
     })
-  }, [reports, search, selectedSector])
+  }, [reports, search, selectedSector, selectedYear])
 
   // Body scroll lock and Escape key listener for PDF viewer & request modal
   useEffect(() => {
@@ -444,7 +454,7 @@ export default function Reports() {
             {[
               { val: `${projects.length}+`, label: 'Studies & Evaluations Produced' },
               { val: '16+ Years', label: 'Knowledge Generation' },
-              { val: '58+ Donors', label: 'UN, World Bank & INGOs' },
+              { val: '60+ Donors', label: 'UN, World Bank & INGOs' },
               { val: '100% Rigor', label: 'OECD-DAC Compliant' },
             ].map((stat) => (
               <div key={stat.label} style={{ background: '#fff', padding: '1.25rem', borderRadius: '12px', border: '1px solid rgba(118,12,176,0.08)', boxShadow: '0 2px 10px rgba(118,12,176,0.04)' }}>
@@ -479,7 +489,7 @@ export default function Reports() {
               />
             </div>
 
-            {/* Sector Tabs / Dropdown */}
+            {/* Sector and Year Filter Dropdowns */}
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
               <select
                 value={selectedSector}
@@ -503,6 +513,52 @@ export default function Reports() {
                   </option>
                 ))}
               </select>
+
+              <select
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                style={{
+                  padding: '0.65rem 1.15rem',
+                  borderRadius: '10px',
+                  border: '1.5px solid rgba(118,12,176,0.2)',
+                  fontFamily: "'Inter', Arial, sans-serif",
+                  fontSize: '0.85rem',
+                  fontWeight: 700,
+                  color: '#760CB0',
+                  background: '#faf5ff',
+                  outline: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                {years.map((yr) => (
+                  <option key={yr} value={yr}>
+                    {yr === 'All' ? 'All Years' : `Year ${yr}`}
+                  </option>
+                ))}
+              </select>
+
+              {(selectedSector !== 'All' || selectedYear !== 'All' || search) && (
+                <button
+                  onClick={() => {
+                    setSelectedSector('All')
+                    setSelectedYear('All')
+                    setSearch('')
+                  }}
+                  style={{
+                    background: 'rgba(118,12,176,0.08)',
+                    color: '#760CB0',
+                    border: 'none',
+                    padding: '0.65rem 1rem',
+                    borderRadius: '10px',
+                    fontFamily: "'Inter', Arial, sans-serif",
+                    fontSize: '0.8125rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                  }}
+                >
+                  Clear Filters ✕
+                </button>
+              )}
             </div>
           </div>
         </div>

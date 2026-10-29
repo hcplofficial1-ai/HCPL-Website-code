@@ -1,3 +1,4 @@
+import usePageSEO from '../hooks/usePageSEO'
 import { Link } from 'react-router-dom'
 import { useData } from '../context/DataContext'
 import { DEFAULT_CONSULTANTS } from '../data/consultantsData'
@@ -161,6 +162,10 @@ function ConsultantCard({ consultant, index = 0 }) {
 }
 
 export default function Consultants() {
+  usePageSEO(
+    'Expert Consultant Roster',
+    'Connect with HIMAT Consulting roster of sectoral experts, senior evaluators, data scientists, and field researchers across South Asia and globally.'
+  )
   const { consultants = [] } = useData()
   const rawList = Array.isArray(consultants) && consultants.length > 0 ? consultants : DEFAULT_CONSULTANTS
   const displayConsultants = [...rawList].sort((a, b) => {

@@ -1,3 +1,4 @@
+import usePageSEO from '../hooks/usePageSEO'
 import { useData } from '../context/DataContext'
 import ClientMarquee from '../components/common/ClientMarquee'
 import BainHero from '../components/home/BainHero'
@@ -11,6 +12,10 @@ import BainInsights from '../components/home/BainInsights'
 import MeetOurPeopleSection from '../components/home/MeetOurPeopleSection'
 
 export default function Home() {
+  usePageSEO(
+    'HIMAT Consulting | Research, Evaluation & Development Advisory',
+    'HIMAT Consulting Private Limited (HCPL) delivers research, OECD-DAC evaluations, diagnostics, and digital survey systems across 121+ assignments for the EU, World Bank, UN, and international donors.'
+  )
   const { stats } = useData()
 
   return (

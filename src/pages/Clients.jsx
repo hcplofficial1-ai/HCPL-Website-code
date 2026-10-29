@@ -1,3 +1,4 @@
+import usePageSEO from '../hooks/usePageSEO'
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import ClientMarquee from '../components/common/ClientMarquee'
@@ -8,7 +9,7 @@ const LOGO_LOOKUP = CLIENT_LOGOS.reduce((acc, item) => {
   return acc
 }, {})
 
-const ALL_58_CLIENTS = [
+const ALL_CLIENTS = [
   { id: 'acf', name: 'Action Against Hunger (ACF)', short: 'ACF', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['acf'] },
   { id: 'asi', name: 'Adam Smith International (ASI)', short: 'ASI', cat: 'bilateral', type: 'Bilateral / Advisory', ...LOGO_LOOKUP['asi'] },
   { id: 'akah', name: 'Aga Khan Agency for Habitat (AKAH)', short: 'AKAH', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['akah'] },
@@ -23,9 +24,9 @@ const ALL_58_CLIENTS = [
   { id: 'care', name: 'CARE International in Pakistan (CIP)', short: 'CARE', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['care'] },
   { id: 'cabi', name: 'Centre for Agriculture and Biosciences International (CABI)', short: 'CABI', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['cabi'] },
   { id: 'cgn', name: 'Children Global Network (CGN)', short: 'CGN', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['cgn'] },
-  { id: 'cbm', name: 'Christoffel-Blindenmission/CBM Germany', short: 'CBM', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['cbm'] },
+  { id: 'cbm', name: 'Christoffel-Blindenmission (CBM)', short: 'CBM', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['cbm'] },
   { id: 'concern', name: 'Concern Worldwide', short: 'Concern', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['concern'] },
-  { id: 'cesvi', name: 'Cooperazione e Sviluppo (CESVI)', short: 'CESVI', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['cesvi'] },
+  { id: 'cesvi', name: 'CESVI (Cooperazione e Sviluppo)', short: 'CESVI', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['cesvi'] },
   { id: 'doaba', name: 'Doaba Foundation', short: 'Doaba', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['doaba'] },
   { id: 'eu', name: 'European Union (EU)', short: 'EU', cat: 'multilateral', type: 'Multilateral', ...LOGO_LOOKUP['eu'] },
   { id: 'fdo', name: 'Farmer Development Organisation (FDO)', short: 'FDO', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['fdo'] },
@@ -38,7 +39,7 @@ const ALL_58_CLIENTS = [
   { id: 'bhc', name: 'British High Commission', short: 'BHC', cat: 'bilateral', type: 'Bilateral', ...LOGO_LOOKUP['bhc'] },
   { id: 'helpage', name: 'HelpAge International', short: 'HelpAge', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['helpage'] },
   { id: 'ifad', name: 'International Fund for Agricultural Development/Economic Transformation Initiative (IFAD/ETI)', short: 'IFAD', cat: 'un', type: 'UN Agency', ...LOGO_LOOKUP['ifad'] },
-  { id: 'irsp', name: 'Integrated Regional Support Program (IRSP)', short: 'IRSP', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['irsp'] },
+  { id: 'irsp', name: 'Integrated Regional Support Programme (IRSP)', short: 'IRSP', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['irsp'] },
   { id: 'irc', name: 'International Rescue Committee (IRC)', short: 'IRC', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['irc'] },
   { id: 'itc', name: 'International Trade Centre (ITC)', short: 'ITC', cat: 'un', type: 'UN Agency', ...LOGO_LOOKUP['itc'] },
   { id: 'jpal', name: 'J-PAL Poverty Action Lab', short: 'J-PAL', cat: 'multilateral', type: 'Research / Global', ...LOGO_LOOKUP['jpal'] },
@@ -47,14 +48,14 @@ const ALL_58_CLIENTS = [
   { id: 'nida', name: 'NIDA Pakistan', short: 'NIDA', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['nida'] },
   { id: 'nca', name: 'Norwegian Church Aid (NCA)', short: 'NCA', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['nca'] },
   { id: 'ni', name: 'Nutrition International (NI)', short: 'NI', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['ni'] },
-  { id: 'oxfam', name: 'Oxford Committee for Famine Relief (OXFAM)', short: 'OXFAM', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['oxfam'] },
+  { id: 'oxfam', name: 'Oxfam', short: 'OXFAM', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['oxfam'] },
   { id: 'ppaf', name: 'Pakistan Poverty Alleviation Fund (PPAF)', short: 'PPAF', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['ppaf'] },
   { id: 'pspa', name: 'Punjab Social Protection Authority', short: 'PSPA', cat: 'gov', type: 'Government', ...LOGO_LOOKUP['pspa'] },
   { id: 'rdf', name: 'Research and Development Foundation (RDF)', short: 'RDF', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['rdf'] },
-  { id: 'rspn', name: 'Rural Support Program Network (RSPN)', short: 'RSPN', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['rspn'] },
+  { id: 'rspn', name: 'Rural Support Programmes Network (RSPN)', short: 'RSPN', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['rspn'] },
   { id: 'savethechildren', name: 'Save the Children', short: 'SaveChildren', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['savethechildren'] },
   { id: 'sightsavers', name: 'Sightsavers UK', short: 'Sightsavers', cat: 'ingo', type: 'INGO', ...LOGO_LOOKUP['sightsavers'] },
-  { id: 'srso', name: 'Sindh Rural Support Organisation (SRSO)', short: 'SRSO', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['srso'] },
+  { id: 'srso', name: 'Sindh Rural Support Organization (SRSO)', short: 'SRSO', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['srso'] },
   { id: 'sdc', name: 'Swiss Agency for Development and Cooperation (SDC)', short: 'SDC', cat: 'bilateral', type: 'Bilateral', ...LOGO_LOOKUP['sdc'] },
   { id: 'trdp', name: 'Thardeep Rural Development Programme (TRDP)', short: 'TRDP', cat: 'ngo', type: 'National NGO', ...LOGO_LOOKUP['trdp'] },
   { id: 'unesco', name: 'UNESCO', short: 'UNESCO', cat: 'un', type: 'UN Agency', ...LOGO_LOOKUP['unesco'] },
@@ -95,16 +96,14 @@ const GLOBAL_PARTNERS = [
     name: 'Kaizen Consulting',
     fullName: 'Kaizen Consulting',
     region: 'Saudi Arabia',
-    logo: './logos/kaizen-logo.jpg',
-    logoNote: 'Temporary placeholder; official logo not included in supplied profile',
+    logo: './logos/kaizen-placeholder.svg',
     desc: 'Saudi Arabia-based management and operational consulting partner specializing in institutional capacity and performance optimization.',
   },
   {
     name: 'Omie Consultants',
     fullName: 'Omie Consultants',
     region: 'Papua New Guinea',
-    logo: './logos/omie-placeholder.png',
-    logoNote: 'Temporary placeholder; official logo not included in supplied files',
+    logo: './logos/omie-placeholder.svg',
     desc: 'Papua New Guinea advisory partner conducting community evaluations, baseline research, and local stakeholder engagement across Northern Provinces.',
   },
   {
@@ -125,8 +124,7 @@ const GLOBAL_PARTNERS = [
     name: 'Nepal Development Research Institute (NDRI)',
     fullName: 'Nepal Development Research Institute (NDRI)',
     region: 'Nepal',
-    logo: './logos/ndri-placeholder.png',
-    logoNote: 'Temporary placeholder; official logo not included in supplied MoU',
+    logo: './logos/ndri-placeholder.svg',
     desc: 'Premier non-profit policy research institute in Nepal specializing in water resources, climate resilience, health, and economic studies.',
   },
   {
@@ -162,7 +160,6 @@ const GLOBAL_PARTNERS = [
     fullName: 'Dynasty Evaluation Centre (DEC) Uganda',
     region: 'Kampala, Uganda',
     logo: './logos/dec-placeholder.svg',
-    logoNote: 'Temporary placeholder; official logo was not included in supplied profile',
     desc: 'Uganda-based research, evaluation, field data collection and independent verification partner.',
   },
   {
@@ -313,11 +310,12 @@ function ClientLogoCard({ client }) {
 }
 
 export default function Clients() {
+  usePageSEO('Institutional Clients & Partners', 'Explore 60+ global development partners including the European Union, World Bank, UNICEF, GIZ, and IFAD who trust HIMAT Consulting.')
   const [activeTab, setActiveTab] = useState('All Partners')
   const [search, setSearch] = useState('')
 
   const filteredClients = useMemo(() => {
-    return ALL_58_CLIENTS.filter((c) => {
+    return ALL_CLIENTS.filter((c) => {
       const allowedCategories = TAB_FILTER_MAP[activeTab]
       const matchCategory = !allowedCategories || allowedCategories.includes(c.cat)
       const matchSearch =
@@ -406,7 +404,7 @@ export default function Clients() {
               lineHeight: 1.75,
             }}
           >
-            Trusted development advisory and third-party monitoring partner for 58+ multilateral
+            Trusted development advisory and third-party monitoring partner for 60+ multilateral
             organizations, UN agencies, bilateral donors, government ministries, and international NGOs.
           </p>
         </div>
@@ -570,11 +568,7 @@ export default function Clients() {
                   {p.desc}
                 </p>
 
-                {p.logoNote && (
-                  <div style={{ fontSize: '0.72rem', color: '#78716c', fontStyle: 'italic', background: '#fff', padding: '0.45rem 0.65rem', borderRadius: '6px', border: '1px dashed #d6d3d1' }}>
-                    ℹ️ {p.logoNote}
-                  </div>
-                )}
+
               </div>
             ))}
           </div>
@@ -883,7 +877,7 @@ export default function Clients() {
               fontSize: '0.95rem',
             }}
           >
-            Join 58+ leading development agencies relying on HIMAT for rigorous, context-driven evaluation
+            Join 60+ leading development agencies relying on HIMAT for rigorous, context-driven evaluation
             and diagnostic intelligence.
           </p>
           <Link

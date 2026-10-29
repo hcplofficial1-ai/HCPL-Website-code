@@ -1,5 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" width="240" height="70">
-  <rect width="240" height="70" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 5"/>
-  <text x="120" y="32" font-family="'Inter', Arial, sans-serif" font-size="14" font-weight="800" fill="#64748b" text-anchor="middle">DEC UGANDA</text>
-  <text x="120" y="50" font-family="'Inter', Arial, sans-serif" font-size="10" font-weight="600" fill="#94a3b8" text-anchor="middle">Temporary Placeholder</text>
+  <rect width="240" height="70" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+  <rect x="16" y="16" width="38" height="38" rx="8" fill="#0284c7"/>
+  <text x="35" y="41" font-family="'Inter', Arial, sans-serif" font-size="14" font-weight="900" fill="#ffffff" text-anchor="middle">DEC</text>
+  <text x="66" y="33" font-family="'Inter', Arial, sans-serif" font-size="12" font-weight="800" fill="#0f172a">DYNASTY EVALUATION</text>
+  <text x="66" y="49" font-family="'Inter', Arial, sans-serif" font-size="10" font-weight="600" fill="#64748b">Centre · Uganda</text>
 </svg>

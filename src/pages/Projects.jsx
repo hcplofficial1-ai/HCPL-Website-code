@@ -1,3 +1,4 @@
+import usePageSEO from '../hooks/usePageSEO'
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useData } from '../context/DataContext'
@@ -281,6 +282,7 @@ function Modal({ project, onClose }) {
 }
 
 export default function Projects() {
+  usePageSEO('Projects Portfolio | 121+ Assignments', 'Browse HIMAT Consulting’s complete portfolio of 121+ development evaluations, research studies, and advisory assignments delivered across South and Central Asia.')
   const { projects } = useData()
   const [search, setSearch] = useState('')
   const [sector, setSector] = useState('All')

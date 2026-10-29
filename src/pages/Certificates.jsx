@@ -1,9 +1,14 @@
+import usePageSEO from '../hooks/usePageSEO'
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { useData } from '../context/DataContext'
 
 export default function Certificates() {
+  usePageSEO(
+    'Client Appreciation & Completion Certificates',
+    'Verified institutional completion certificates, client appreciation letters, and performance commendations awarded to HIMAT Consulting by the European Union, World Bank, UN agencies, and global donors.'
+  )
   const { certificates = [] } = useData()
   const [activeTab, setActiveTab] = useState('all')
   const [selectedCert, setSelectedCert] = useState(null)

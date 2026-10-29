@@ -190,7 +190,7 @@ export function HeroIntro({
         {[
           '5-Country Experience',
           `${projects.length} Documented Assignments`,
-          '58+ Institutional Clients',
+          '60+ Institutional Clients',
           'ISO-9001 Certified',
         ].map((b) => (
           <div key={b} style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>

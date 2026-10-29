@@ -1,3 +1,4 @@
+import usePageSEO from '../hooks/usePageSEO'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useData } from '../context/DataContext'
@@ -233,6 +234,10 @@ function ExecutiveMemberCard({ member, index = 0 }) {
 }
 
 export default function Team() {
+  usePageSEO(
+    'Leadership & Core Advisory Leads',
+    'Meet the multidisciplinary leadership team, technical directors, and core advisory leads at HIMAT Consulting driving rigorous evaluations, policy research, and socio-economic diagnostics.'
+  )
   const { team = [], projects = [] } = useData()
   const teamList = Array.isArray(team) && team.length > 0 ? team : DEFAULT_TEAM
 
@@ -337,7 +342,7 @@ export default function Team() {
               ['16+', 'Years Experience'],
               [`${teamList.length}`, 'Core Advisory Leads'],
               [`${projects.length}`, 'Assignments Delivered'],
-              ['58+', 'Institutional Clients'],
+              ['60+', 'Institutional Clients'],
             ].map(([v, l]) => (
               <div key={l} style={{ textAlign: 'center' }}>
                 <div

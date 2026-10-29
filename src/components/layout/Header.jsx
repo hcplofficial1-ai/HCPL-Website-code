@@ -4,50 +4,28 @@ import { useData } from '../../context/DataContext'
 
 const NAV_STRUCTURE = [
   { to: '/', label: 'Home' },
+  { to: '/about', label: 'About' },
+  { to: '/projects', label: 'Projects' },
+  { to: '/clients', label: 'Clients' },
   {
-    label: 'About Us',
-    matchPaths: ['/about', '/team', '/consultants'],
+    label: 'Our People',
+    matchPaths: ['/team', '/consultants'],
     items: [
       {
-        to: '/about',
-        label: 'Company Overview',
-        desc: 'Vision, Mission & 16+ Years Legacy',
-      },
-      {
         to: '/team',
-        label: 'Our People',
-        desc: 'Executive Advisory & Specialists',
+        label: 'Our People & Leadership',
+        desc: 'Executive Advisory & Thematic Specialists',
       },
       {
         to: '/consultants',
         label: 'Senior Consultants',
-        desc: 'Independent Experts & Domain Advisors',
+        desc: 'Independent Experts & Sector Advisors',
       },
     ],
   },
   { to: '/services', label: 'Services' },
-  {
-    label: 'Our Work',
-    matchPaths: ['/projects', '/clients', '/certificates'],
-    items: [
-      {
-        to: '/projects',
-        label: 'Projects Portfolio',
-        desc: 'Search Complete Assignment Database',
-      },
-      {
-        to: '/clients',
-        label: 'Institutional Clients',
-        desc: 'UN Agencies, World Bank & Donors',
-      },
-      {
-        to: '/certificates',
-        label: 'Completion Certificates',
-        desc: 'Verified Letters & Donor Commendations',
-      },
-    ],
-  },
-  { to: '/reports', label: 'Published Reports' },
+  { to: '/reports', label: 'Reports' },
+  { to: '/certificates', label: 'Certificates' },
   { to: '/contact', label: 'Contact' },
 ]
 
